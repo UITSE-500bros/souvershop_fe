@@ -1,14 +1,29 @@
 import React from "react";
-interface HeaderProps {
-  text: string;
-}
+import { AppBar, Toolbar, TextField, Typography, Box } from "@mui/material";
+import SearchBar from "./SearchBar";
 
-const Header = ({ text }: HeaderProps) => {
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+
+const Header = () => {
   return (
-    <div className="fixed left-0 top-0 z-10 w-full flex-1 items-start justify-end bg-[#7B5D44] p-1 text-white">
-      {text}
+    <div className="flex w-[100%] flex-row items-center justify-center p-[40px] gap-10 relative">
+      <div>SouverShop</div>
+      <div>Sale up to 40%</div>
+      <div >
+        <SearchBar />
+      </div>
+      <div>
+        <ShoppingCartOutlinedIcon />
+      </div>
+      <div>
+        <FavoriteBorderOutlinedIcon />
+      </div>
+      <div>
+        <AccountCircleOutlinedIcon />
+      </div>
     </div>
   );
 };
-
 export default Header;

@@ -10,9 +10,9 @@ function App() {
   return (
     <>
       <header className=" align-top justify-center text-center text-2xl ">
-        Hello World
+
       </header>
-      
+
       <div>
         <Home />
       </div>
