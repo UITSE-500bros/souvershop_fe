@@ -6,14 +6,14 @@ const SearchBar = () => {
   return (
     <Box
       display="flex"
-      alignItems="center"
-      gap={12}
+      alignItems="start"
+      gap={1}
       px={2}
       py={1}
       bgcolor="#efefef"
       borderRadius="62px"
       overflow="hidden"
-      width={300}
+      width={500}
     >
       <SearchIcon style={{ width: 24, height: 24 }} />
       <Typography

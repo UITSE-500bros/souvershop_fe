@@ -4,10 +4,10 @@ import DiscountBanner from "../components/DiscountBanner";
 const Home = () => {
   return (
     <div>
+      <DiscountBanner text="Đăng ký và nhận giảm giá 20% cho đơn hàng đầu tiên của bạn. Đăng ký ngay" />
       <div>
-        <DiscountBanner text="Đăng ký và nhận giảm giá 20% cho đơn hàng đầu tiên của bạn. Đăng ký ngay" />
+        <Header />
       </div>
-      <Header />
     </div>
   );
 };
