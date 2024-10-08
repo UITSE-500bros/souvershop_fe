@@ -10,12 +10,12 @@ const Header = () => {
   return (
     <>
      
-      <AppBar position="static" sx={{ width: '100%' }} color="transparent">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SouverShop
+      <AppBar position="static" sx={{ width: '100%',  }} color="transparent">
+        <Toolbar >
+          <Typography className=" font-bold px-5" variant="h4" component="div" sx={{ }}>
+            SouverShop  
           </Typography>
-          <Typography variant="body1" component="div" sx={{ marginRight: 2 }}>
+          <Typography variant="body1" component="div" sx={{paddingRight:5  }} color="red">
             Sale up to 40%
           </Typography>
           <Box sx={{ flexGrow: 1 }}>

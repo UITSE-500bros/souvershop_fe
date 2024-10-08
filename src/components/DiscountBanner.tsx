@@ -1,9 +1,14 @@
-import React from 'react'
-
-export default function DiscountBanner({text}:{text:string}) {
+export default function DiscountBanner() {
   return (
-    <div className="fixed left-0 top-0 z-10 w-full flex-1 items-start justify-end bg-[#7B5D44] p-1 text-white">
-    {text}
-  </div>
-  )
+    <div className="w-full flex items-center justify-center bg-[#7B5D44] text-center text-white p-2">
+      <div className="flex items-center space-x-2">
+        <p className="font-normal m-0">
+          Đăng ký và nhận giảm giá 20% cho đơn hàng đầu tiên của bạn.
+        </p>
+        <button className="font-bold text-white underline font-normal">
+          Đăng ký ngay
+        </button>
+      </div>
+    </div>
+  );
 }

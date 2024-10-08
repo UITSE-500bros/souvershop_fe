@@ -13,7 +13,7 @@ const SearchBar = () => {
       bgcolor="#efefef"
       borderRadius="62px"
       overflow="hidden"
-      width={500}
+      width={900}
     >
       <SearchIcon style={{ width: 24, height: 24 }} />
       <Typography
