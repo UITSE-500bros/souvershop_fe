@@ -1,7 +1,5 @@
 import { useState } from "react";
-import Home from "./screens/Home";
-import { Footer } from "./components";
-
+import Footer from "./components/Footer/Footer";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -10,7 +8,6 @@ function App() {
       <div>
         <Footer />
       </div>
-    
     </>
   );
 }
