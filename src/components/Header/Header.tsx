@@ -1,14 +1,16 @@
-import React from "react";
-import { AppBar, Toolbar, TextField, Typography, Box, IconButton } from "@mui/material";
-import SearchBar from "./SearchBar";
+
+import { AppBar, Toolbar, Typography, Box, IconButton } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import SearchBar from "./SearchBar";
 import DiscountBanner from "./DiscountBanner";
+
 
 const Header = () => {
   return (
     <>
+      <DiscountBanner />
      
       <AppBar position="static" sx={{ width: '100%',  }} color="transparent">
         <Toolbar >

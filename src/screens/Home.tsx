@@ -1,10 +1,8 @@
-import Header from "../components/Header";
-import DiscountBanner from "../components/DiscountBanner";
 
+import Header from "../components/Header/Header";
 const Home = () => {
   return (
     <div>
-      <DiscountBanner  />
       <div>
         <Header />
       </div>
