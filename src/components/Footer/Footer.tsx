@@ -2,12 +2,12 @@ import React from "react";
 
 function Footer() {
   return (
-    <div className="relative h-[588px] w-[1441px]">
+    <div className="relative h-[588px] w-full">
       {/* Main footer container */}
       <div className="absolute left-0 top-[88px] h-[500px] w-full">
-        <div className="absolute left-0 top-[1px] h-[499px] w-[100%]">
+        <div className="absolute left-0 top-[1px] h-[499px] w-full">
           {/* Background and border */}
-          <div className="absolute left-0 top-0 h-[499px] w-[100%] bg-[#7b5c43]" />
+          <div className="absolute left-0 top-0 h-[499px] w-full bg-[#7b5c43]" />
         </div>
 
         {/* Store system section */}
