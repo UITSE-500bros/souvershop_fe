@@ -34,7 +34,6 @@ const Header = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Toolbar /> {/* This Toolbar is used to give space below the fixed AppBar */}
     </>
   );
 };
