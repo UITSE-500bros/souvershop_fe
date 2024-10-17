@@ -1,8 +1,35 @@
 import Header from "../components/Header/Header";
 import MainBanner from "../assets/TranhDongHo.png";
 import { Button } from "@mui/material";
+import ProductCard from "../components/ProductCard";
 
 const Home = () => {
+  const data = [
+    {
+      id: 1,
+      name: "Đồng hồ treo tường",
+      price: 500000,
+      imageUrl: "https://picsum.photos/seed/picsum/200/300",
+    },
+    {
+      id: 2,
+      name: "Tranh nghệ thuật",
+      price: 1200000,
+      imageUrl: "https://picsum.photos/seed/picsum/200/300",
+    },
+    {
+      id: 3,
+      name: "Bình hoa sứ",
+      price: 300000,
+      imageUrl: "https://picsum.photos/seed/picsum/200/300",
+    },
+    {
+      id: 4,
+      name: "Bình hoa sứ",
+      price: 300000,
+      imageUrl: "https://picsum.photos/seed/picsum/200/300",
+    },
+  ];
   return (
     <div className="flex flex-col">
       <div>
@@ -76,6 +103,38 @@ const Home = () => {
         <div className="text-center text-5xl font-bold text-black">
           Sản phẩm mới
         </div>
+        <div className="flex w-full flex-row justify-between gap-x-5">
+          {data.map((item) => (
+            <div key={item.id} className="w-[300]">
+              <ProductCard
+                name={item.name}
+                rating={4}
+                price={item.price}
+                imageUrl={item.imageUrl}
+              />
+            </div>
+          ))}
+        </div>
+        <Button 
+        variant="contained"
+        sx={{
+          width: 210,
+          height: 50,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 3,
+          px: 7,
+          py: 1,
+          backgroundColor: "#dbad34",
+          borderRadius: "60px",
+          overflow: "hidden",
+          fontWeight: 500,
+          fontSize: 20,
+          color: "black",
+          textTransform: "none",
+        }}
+        >Xem thêm</Button>
       </div>
     </div>
   );
