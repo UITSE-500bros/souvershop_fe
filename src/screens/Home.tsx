@@ -21,11 +21,18 @@ const Home = () => {
           Xem Giỏ Hàng
         </button>
       </Link>
+      <Link to="/category">
+        <button className="mt-4 bg-green-500 text-white py-2 px-4 rounded">
+          Xem Cửa Hàng
+        </button>
+      </Link>
       <div className="my-4 flex flex-wrap justify-center gap-4"> 
+
         <ProductCard
           imageUrl="https://cdn.ready-market.com.tw/24cfa4d4/Templates/pic/m/img_product_3462_20140903175702-1256-9615.jpg?v=c58ca81e"
           name="Móc khóa"
           price={250000}
+          discountPrice={200000} 
           rating={4}
         />
         </div>

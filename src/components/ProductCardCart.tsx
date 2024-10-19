@@ -1,53 +1,75 @@
 import React, { useState } from "react";
+import { FaTrash } from "react-icons/fa";
 
 interface ProductCardCartProps {
-  name: string;        
-  price: number;       
-  imageUrl: string;    
-  size: string;        
-  color: string;       
+  name: string;
+  price: number; 
+  imageUrl: string;
+  size: string;
+  color: string;
+  initialQuantity: number; 
+  onRemove: () => void; 
 }
 
-const ProductCardCart: React.FC<ProductCardCartProps> = ({ name, price, imageUrl, size, color }) => {
- 
-  const [quantity, setQuantity] = useState(1);
+const ProductCardCart: React.FC<ProductCardCartProps> = ({
+  name,
+  price,
+  imageUrl,
+  size,
+  color,
+  initialQuantity,
+  onRemove,
+}) => {
+  const [quantity, setQuantity] = useState(initialQuantity);
+  const totalPrice = price * quantity; 
 
   
-  const increaseQuantity = () => {
-    setQuantity(prev => prev + 1);
-  };
-
-  
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(prev => prev - 1);
+  const handleQuantityChange = (delta: number) => {
+    const newQuantity = quantity + delta;
+    if (newQuantity >= 1) { 
+      setQuantity(newQuantity);
     }
   };
 
   return (
-    <div className="product-card border rounded-lg shadow-md p-4 my-4 bg-white flex items-center">
+    <div className="flex items-center justify-between w-full max-w-3xl p-4 border rounded-lg shadow-md bg-white mb-4">
       
-      <img src={imageUrl} alt={name} className="w-48 h-48 object-cover rounded mr-4" />
-      <div className="product-info flex flex-col justify-between w-full">
-        <h2 className="font-bold text-lg">{name}</h2>
-        <p className="text-gray-500">Size: {size}</p>
-        <p className="text-gray-500">Color: {color}</p>
-        <p className="text-green-500 font-semibold">Giá: {price.toLocaleString()} VNĐ</p>
-        <div className="flex items-center my-2">
-          <button 
-            onClick={decreaseQuantity} 
-            className="px-2 py-1 border border-gray-300 rounded-l hover:bg-gray-200"
+      <div className="w-1/4">
+        <img src={imageUrl} alt={name} className="w-full h-auto object-cover" />
+      </div>
+
+      
+      <div className="flex-1 px-4">
+        <h3 className="font-bold text-lg">{name}</h3>
+        <p>Kích cỡ: {size}</p>
+        <p>Màu sắc: {color}</p>
+        <p>Giá: {price.toLocaleString()} đ / sản phẩm</p>
+        <p>Tổng giá: {totalPrice.toLocaleString()} đ</p> 
+      </div>
+
+      
+      <div className="flex items-center space-x-4">
+        
+        <div className="flex items-center border rounded-lg">
+          <button
+            className="px-3 py-1 bg-gray-200 hover:bg-gray-300"
+            onClick={() => handleQuantityChange(-1)}
           >
             -
           </button>
-          <span className="px-4 py-1 border-t border-b border-gray-300">{quantity}</span>
-          <button 
-            onClick={increaseQuantity} 
-            className="px-2 py-1 border border-gray-300 rounded-r hover:bg-gray-200"
+          <span className="px-4 py-1">{quantity}</span>
+          <button
+            className="px-3 py-1 bg-gray-200 hover:bg-gray-300"
+            onClick={() => handleQuantityChange(1)}
           >
             +
           </button>
         </div>
+
+        
+        <button onClick={onRemove} className="text-red-500 hover:text-red-700">
+          <FaTrash size={20} />
+        </button>
       </div>
     </div>
   );
