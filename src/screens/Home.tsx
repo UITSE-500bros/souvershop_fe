@@ -2,6 +2,7 @@ import Header from "../components/Header/Header";
 import MainBanner from "../assets/TranhDongHo.png";
 import { Button } from "@mui/material";
 import ProductCard from "../components/ProductCard";
+import ProductSlider from "../components/ProductSlider";
 
 const Home = () => {
   const data = [
@@ -10,25 +11,43 @@ const Home = () => {
       name: "Đồng hồ treo tường",
       price: 500000,
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
+      rating: 4,
     },
     {
       id: 2,
       name: "Tranh nghệ thuật",
       price: 1200000,
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
+      rating: 5,
     },
     {
       id: 3,
       name: "Bình hoa sứ",
       price: 300000,
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
+      rating: 3,
     },
     {
       id: 4,
       name: "Bình hoa sứ",
       price: 300000,
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
+      rating: 4,
     },
+    // {
+    //   id: 5,
+    //   name: "Bình hoa sứ",
+    //   price: 300000,
+    //   imageUrl: "https://picsum.photos/seed/picsum/200/300",
+    //   rating: 5,
+    // },
+    // {
+    //   id: 6,
+    //   name: "Bình hoa sứ",
+    //   price: 300000,
+    //   imageUrl: "https://picsum.photos/seed/picsum/200/300",
+    //   rating: 4,
+    // },
   ];
   return (
     <div className="flex flex-col">
@@ -99,42 +118,21 @@ const Home = () => {
       <div className="h-[100px] w-full bg-[#7b5c43]" />
 
       {/* new products */}
-      <div className="flex h-[530px] w-full flex-col items-center justify-center">
-        <div className="text-center text-5xl font-bold text-black">
-          Sản phẩm mới
-        </div>
-        <div className="flex w-full flex-row justify-between gap-x-5">
-          {data.map((item) => (
-            <div key={item.id} className="w-[300]">
-              <ProductCard
-                name={item.name}
-                rating={4}
-                price={item.price}
-                imageUrl={item.imageUrl}
-              />
-            </div>
-          ))}
-        </div>
-        <Button 
-        variant="contained"
-        sx={{
-          width: 210,
-          height: 50,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 3,
-          px: 7,
-          py: 1,
-          backgroundColor: "#dbad34",
-          borderRadius: "60px",
-          overflow: "hidden",
-          fontWeight: 500,
-          fontSize: 20,
-          color: "black",
-          textTransform: "none",
-        }}
-        >Xem thêm</Button>
+      <ProductSlider data={data} text="Sản phẩm mới" />
+
+      <div className="my-3 h-[1px] w-full bg-black" />
+
+      {/* best seller */}
+      <ProductSlider data={data} text="Bán chạy nhất" />
+      <div className="my-3 h-[1px] w-full bg-black" />
+      {/*Banner*/}
+      <div className="w-full h-[750px] border ">
+        <img
+          src="https://picsum.photos/seed/picsum/2000/750"
+          alt="banner"
+          className="w-full h-full"
+        />
+
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { FaStar, FaHeart, FaPlus } from "react-icons/fa";
 
-interface ProductCardProps {
+export interface ProductCardProps {
   name: string;       
   price: number;      
   discountPrice?: number; 
@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const discountPercentage = discountPrice ? Math.round(((price - discountPrice) / price) * 100) : 0;
 
   return (
-    <div className="product-card border rounded-lg shadow-md p-4 my-4 bg-white w-56">
+    <div className="product-card border rounded-lg shadow-md p-4 my-4 bg-white w-[300px] h-[452px]">
       
       <div className="relative">
         <img src={imageUrl} alt={name} className="w-full h-40 object-cover rounded" />

@@ -9,7 +9,7 @@ import DiscountBanner from "./DiscountBanner";
 
 const Header = () => {
   return (
-    <>
+    <div className="fixed top-0 left-0 z-10">
       <DiscountBanner />
      
       <AppBar position="static" sx={{ width: '100%',  }} color="transparent">
@@ -34,7 +34,7 @@ const Header = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-    </>
+    </div>
   );
 };
 
