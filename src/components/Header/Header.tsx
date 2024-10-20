@@ -9,12 +9,12 @@ import DiscountBanner from "./DiscountBanner";
 
 const Header = () => {
   return (
-    <div className="fixed top-0 left-0 z-10">
+    <div className=" sticky top-0 left-0 z-10 w-full">
       <DiscountBanner />
      
-      <AppBar position="static" sx={{ width: '100%',  }} color="transparent">
+      <AppBar position="sticky" sx={{ width: '100%', backgroundColor: '#F8F2E5' }}>
         <Toolbar >
-          <Typography className=" font-bold px-5" variant="h4" component="div" sx={{ }}>
+          <Typography className=" text-black font-bold px-5" variant="h4" component="div" >
             SouverShop  
           </Typography>
           <Typography variant="body1" component="div" sx={{paddingRight:5  }} color="red">
@@ -23,13 +23,13 @@ const Header = () => {
           <Box sx={{ flexGrow: 1 }}>
             <SearchBar />
           </Box>
-          <IconButton color="inherit">
+          <IconButton className="bg-black">
             <ShoppingCartOutlinedIcon />
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton className="bg-black">
             <FavoriteBorderOutlinedIcon />
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton className="bg-black">
             <AccountCircleOutlinedIcon />
           </IconButton>
         </Toolbar>
