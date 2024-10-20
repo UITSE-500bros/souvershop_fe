@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
+
 import { FaShoppingCart, FaUser, FaChevronRight } from "react-icons/fa";
 import ProductCard from "../components/ProductCard";
 
@@ -13,7 +14,7 @@ const CategoryPage: React.FC = () => {
   return (
     <div>
       
-      <Header text="Đăng ký và nhận giảm giá 20% cho đơn hàng đầu tiên của bạn. Đăng ký ngay" />
+      <Header  />
 
       <div className="pt-12">
         <div className="flex justify-between items-center bg-gray-200 p-4">
