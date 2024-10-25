@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Home from "./screens/Home";
+import Login from "./screens/Login";
 
 function App() {
 
@@ -7,7 +8,7 @@ function App() {
   return (
     <>
       <div>
-        <Home />
+        <Login />
       </div>
     </>
   );
