@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import ProductCard from "../../components/ProductCard";
 import ProductSlider from "../../components/ProductSlider";
 import { Footer } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
