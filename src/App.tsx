@@ -1,15 +1,26 @@
-import { useState } from "react";
+
+
+
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./screens/Home";
+import Cart from "./screens/CartPage";
+import CategoryPage from "./screens/CategoryPage";
 
 function App() {
-
-
   return (
-    <>
-      <div>
-        <Home />
-      </div>
-    </>
+    <Router>
+    
+
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="Cart" element={<Cart />} />
+        <Route path="Category" element={<CategoryPage />} />
+
+        <Route path="*" element={<h1>Not Found</h1>} />
+
+
+      </Routes>
+    </Router>
   );
 }
 
