@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { Label } from "@radix-ui/react-label";
 import React from "react";
 
@@ -13,28 +13,30 @@ function Login() {
           className="h-full w-full rounded-bl-[40px] rounded-tr-[40px] object-cover"
         />
       </div>
-      <div className="form flex h-auto w-full flex-1 items-center justify-center">
-        <div className="flex w-full flex-col items-center justify-start gap-[31px]">
-          <div className="font-['Inter'] text-3xl font-black text-white">
+      <div className="form ml-[75px] flex h-auto w-full flex-1 items-center justify-start">
+        <div className="flex w-auto flex-col items-center justify-start gap-[31px]">
+          <div className="self-start font-['Inter'] text-3xl font-black text-white">
             Đăng nhập
           </div>
-          <div>Hoặc bạn không có tài khoản?</div>
-          <div>Đăng ký tại đây</div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="email">Email</Label>
-            <Input type="email" id="email" placeholder="Email" />
+          <div className="flex flex-col justify-start self-start">
+            <div>Hoặc bạn không có tài khoản?</div>
+            <a className="text-[#7B5D44] underline">Đăng ký ngay</a>
           </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="password">Mật khẩu</Label>
-            <Input type="password" id="password" placeholder="Mật khẩu" />
-          </div>
-          <div className="remberbox flex w-full flex-row items-center justify-between">
+          <TextField
+            label="Email"
+            required
+            sx={{ width: 430 }}
+            variant="outlined"
+          />
+          <TextField label="Mật khẩu" sx={{ width: 430 }} variant="outlined" />
+
+          <div className="remberbox flex w-[429px] flex-row items-center justify-between">
             <div className="rememberpass flex flex-row">
               <input type="checkbox" />
               <div>Nhớ mật khẩu</div>
             </div>
 
-            <div>Quên mật khẩu</div>
+            <Button variant="text">Quên mật khẩu</Button>
           </div>
 
           <Button
