@@ -1,12 +1,12 @@
 import { useState } from "react";
-import Home from "./screens/Home";
-import Login from "./screens/Login";
+import Home from "./screens/Home/Home";
+import Login from "./screens/Login/Login";
 
 function App() {
   return (
     <>
       <div>
-        <Login  />  
+        <Login />
       </div>
     </>
   );

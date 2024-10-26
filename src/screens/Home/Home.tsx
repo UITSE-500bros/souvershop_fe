@@ -1,9 +1,9 @@
-import Header from "../components/Header/Header";
+import Header from "../../components/Header/Header";
 import MainBanner from "../assets/TranhDongHo.png";
 import { Button } from "@mui/material";
-import ProductCard from "../components/ProductCard";
-import ProductSlider from "../components/ProductSlider";
-import { Footer } from "../components";
+import ProductCard from "../../components/ProductCard";
+import ProductSlider from "../../components/ProductSlider";
+import { Footer } from "../../components";
 
 const Home = () => {
   const data = [
@@ -52,9 +52,7 @@ const Home = () => {
   ];
   return (
     <div className="flex flex-col">
-  
-        <Header />
-     
+      <Header />
 
       {/* banner block */}
 
@@ -127,13 +125,12 @@ const Home = () => {
       <ProductSlider data={data} text="Bán chạy nhất" />
 
       {/*Banner*/}
-      <div className="w-full h-[750px] border my-5 ">
+      <div className="my-5 h-[750px] w-full border">
         <img
           src="https://picsum.photos/seed/picsum/2000/750"
           alt="banner"
-          className="w-full h-full"
+          className="h-full w-full"
         />
-
       </div>
 
       {/*Footer*/}
