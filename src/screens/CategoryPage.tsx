@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../components/Header/Header";
 
-import { FaShoppingCart, FaUser, FaChevronRight } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 import ProductCard from "../components/ProductCard";
 
 const CategoryPage: React.FC = () => {

@@ -1,14 +1,11 @@
 import {
   Button,
-  ButtonGroup,
-  IconButton,
   SvgIcon,
-  TextField,
+  TextField
 } from "@mui/material";
 
 import FacebookIcon from "@mui/icons-material/Facebook";
 
-import GoogleIcon from "../../assets/GoogleLogo.svg";
 
 function Login() {
   return (

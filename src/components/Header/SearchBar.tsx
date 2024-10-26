@@ -1,6 +1,6 @@
 
-import { Box, Typography, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { Box, Typography } from "@mui/material";
 
 const SearchBar = () => {
   return (
