@@ -1,15 +1,26 @@
-import { useState } from "react";
-import Home from "./screens/Home/Home";
-import Login from "./screens/Login/Login";
-import SignUp from "./screens/SignUp/SignUp";
+
+
+
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./screens/Home";
+import Cart from "./screens/CartPage";
+import CategoryPage from "./screens/CategoryPage";
 
 function App() {
   return (
-    <>
-      <div>
-        <SignUp />
-      </div>
-    </>
+    <Router>
+    
+
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="Cart" element={<Cart />} />
+        <Route path="Category" element={<CategoryPage />} />
+
+        <Route path="*" element={<h1>Not Found</h1>} />
+
+
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,5 +1,5 @@
 import Header from "../../components/Header/Header";
-import MainBanner from "../assets/TranhDongHo.png";
+import MainBanner from "../../assets/TranhDongHo.png";
 import { Button } from "@mui/material";
 import ProductCard from "../../components/ProductCard";
 import ProductSlider from "../../components/ProductSlider";
