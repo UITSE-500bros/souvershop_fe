@@ -7,7 +7,6 @@ import CheckoutPage from "./screens/CheckoutPage";
 
 function App() {
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="Cart" element={<Cart />} />
@@ -16,7 +15,6 @@ function App() {
         <Route path="/checkout" element={<CheckoutPage/>} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
-    </Router>
   );
 }
 
