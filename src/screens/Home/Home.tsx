@@ -4,13 +4,16 @@ import { Button } from "@mui/material";
 import ProductCard from "../../components/ProductCard";
 import ProductSlider from "../../components/ProductSlider";
 import { Footer } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const data = [
     {
       id: 1,
       name: "Đồng hồ treo tường",
       price: 500000,
+      discountPrice: 300000,
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
       rating: 4,
     },
@@ -18,6 +21,7 @@ const Home = () => {
       id: 2,
       name: "Tranh nghệ thuật",
       price: 1200000,
+      discountPrice: 800000,
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
       rating: 5,
     },
@@ -25,6 +29,7 @@ const Home = () => {
       id: 3,
       name: "Bình hoa sứ",
       price: 300000,
+      discountPrice: 100000,
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
       rating: 3,
     },
@@ -32,6 +37,7 @@ const Home = () => {
       id: 4,
       name: "Bình hoa sứ",
       price: 300000,
+      discountPrice: 250000,
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
       rating: 4,
     },
@@ -113,6 +119,7 @@ const Home = () => {
         </div>
       </div>
 
+
       {/* empty space */}
       <div className="h-[100px] w-full bg-[#7b5c43]" />
 
@@ -123,6 +130,73 @@ const Home = () => {
 
       {/* best seller */}
       <ProductSlider data={data} text="Bán chạy nhất" />
+      <div className="flex justify-center gap-4 mt-4"> 
+      <Button
+          variant="contained"
+          onClick={() => navigate("/category")} 
+          sx={{
+            width: 210,
+            height: 50,
+            backgroundColor: "#dbad34",
+            fontWeight: 500,
+            fontSize: 18,
+            color: "white",
+            borderRadius: "20px",
+            textTransform: "none",
+          }}
+        >
+          go to CategoryPage
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => navigate("/cart")} 
+          sx={{
+            width: 210,
+            height: 50,
+            backgroundColor: "#dbad34",
+            fontWeight: 500,
+            fontSize: 18,
+            color: "white",
+            borderRadius: "20px",
+            textTransform: "none",
+          }}
+        >
+          go to CartPage
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => navigate("/customer-info")}  
+          sx={{
+            width: 210,
+            height: 50,
+            backgroundColor: "#dbad34",
+            fontWeight: 500,
+            fontSize: 18,
+            color: "white",
+            borderRadius: "20px",
+            textTransform: "none",
+          }}
+        >
+          go to customerpage
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => navigate("/checkout")}
+          sx={{
+            width: 210,
+            height: 50,
+            backgroundColor: "#dbad34",
+            fontWeight: 500,
+            fontSize: 18,
+            color: "white",
+            borderRadius: "20px",
+            textTransform: "none",
+          }}
+        >
+          Go to CheckoutPage
+        </Button>
+        
+</div>
 
       {/*Banner*/}
       <div className="my-5 h-[750px] w-full border">
@@ -132,6 +206,7 @@ const Home = () => {
           className="h-full w-full"
         />
       </div>
+      
 
       {/*Footer*/}
       <div className="my-20 h-[1px] w-full bg-black" />

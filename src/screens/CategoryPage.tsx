@@ -12,33 +12,11 @@ const CategoryPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="bg-[#F8F2E5] min-h-screen">
       
       <Header  />
 
-      <div className="pt-12">
-        <div className="flex justify-between items-center bg-gray-200 p-4">
-          <h1 className="text-2xl font-bold">SouverShop</h1>
-          <nav className="flex space-x-4">
-            <div className="cursor-pointer hover:text-blue-500 flex items-center">
-              <span>Cửa hàng</span>
-              <span className="ml-1 transform rotate-90">{'>'}</span>
-            </div>
-            <div className="cursor-pointer hover:text-blue-500">Giảm giá</div>
-            <div className="cursor-pointer hover:text-blue-500">Hàng mới</div>
-            <div className="cursor-pointer hover:text-blue-500">Thương hiệu</div>
-          </nav>
-          <div className="flex space-x-4 items-center">
-            <input
-              type="text"
-              placeholder="Tìm kiếm..."
-              className="border rounded-md px-2 py-1"
-            />
-            <FaShoppingCart className="text-xl cursor-pointer" />
-            <FaUser className="text-xl cursor-pointer" />
-          </div>
-        </div>
-      </div>
+      
 
       <div className="my-4 text-gray-600 text-sm flex items-center">
         Trang chủ <FaChevronRight className="inline-block mx-2" /> Truyền thống
@@ -48,10 +26,10 @@ const CategoryPage: React.FC = () => {
         <div className="w-1/4 p-4 bg-gray-100 rounded-md">
           <p className="font-semibold">Bộ lọc</p>
           <label htmlFor="price-range" className="text-sm">
-            Giá: 0 VNĐ - {priceRange.toLocaleString()} VNĐ
+            Giá: 0 đ - {priceRange.toLocaleString()} đ
           </label>
           <div className="flex items-center">
-            <span>0 VNĐ</span>
+            <span>0 đ</span>
             <input
               id="price-range"
               type="range"
@@ -61,9 +39,13 @@ const CategoryPage: React.FC = () => {
               onChange={handlePriceRangeChange}
               className="w-full mx-4"
             />
-            <span>1,000,000 VNĐ</span>
+            <span>1,000,000 đ</span>
           </div>
-          <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Áp dụng bộ lọc</button>
+          <div className="flex justify-center mt-4">
+          <button className="bg-[#DBAD34] text-white px-4 py-2 rounded-[62px]">
+            Áp dụng bộ lọc
+          </button>
+          </div>
         </div>
 
         <div className="flex-grow">
