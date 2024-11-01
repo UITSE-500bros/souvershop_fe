@@ -1,9 +1,12 @@
 import React from "react";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export default function Footer() {
   return (
     <div className="relative h-[588px] w-full">
-      
       {/* Footer */}
       <div className="absolute left-0 top-[88px] h-[500px] w-full">
         <div className="absolute left-0 top-[1px] h-[500px] w-full">
@@ -46,22 +49,21 @@ export default function Footer() {
             9:00-21:00
           </div>
         </div>
-        <div className="absolute left-[1177px] top-[407px] h-[38px] w-[164px]">
-          <div className="absolute left-0 top-0 h-[38px] w-[31.03px]">
-            <div className="absolute left-0 top-0 h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
+        <div className="absolute left-[1177px] top-[407px] flex h-[38px] w-[164px] space-x-4">
+          <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-black/20 bg-white">
+            <FacebookIcon className="text-[#3b5998]" />
           </div>
-          <div className="absolute left-[44.32px] top-[-0px] h-[38px] w-[31.03px]">
-            <div className="absolute left-0 top-0 h-[38px] w-[31.03px] rounded-full bg-white" />
+          <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-black/20 bg-white">
+            <InstagramIcon className="text-[#E4405F]" />
           </div>
-          <div className="absolute left-[88.65px] top-[-0px] h-[38px] w-[31.03px]">
-            <div className="absolute left-0 top-0 h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
-            <div className="absolute left-[8.01px] top-[9.81px] h-[18.39px] w-[15.01px]"></div>
+          <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-black/20 bg-white">
+            <TwitterIcon className="text-[#1DA1F2]" />
           </div>
-          <div className="absolute left-[132.97px] top-[-0px] h-[38px] w-[31.03px]">
-            <div className="absolute left-0 top-0 h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
+          <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-black/20 bg-white">
+            <LinkedInIcon className="text-[#0077B5]" />
           </div>
         </div>
-        <div className="absolute left-[1px] top-0 inline-flex w-[369px] flex-col items-center justify-start  pl-[100px] pr-[21px] pt-[146px]">
+        <div className="absolute left-[1px] top-0 inline-flex w-[369px] flex-col items-center justify-start pl-[100px] pr-[21px] pt-[146px]">
           <div className="inline-flex flex-col items-start justify-start gap-[35px] self-stretch">
             <div className="flex flex-col items-start justify-start gap-[25px]">
               <div className="font-['Inter'] text-[33.45px] font-bold text-white">
@@ -82,10 +84,11 @@ export default function Footer() {
         </div>
         <div className="inline-flex flex-col items-start justify-start gap-3.5">
           <div className="inline-flex w-[349px] items-start justify-start gap-3 rounded-[62px] bg-white px-4 py-3">
-            <div className="relative h-6 w-6" />
-            <div className="font-['Inter'] text-base font-normal text-black/40">
-              Nhập email
-            </div>
+            <input
+              type="email"
+              placeholder="Nhập email"
+              className="w-full font-['Inter'] text-base font-normal text-black/40"
+            />
           </div>
           <div className="inline-flex w-[349px] items-center justify-center gap-3 rounded-[62px] bg-white px-4 py-3">
             <div className="font-['Inter'] text-base font-medium text-black">
