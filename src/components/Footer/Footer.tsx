@@ -1,10 +1,9 @@
-
 function Footer() {
   return (
     <div className="relative h-[588px] w-full">
       {/* Main footer container */}
-      <div className="absolute left-0 top-[88px] h-[500px] w-full">
-        <div className="absolute left-0 top-[1px] h-[499px] w-full">
+      <div className="absolute bottom-0 left-0 top-[88px] h-[500px] w-full">
+        <div className="absolute left-0 top-[70px] h-[499px] w-full">
           {/* Background and border */}
           <div className="absolute left-0 top-0 h-[499px] w-full bg-[#7b5c43]" />
         </div>
@@ -47,39 +46,24 @@ function Footer() {
         </div>
 
         {/* Social media icons */}
-        <div className="absolute left-[1177px] top-[407px] h-[38px] w-[164px]">
-          <div className="absolute left-0 top-0 h-[38px] w-[31.03px]">
-            <div className="absolute left-0 top-0 h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
-          </div>
-          <div className="absolute left-[44.32px] top-[-0px] h-[38px] w-[31.03px]">
-            <div className="absolute left-0 top-0 h-[38px] w-[31.03px] rounded-full bg-white" />
-          </div>
-          <div className="absolute left-[88.65px] top-[-0px] h-[38px] w-[31.03px]">
-            <div className="absolute left-0 top-0 h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
-            <div className="absolute left-[8.01px] top-[9.81px] h-[18.39px] w-[15.01px]"></div>
-          </div>
-          <div className="absolute left-[132.97px] top-[-0px] h-[38px] w-[31.03px]">
-            <div className="absolute left-0 top-0 h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
-          </div>
+        <div className="absolute left-[1177px] top-[407px] flex space-x-4">
+          <div className="h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
+          <div className="h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
+          <div className="h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
+          <div className="h-[38px] w-[31.03px] rounded-full border border-black/20 bg-white" />
         </div>
 
         {/* Brand name and slogan */}
-        <div className="absolute left-[1px] top-0 inline-flex w-[369px] flex-col items-center justify-start pb-[283px] pl-[100px] pr-[21px] pt-[146px]">
-          <div className="inline-flex flex-col items-start justify-start gap-[35px] self-stretch">
-            <div className="flex flex-col items-start justify-start gap-[25px]">
-              <div className="font-['Inter'] text-[33.45px] font-bold text-white">
-                SouverShop
-              </div>
-              <div className="w-[248px] font-['Inter'] text-sm font-normal leading-snug text-[#f2f0f1]">
-                Kỷ niệm khó quên
-              </div>
-            </div>
+        <div className="absolute left-[1px] top-0 flex flex-col items-center justify-start pb-[283px] pl-[100px] pr-[21px] pt-[146px]">
+          <div className="text-3xl font-bold text-white">SHOP.CO</div>
+          <div className="text-sm font-normal text-[#f2f0f1]">
+            Kỷ niệm khó quên
           </div>
         </div>
       </div>
 
       {/* Subscription section */}
-      <div className="absolute left-[133px] top-0 inline-flex w-[1240px] items-center justify-between rounded-[20px] bg-[#dbad34] px-16 py-9">
+      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[-50px] inline-flex w-[1240px] items-center justify-between rounded-[20px] bg-[#dbad34] px-16 py-9">
         <div className="h-[94px] w-[551px] font-['Inter'] text-[40px] font-bold leading-[45px] text-white">
           Đăng ký để nhận được những thông tin mới nhất
         </div>
