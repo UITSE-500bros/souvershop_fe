@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import CustomerInfo from '../components/CustomerInfo';
 
+
 const CustomerInfoPage: React.FC = () => {
   const customerInfo = {
     email: "12345@gmail.com",
@@ -10,6 +11,7 @@ const CustomerInfoPage: React.FC = () => {
     bankAccount: "123456789",
     customerName: "Nguyễn Văn A", 
     imageSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBodQoJhJGB1qoSvJ-mZeCy61dpq0XZOM8pA&s", 
+
  };
 
   return (
@@ -26,8 +28,8 @@ const CustomerInfoPage: React.FC = () => {
           address={customerInfo.address}
           phone={customerInfo.phone}
           bankAccount={customerInfo.bankAccount}
-          customerName={customerInfo.customerName} // Truyền tên khách hàng
-          imageSrc={customerInfo.imageSrc} // Truyền đường dẫn hình ảnh
+          customerName={customerInfo.customerName} 
+          imageSrc={customerInfo.imageSrc} 
         />
     </Box>
   );
