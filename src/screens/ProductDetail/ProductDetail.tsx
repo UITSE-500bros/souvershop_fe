@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ButtonGroup from "./ButtonGroup";
 import RatingReview from "./RatingReview";
+import ProductSlider from "@/components/ProductSlider";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -51,6 +52,41 @@ function ProductDetail() {
     "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
     "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
     "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
+  ];
+
+    const images_data = [
+    {
+      id: 1,
+      name: "Đồng hồ treo tường",
+      price: 500000,
+      discountPrice: 300000,
+      imageUrl: "https://picsum.photos/seed/picsum/200/300",
+      rating: 4,
+    },
+    {
+      id: 2,
+      name: "Tranh nghệ thuật",
+      price: 1200000,
+      discountPrice: 800000,
+      imageUrl: "https://picsum.photos/seed/picsum/200/300",
+      rating: 5,
+    },
+    {
+      id: 3,
+      name: "Bình hoa sứ",
+      price: 300000,
+      discountPrice: 100000,
+      imageUrl: "https://picsum.photos/seed/picsum/200/300",
+      rating: 3,
+    },
+    {
+      id: 4,
+      name: "Bình hoa sứ",
+      price: 300000,
+      discountPrice: 250000,
+      imageUrl: "https://picsum.photos/seed/picsum/200/300",
+      rating: 4,
+    },
   ];
 
   const [ratingvValue, setRatingValue] = React.useState<number | null>(2);
@@ -236,6 +272,10 @@ function ProductDetail() {
           <Typography>FAQ content goes here.</Typography>
         </TabPanel>
       </Box>
+
+      {/* Related Products */}
+      <ProductSlider data={images_data} text="Sản phẩm liên quan" />
+
     </div>
   );
 }
