@@ -27,14 +27,14 @@ const Header = () => {
           <Box sx={{ flexGrow: 1 }}>
             <SearchBar />
           </Box>
-          <IconButton className="bg-black" onClick={() => navigate("/Cart")} >
+          <IconButton className="bg-black" onClick={() => navigate("/cart")} >
             <ShoppingCartOutlinedIcon />
           </IconButton>
-          <IconButton className="bg-black" onClick={()=>navigate("/Favorite")}>
+          <IconButton className="bg-black" onClick={()=>navigate("/favorite")}>
             <FavoriteBorderOutlinedIcon />
           </IconButton>
-          <IconButton className="bg-black">
-            <AccountCircleOutlinedIcon />
+          <IconButton className="bg-black" onClick={()=>navigate("/profile")}>
+            <AccountCircleOutlinedIcon  />
           </IconButton>
         </Toolbar>
       </AppBar>
