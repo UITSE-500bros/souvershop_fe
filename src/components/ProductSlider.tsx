@@ -17,7 +17,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text }) => {
         <div className="flex w-full flex-row justify-center gap-x-5">
           {data.map((item) => (
             <div key={item.name} className="h-[452px] w-[300px]">
-              <Link to ={"/product"}>
+              <Link to ={"/product/1"}>
               <ProductCard
                 name={item.name}
                 rating={item.rating}
