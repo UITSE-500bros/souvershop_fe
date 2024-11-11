@@ -1,6 +1,7 @@
 import React from "react";
 import ProductCard, { ProductCardProps } from "./ProductCard";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface ProductSliderProps {
   data: ProductCardProps[];
@@ -16,6 +17,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text }) => {
         <div className="flex w-full flex-row justify-center gap-x-5">
           {data.map((item) => (
             <div key={item.name} className="h-[452px] w-[300px]">
+              <Link to ={"/product/1"}>
               <ProductCard
                 name={item.name}
                 rating={item.rating}
@@ -24,6 +26,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text }) => {
                 discountPrice={item.discountPrice}
                 isFavorite={item.isFavorite}
               />
+              </Link>
             </div>
           ))}
         </div>

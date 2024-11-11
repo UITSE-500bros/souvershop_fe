@@ -63,10 +63,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       <div className="absolute bottom-4 left-4">
-        <button className="flex items-center justify-center w-10 h-10 border-2 border-white rounded-full p-1 transition-transform duration-200 hover:scale-105">
+        <button className="flex items-center justify-center w-10 h-10  rounded-full p-1 transition-transform duration-200 hover:scale-105">
           <FavoriteBorderOutlinedIcon
             className={`${isFavorite ? "text-red-500" : "text-black"} transition-colors duration-200`}
             fontSize="large"
+            sx={{color: "black"}}
           />
         </button>
       </div>

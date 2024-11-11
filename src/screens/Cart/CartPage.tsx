@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Header from "../components/Header/Header";
-import ProductCardCart from "../components/ProductCardCart";
-import OrderSummaryCard from "../components/OrderSummaryCard";
-import PromoCodeBox from "../components/PromoCodeBox";
+
+import ProductCardCart from "../../components/ProductCardCart";
+import OrderSummaryCard from "../../components/OrderSummaryCard";
+import PromoCodeBox from "../../components/PromoCodeBox";
 
 const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState([
@@ -37,7 +37,7 @@ const CartPage: React.FC = () => {
 
   return (
     <div>
-      <Header />
+ 
       <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
       <div className="flex space-x-6"> 
         <div className="p-6 bg-white rounded-lg shadow-md" style={{ width: '715px', height: '508px' }}>

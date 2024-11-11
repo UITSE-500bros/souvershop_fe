@@ -1,26 +1,31 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Cart from "./screens/CartPage";
-import CategoryPage from "./screens/CategoryPage";
-import CheckoutPage from "./screens/CheckoutPage";
-import CustomerInfoPage from "./screens/CustomerInfoPage";
+import { Route, Routes } from "react-router-dom";
+
+import CategoryPage from "./screens/Category/CategoryPage";
+import CheckoutPage from "./screens/CheckOut/CheckoutPage";
 import Home from "./screens/Home";
+
+import Cart from "./screens/Cart";
+import Profile from "./screens/Profile";
+import Headers from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import ProductDetail from "./screens/ProductDetail";
-import Login from "./screens/Login";
-import SignUp from "./screens/SignUp/SignUp";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/product/:id" element={<ProductDetail />} />
-      <Route path="/" element={<Home />} />
-      <Route path="cart" element={<Cart />} />
-      <Route path="category" element={<CategoryPage />} />
-      <Route path="/customer" element={<CustomerInfoPage />} />
-      <Route path="/checkout" element={<CheckoutPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="*" element={<h1>Not Found</h1>} />
-    </Routes>
+    <>
+      <Headers />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="category" element={<CategoryPage />} />
+        <Route path="/customer" element={<Profile />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/product/:productId" element={<ProductDetail/>} />
+        <Route path="*" element={<h1>Not Found</h1>} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 

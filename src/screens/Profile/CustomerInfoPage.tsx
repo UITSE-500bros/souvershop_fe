@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import CustomerInfo from '../components/CustomerInfo';
+import CustomerInfo from '../../components/CustomerInfo';
 
 const CustomerInfoPage: React.FC = () => {
   const customerInfo = {

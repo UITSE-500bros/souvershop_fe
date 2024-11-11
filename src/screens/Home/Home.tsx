@@ -57,7 +57,7 @@ const Home = () => {
   ];
   return (
     <div className="flex flex-col">
-      <Header />
+     
 
       {/* banner block */}
 
@@ -139,9 +139,7 @@ const Home = () => {
       </div>
 
       {/*Footer*/}
-      <div className="mt-auto w-full">
-        <Footer />
-      </div>
+      
     </div>
   );
 };
