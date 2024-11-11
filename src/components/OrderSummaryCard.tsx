@@ -17,7 +17,7 @@ const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
     <div>
       <h2 className="text-xl font-semibold mb-4">Tóm tắt đơn hàng</h2>
 
-      <div className="p-5 bg-white rounded-lg shadow-md">
+      <div className="p-5 bg-[#F8F2E5] rounded-lg shadow-md">
         <div className="flex justify-between mb-2">
           <span>Tổng phụ</span>
           <span>{subtotal.toLocaleString()} đ</span>

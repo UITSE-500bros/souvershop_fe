@@ -1,6 +1,8 @@
 import React from 'react';
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box, Button, IconButton, MenuItem, Select } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EditIcon from '@mui/icons-material/Edit';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 interface CustomerInfoProps {
   email: string;
@@ -8,166 +10,156 @@ interface CustomerInfoProps {
   phone: string;
   bankAccount: string;
   customerName: string; 
-  imageSrc: string; 
+  imageSrc: string;
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({ email, address, phone, bankAccount, customerName, imageSrc }) => {
+  const [selectedBank, setSelectedBank] = React.useState('Visa');
+  const maskedBankAccount = `**** **** **** ${bankAccount.slice(-4)}`; 
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px', marginLeft: '24px' }}>
+    <Box sx={{ width: '100vw', height: '100vh', display: 'flex', gap: '24px', padding: '24px', backgroundColor: '#F8F2E5' }}>
       <Box
         sx={{
-          width: 276,
-          height: 700,
-          border: '1px solid #ccc',
-          borderRadius: '16px',
-          padding: '16px',
+          width: 320,
           display: 'flex',
           flexDirection: 'column',
-          gap: '16px',
-          position: 'fixed',
-          left: '0',
-          backgroundColor: '#EEEFF1',
+          gap: 3,
+          borderRadius: '12px',
+          backgroundColor: '#F8F2E5',
+          padding: '24px',
+          boxShadow: '0 6px 15px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <Typography variant="h6" align="center">Dashboard</Typography>
-
-      
-        <Button 
-            sx={{ 
-                width: 250, 
-                height: 49, 
-                backgroundColor: '#ffffff', 
-                color: '#0B2F64', 
-                padding: '8px', 
-                borderRadius: '8px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'flex-start', 
-                pl: 2 
-            }}
-            >
-            <Typography variant="subtitle1">Rating and Reviews</Typography>
-            </Button>
-
-            <Button 
-            sx={{ 
-                width: 250, 
-                height: 49, 
-                backgroundColor: '#ffffff', 
-                color: '#0B2F64', 
-                padding: '8px', 
-                borderRadius: '8px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'flex-start', 
-                pl: 2 
-            }}
-            >
-            <Typography variant="body2">Feedback</Typography>
+        <Typography variant="h5" sx={{ textAlign: 'center', fontWeight: 'bold', color: '#ff5722' }}>
+          Tài khoản
+        </Typography>
+        <Button
+          sx={{
+            justifyContent: 'flex-start',
+            color: '#333',
+            backgroundColor: '#FFF',
+            '&:hover': { backgroundColor: '#f0f0f0' },
+            padding: '8px 16px',
+            textTransform: 'none',
+          }}
+        >
+          Đánh giá và nhận xét
         </Button>
-
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start', marginTop: 'auto' }}>
-          <Button variant="contained" sx={{ width: 250, height: 35 }}>Profile</Button>
-          <Button variant="contained"  
-          sx={{ 
-            width: 250, 
-            height: 35,
-            backgroundColor: '#FFFFFF',
-            color: '#0B2F64',
-            '&:hover': {
-                backgroundColor: '#F0F0F0', 
-            }, 
-            }}>
-                Settings</Button>
+        <Button
+          sx={{
+            justifyContent: 'flex-start',
+            color: '#333',
+            backgroundColor: '#FFF',
+            '&:hover': { backgroundColor: '#f0f0f0' },
+            padding: '8px 16px',
+            textTransform: 'none',
+          }}
+        >
+          Lịch sử mua hàng
+        </Button>
+        <Button
+          sx={{
+            justifyContent: 'flex-start',
+            color: '#333',
+            backgroundColor: '#FFF',
+            '&:hover': { backgroundColor: '#f0f0f0' },
+            padding: '8px 16px',
+            textTransform: 'none',
+          }}
+        >
+          Đơn hàng hiện tại
+        </Button>
+        <Box sx={{ marginTop: 'auto' }}>
+          <Button variant="contained" fullWidth 
+          sx={{ backgroundColor: '#ff5722', 
+          color: '#fff', 
+          marginBottom: 1 }}>
+            Hồ sơ
+          </Button>
+          <Button
+            variant="outlined"
+            fullWidth
+            sx={{
+              borderColor: '#ff5722',
+              color: '#ff5722',
+              '&:hover': { backgroundColor: '#ffebee' },
+            }}
+          >
+            Cài đặt
+          </Button>
+          <Button
+            variant="outlined"
+            fullWidth
+            startIcon={<LogoutIcon />}
+            sx={{
+              borderColor: '#ff5722',
+              color: '#ff5722',
+              mt: 1,
+              '&:hover': { backgroundColor: '#ffebee' },
+            }}
+          >
+            Đăng xuất
+          </Button>
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '1081px', 
-          height: 88,
-          padding: '16px',
-          borderRadius: '0',
-          backgroundColor: '#e0e0e0',
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-          marginLeft: '276px',
-        }}
-      >
-        <AccountCircleIcon fontSize="large" />
-        <Typography variant="h5" sx={{ marginLeft: '8px' }}>Profile</Typography>
-      </Box>
-
-      <Box
-        sx={{
-          display: 'flex',
-          width: 'calc(100% - 276px)',
-          marginLeft: '276px',
-          marginTop: '16px',
-          gap: '16px',
-        }}
-      >
-        <Box
-          sx={{
-            width: 268,
-            height: 374,
-            backgroundColor: '#f5f5f5',
-            borderRadius: '16px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center', 
-            padding: '16px',
-          }}
-        >
-          <img
-            src={imageSrc}
-            alt="Customer"
-            style={{ width: '100%', height: 'auto', borderRadius: '16px', objectFit: 'cover' }}
-          />
-          <Typography variant="subtitle1" align="center" sx={{ marginTop: '8px' }}>
-            {customerName} 
+      <Box sx={{ flexGrow: 1, padding: '24px', backgroundColor: '#F8F2E5', borderRadius: '12px', boxShadow: '0 6px 15px rgba(0, 0, 0, 0.1)' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
+          <AccountCircleIcon fontSize="large" sx={{ color: '#ff5722' }} />
+          <Typography variant="h5" sx={{ marginLeft: '8px', fontWeight: 'bold' }}>
+            Hồ sơ khách hàng
           </Typography>
         </Box>
+        <Box sx={{ display: 'flex', gap: '24px', marginBottom: '32px' }}>
+          <Box sx={{ width: 160, height: 160, overflow: 'hidden', borderRadius: '50%' }}>
+            <img src={imageSrc} alt="Customer" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </Box>
+          <Box>
+            <Typography variant="h6">
+              {customerName}
+              <IconButton size="small" sx={{ marginLeft: 1 }}>
+                <EditIcon fontSize="small" color="primary" />
+              </IconButton>
+            </Typography>
+            <Typography color="textSecondary">
+              Số điện thoại: {phone}
+              <IconButton size="small" sx={{ marginLeft: 1 }}>
+                <EditIcon fontSize="small" color="primary" />
+              </IconButton>
+            </Typography>
+            <Typography color="textSecondary">
+              Email: {email}
+              <IconButton size="small" sx={{ marginLeft: 1 }}>
+                <EditIcon fontSize="small" color="primary" />
+              </IconButton>
+            </Typography>
+          </Box>
+        </Box>
 
-        <Box
-          sx={{
-            width: '100%',
-            height: 437,
-            backgroundColor: '#f5f5f5',
-            borderRadius: '16px',
-            padding: '16px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-          }}
-        >
-          <Box sx={{ width: 577, height: 71 }}>
-            <Typography variant="subtitle2" sx={{ padding: '8px' }}>Email</Typography>
-            <Box sx={{ width: '100%', height: 46, border: '1px solid #ccc', backgroundColor: '#fff', padding: '8px' }}>
-              <Typography variant="body1">{email}</Typography>
-            </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold', color: '#000000' }}>Địa chỉ:</Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', padding: 2, backgroundColor: '#fafafa', borderRadius: '8px', border: '1px solid #ddd' }}>
+            <Typography>{address}</Typography>
+            <IconButton size="small" sx={{ marginLeft: 'auto' }}>
+              <EditIcon fontSize="small" color="primary" />
+            </IconButton>
           </Box>
 
-          <Box sx={{ width: 577, height: 71 }}>
-            <Typography variant="subtitle2" sx={{ padding: '8px' }}>Địa Chỉ</Typography>
-            <Box sx={{ width: '100%', height: 46, border: '1px solid #ccc', backgroundColor: '#fff', padding: '8px' }}>
-              <Typography variant="body1">{address}</Typography>
-            </Box>
-          </Box>
-
-          <Box sx={{ width: 577, height: 71 }}>
-            <Typography variant="subtitle2" sx={{ padding: '8px' }}>Số Điện Thoại</Typography>
-            <Box sx={{ width: '100%', height: 46, border: '1px solid #ccc', backgroundColor: '#fff', padding: '8px' }}>
-              <Typography variant="body1">{phone}</Typography>
-            </Box>
-          </Box>
-
-          <Box sx={{ width: 577, height: 71 }}>
-            <Typography variant="subtitle2" sx={{ padding: '8px' }}>Tài Khoản Ngân Hàng</Typography>
-            <Box sx={{ width: '100%', height: 46, border: '1px solid #ccc', backgroundColor: '#fff', padding: '8px' }}>
-              <Typography variant="body1">{bankAccount}</Typography>
-            </Box>
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold', color: '#000000' }}>Tài khoản ngân hàng:</Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', padding: 2, backgroundColor: '#fafafa', borderRadius: '8px', border: '1px solid #ddd' }}>
+            <Select
+              value={selectedBank}
+              onChange={(e) => setSelectedBank(e.target.value as string)}
+              sx={{ marginRight: 2 }}
+            >
+              <MenuItem value="Visa">Visa</MenuItem>
+              <MenuItem value="MasterCard">MasterCard</MenuItem>
+            </Select>
+            <Typography>{maskedBankAccount}</Typography>
+            <IconButton size="small" sx={{ marginLeft: 'auto' }}>
+              <EditIcon fontSize="small" color="primary" />
+            </IconButton>
           </Box>
         </Box>
       </Box>
