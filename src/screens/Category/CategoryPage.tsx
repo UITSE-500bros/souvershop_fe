@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../../components/Header/Header";
+import Header from "../../Layout/Header/Header";
 
 import { FaChevronRight } from "react-icons/fa";
 import ProductCard from "../../components/ProductCard";

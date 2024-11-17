@@ -1,7 +1,6 @@
-import Header from './Header/Header';
-import DiscountBanner from './Header/DiscountBanner';
-import SearchBar from './Header/SearchBar';
-import Footer from './Footer/Footer';
-
+import Header from "../Layout/Header/Header";
+import DiscountBanner from "../Layout/Header/DiscountBanner";
+import SearchBar from "../Layout/Header/SearchBar";
+import Footer from "../Layout/Footer/Footer";
 
 export { Header, DiscountBanner, SearchBar, Footer };
