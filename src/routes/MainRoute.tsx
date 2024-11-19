@@ -6,6 +6,7 @@ import CheckoutPage from "@/screens/CheckOut";
 import CustomerInfoPage from "@/screens/CustomerInfo";
 import ForgotPassword from "@/screens/ForgotPassword/ForgotPassword";
 import Home from "@/screens/Home";
+import NewPassword from "@/screens/NewPassword";
 import ProductDetail from "@/screens/ProductDetail";
 import { Route, Routes } from "react-router-dom";
 
@@ -23,6 +24,7 @@ export default function MainRoute() {
           <Route path="/product/:productId" element={<ProductDetail />} />
         </Route>
 
+        <Route path="/new-password" element={<NewPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
