@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainBanner from "../../assets/TranhDongHo.png";
 import { Footer } from "../../components";
-import Header from "../../components/Header/Header";
+import Header from "../../Layout/Header/Header";
 import ProductSlider from "../../components/ProductSlider";
 
 const Home = () => {
@@ -57,8 +57,6 @@ const Home = () => {
   ];
   return (
     <div className="flex flex-col">
-     
-
       {/* banner block */}
 
       <div className="relative h-[550px] w-full">
@@ -139,7 +137,6 @@ const Home = () => {
       </div>
 
       {/*Footer*/}
-      
     </div>
   );
 };
