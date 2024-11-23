@@ -1,13 +1,11 @@
 
-import { AppBar, Toolbar, Typography, Box, IconButton } from "@mui/material";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import SearchBar from "./SearchBar";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
-import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 
 const Header = () => {
