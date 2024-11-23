@@ -10,9 +10,15 @@ import Headers from "./Layout/Header/Header";
 import Footer from "./Layout/Footer/Footer";
 import ProductDetail from "./screens/ProductDetail";
 import MainRoute from "./routes/MainRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
-  return <MainRoute />;
+  return (
+    <>
+      <ScrollToTop />
+      <MainRoute />;
+    </>
+  );
 }
 
 export default App;

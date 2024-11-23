@@ -13,7 +13,7 @@ const CategoryPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F2E5]">
-      <Header />
+    
 
       <div className="my-4 flex items-center text-sm text-gray-600">
         Trang chủ <FaChevronRight className="mx-2 inline-block" /> Truyền thống

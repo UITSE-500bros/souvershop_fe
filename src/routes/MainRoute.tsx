@@ -4,6 +4,7 @@ import Cart from "@/screens/Cart";
 import CategoryPage from "@/screens/Category";
 import CheckoutPage from "@/screens/CheckOut";
 import CustomerInfoPage from "@/screens/CustomerInfo";
+import Favorite from "@/screens/Favorite";
 import ForgotPassword from "@/screens/ForgotPassword/ForgotPassword";
 import Home from "@/screens/Home";
 import NewPassword from "@/screens/NewPassword";
@@ -19,9 +20,10 @@ export default function MainRoute() {
           <Route path="/" element={<Home />} />
           <Route path="cart" element={<Cart />} />
           <Route path="category" element={<CategoryPage />} />
-          <Route path="/customer" element={<CustomerInfoPage />} />
+          <Route path="/customer-info" element={<CustomerInfoPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/product/:productId" element={<ProductDetail />} />
+          <Route path="/favorite" element={<Favorite />} />
         </Route>
 
         <Route path="/new-password" element={<NewPassword />} />
