@@ -1,4 +1,3 @@
-
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -7,32 +6,40 @@ import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
 import SearchBar from "./SearchBar";
 
-
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className=" sticky top-0 left-0 z-10 w-full">
+    <div className="sticky left-0 top-0 z-10 w-full">
       <DiscountBanner />
-     
-      <AppBar position="sticky" sx={{ width: '100%', backgroundColor: '#F8F2E5' }}>
-        <Toolbar >
-          <Link className=" text-black font-bold text-4xl px-5" to={"/"}  >
-            SouverShop  
+
+      <AppBar
+        position="sticky"
+        sx={{ width: "100%", backgroundColor: "#F8F2E5" }}
+      >
+        <Toolbar>
+          <Link className="px-5 text-4xl font-bold text-black" to={"/"}>
+            SouverShop
           </Link>
-          <Typography variant="body1" component="div" sx={{paddingRight:5  }} color="red">
+          <Link to={"/category"} className="text-red-700">
             Sale up to 40%
-          </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1 }}>
             <SearchBar />
           </Box>
-          <IconButton className="bg-black" onClick={() => navigate("/cart")} >
+          <IconButton className="bg-black" onClick={() => navigate("/cart")}>
             <ShoppingCartOutlinedIcon />
           </IconButton>
-          <IconButton className="bg-black" onClick={()=>navigate("/favorite")}>
+          <IconButton
+            className="bg-black"
+            onClick={() => navigate("/favorite")}
+          >
             <FavoriteBorderOutlinedIcon />
           </IconButton>
-          <IconButton className="bg-black" onClick={()=>navigate("/profile")}>
-            <AccountCircleOutlinedIcon  />
+          <IconButton
+            className="bg-black"
+            onClick={() => navigate("/customer-info")}
+          >
+            <AccountCircleOutlinedIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
