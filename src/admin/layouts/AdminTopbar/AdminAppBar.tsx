@@ -1,22 +1,26 @@
+import { useSidebar } from "@/components/ui/sidebar";
 import { IconButton, TextField } from "@mui/material";
-import { Search, Bell, User } from "lucide-react";
+import { Search, Bell, User, MenuIcon } from "lucide-react";
 import React from "react";
 
 export default function AdminAppBar() {
+  const { toggleSidebar } = useSidebar();
   return (
-    <div className="sticky bg-white top-0 z-10 flex flex-row items-center justify-between py-[20px] pl-[48px] pr-[32px]">
-      <div className="flex items-center justify-center">
+    <div className="sticky top-0 z-10 flex flex-row items-center justify-between bg-white py-[20px] pr-[32px]">
+      <div className="flex items-end">
+        <IconButton onClick={toggleSidebar} className="mr-5">
+          <MenuIcon size={30} />
+        </IconButton>
         <TextField
           id="outlined-basic"
           label="Search"
           variant="outlined"
           sx={{ width: "700px" }}
-          InputProps={{
-            startAdornment: (
-              <IconButton>
-                <Search size={24} />
-              </IconButton>
-            ),
+          size="small"
+          slotProps={{
+            input: {
+              startAdornment: <Search size={24} />,
+            },
           }}
         />
       </div>

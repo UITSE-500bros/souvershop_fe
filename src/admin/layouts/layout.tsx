@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         <main>
           <AdminAppBar />
-          <SidebarTrigger className="sticky" />
+
           {children}
         </main>
       </SidebarProvider>
