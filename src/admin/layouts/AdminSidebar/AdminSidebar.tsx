@@ -1,12 +1,14 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 import {
@@ -15,6 +17,8 @@ import {
   PackagePlus,
   CircleUserRound,
   Database,
+  Settings,
+  LogOut,
 } from "lucide-react";
 import React from "react";
 //menu items
@@ -65,7 +69,7 @@ export default function AdminSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton className="h-12" asChild>
-                    <a href={item.url} >
+                    <a href={item.url}>
                       <item.icon className="h-8 w-8" />
                       <span>{item.title}</span>
                     </a>
@@ -76,6 +80,27 @@ export default function AdminSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      {/* Sidebar footer */}
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <a href="#">
+                <Settings className="h-8 w-8" />
+                <span>Cài đặt</span>
+              </a>
+            </SidebarMenuButton>
+
+            <SidebarMenuButton asChild>
+              <a href="#">
+                <LogOut className="h-8 w-8" />
+                <span>Đăng xuất</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }

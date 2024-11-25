@@ -1,3 +1,3 @@
-import AdminTopBar from "./AdminTopBar"
+import AdminTopBar from "./AdminAppBar"
 
 export default AdminTopBar;
