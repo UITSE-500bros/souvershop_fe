@@ -5,18 +5,20 @@ import ActionButtons from "../../../admin/components/ActionButtons";
 
 export default function EmployeesList() {
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
+  const [isSelectingAddType, setIsSelectingAddType] = useState(false);
 
   const handleAddEmployee = () => {
-    setIsAddingEmployee(true);
+    setIsSelectingAddType(true);  
   };
 
   const handleCloseModal = () => {
     setIsAddingEmployee(false);
+    setIsSelectingAddType(false);
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5]">
-      <div className="flex h-[700px] w-[1096px] flex-col gap-8 bg-white px-[20px] py-[20px] shadow-md relative ">
+      <div className="flex h-[700px] w-[1096px] flex-col gap-8 bg-white px-[20px] py-[20px] shadow-md relative">
         <div className="flex justify-between items-center">
           <div className="text-[24px] font-bold text-[#333]">Employees</div>
           <ActionButtons onAddEmployee={handleAddEmployee} />
@@ -49,46 +51,70 @@ export default function EmployeesList() {
           <Button variant="outlined" sx={{ textTransform: "none", marginLeft: "350px" }}>Sau</Button>
         </div>
 
+        {isSelectingAddType && (
+          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-10">
+            <div className="bg-white w-[400px] p-[20px] rounded-md shadow-lg">
+              <h2 className="text-[24px] font-bold mb-4">Chọn kiểu thêm nhân viên</h2>
+              <div className="flex flex-col gap-4">
+                <Button
+                  variant="contained"
+                  onClick={() => { setIsAddingEmployee(true); setIsSelectingAddType(false); }}
+                  sx={{ marginBottom: "10px" }}
+                >
+                  Thêm 1 nhân viên
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => { setIsSelectingAddType(false); setIsAddingEmployee(true); }}
+                  sx={{ marginBottom: "10px" }}
+                >
+                  Thêm nhiều nhân viên 
+                </Button>
+                <Button variant="outlined" onClick={handleCloseModal}>Hủy bỏ</Button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {isAddingEmployee && (
           <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-10">
             <div className="bg-white w-[400px] p-[20px] rounded-md shadow-lg">
               <h2 className="text-[24px] font-bold mb-4">Thêm Nhân Viên</h2>
               <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between border-dashed border-2 p-4 mt-4">
-                  
-                  <div className="w-[100px] h-[100px] rounded-full border-2 border-dashed border-[#ddd]  flex justify-center items-center">
+                <div className="flex items-center justify-between border-dashed border-2 p-4 mt-4">
+                  <div className="w-[100px] h-[100px] rounded-full border-2 border-dashed border-[#ddd] flex justify-center items-center">
                     <FaUser size={60} color="#777777" />
                   </div>
                   <div className="flex flex-col items-start gap-2">
                     <div className="text-[#858D9D]">Kéo hình ảnh vào đây</div>
                     <div className="text-[#858D9D]">Hoặc</div>
                     <div className="text-[#448DF2]">Duyệt hình ảnh</div>
-                    
                   </div>
                 </div>
+
                 <div className="flex justify-between items-center">
-                  <label className="text-[14px]  text-[#333] w-[150px]">Tên nhân viên:</label>
+                  <label className="text-[14px] text-[#333] w-[150px]">Tên nhân viên:</label>
                   <TextField fullWidth variant="outlined" />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-[14px]  text-[#333] w-[150px]">Mã nhân viên:</label>
+                  <label className="text-[14px] text-[#333] w-[150px]">Mã nhân viên:</label>
                   <TextField fullWidth variant="outlined" />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-[14px]  text-[#333] w-[150px]">Số điện thoại:</label>
+                  <label className="text-[14px] text-[#333] w-[150px]">Số điện thoại:</label>
                   <TextField fullWidth variant="outlined" />
                 </div>
                 <div className="flex justify-between items-center gap-10">
-                  <label className="text-[14px]  text-[#333] w-[100px]">E-mail:</label>
+                  <label className="text-[14px] text-[#333] w-[100px]">E-mail:</label>
                   <TextField fullWidth variant="outlined" />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-[14px]  text-[#333] ">Loại nhân viên:</label>
-                  <TextField sx={{ width: '250px' }} variant="outlined" />
+                  <label className="text-[14px] text-[#333]">Loại nhân viên:</label>
+                  <TextField sx={{ width: "250px" }} variant="outlined" />
                 </div>
                 <div className="flex justify-between items-center">
-                  <label className="text-[14px]  text-[#333] ">Lương:</label>
-                  <TextField sx={{ width: '250px', height: '44px' }} variant="outlined" />
+                  <label className="text-[14px] text-[#333]">Lương:</label>
+                  <TextField sx={{ width: "250px", height: "44px" }} variant="outlined" />
                 </div>
                 <div className="flex justify-between mt-4">
                   <Button variant="outlined" onClick={handleCloseModal}>Hủy bỏ</Button>
