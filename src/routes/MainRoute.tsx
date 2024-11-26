@@ -1,3 +1,4 @@
+import AdminApp from "@/admin/AdminApp";
 import { Footer, Header } from "@/components";
 import Layout from "@/Layout";
 import Cart from "@/screens/Cart";
@@ -28,6 +29,7 @@ export default function MainRoute() {
 
         <Route path="/new-password" element={<NewPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/admin" element={<AdminApp />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     

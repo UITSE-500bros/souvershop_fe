@@ -1,11 +1,13 @@
-import React from 'react'
-import AdminSidebar from './layouts/AdminSidebar'
+
+import Home from '@/screens/Home'
+import Layout from './layouts/layout'
 
 export default function AdminApp() {
   return (
     <div>
-      <AdminSidebar />
-      
+     <Layout>
+        <Home />
+     </Layout>
     </div>
   )
 }
