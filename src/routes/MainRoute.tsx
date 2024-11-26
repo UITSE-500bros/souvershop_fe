@@ -9,6 +9,7 @@ import ForgotPassword from "@/screens/ForgotPassword/ForgotPassword";
 import Home from "@/screens/Home";
 import NewPassword from "@/screens/NewPassword";
 import ProductDetail from "@/screens/ProductDetail";
+import EmployeesList from "@/admin/screens/EmployeesList";
 import { Route, Routes } from "react-router-dom";
 
 export default function MainRoute() {
@@ -28,6 +29,7 @@ export default function MainRoute() {
 
         <Route path="/new-password" element={<NewPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/employees" element={<EmployeesList />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     
