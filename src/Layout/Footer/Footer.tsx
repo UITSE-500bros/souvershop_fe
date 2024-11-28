@@ -2,6 +2,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import SubscribeBanner from "./SubscribeBanner";
 
 export default function Footer() {
   return (
@@ -48,7 +49,7 @@ export default function Footer() {
             9:00-21:00
           </div>
         </div>
-        <div className="absolute left-[1177px] top-[407px] flex h-[38px] w-[164px] space-x-4">
+        <div className="left-[1177px] absolute z-10 top-[407px] flex h-[38px] w-[250px] space-x-4">
           <div className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-black/20 bg-white">
             <FacebookIcon className="text-[#3b5998]" />
           </div>
@@ -66,7 +67,7 @@ export default function Footer() {
           <div className="inline-flex flex-col items-start justify-start gap-[35px] self-stretch">
             <div className="flex flex-col items-start justify-start gap-[25px]">
               <div className="font-['Inter'] text-[33.45px] font-bold text-white">
-                SHOP.CO
+                SOUVERSHOP
               </div>
               <div className="w-[248px] font-['Inter'] text-sm font-normal leading-snug text-[#f2f0f1]">
                 Kỷ niệm khó quên
@@ -77,25 +78,7 @@ export default function Footer() {
       </div>
 
       {/* Subscribe */}
-      <div className="absolute left-[133px] top-0 inline-flex w-[1240px] items-center justify-between rounded-[20px] bg-[#dbad34] px-16 py-9">
-        <div className="h-[94px] w-[551px] font-['Inter'] text-[40px] font-bold leading-[45px] text-white">
-          Đăng ký để nhận được những thông tin mới nhất
-        </div>
-        <div className="inline-flex flex-col items-start justify-start gap-3.5">
-          <div className="inline-flex w-[349px] items-start justify-start gap-3 rounded-[62px] bg-white px-4 py-3">
-            <input
-              type="email"
-              placeholder="Nhập email"
-              className="w-full font-['Inter'] text-base font-normal text-black/40"
-            />
-          </div>
-          <div className="inline-flex w-[349px] items-center justify-center gap-3 rounded-[62px] bg-white px-4 py-3">
-            <div className="font-['Inter'] text-base font-medium text-black">
-              Đăng ký thành viên mới
-            </div>
-          </div>
-        </div>
-      </div>
+      <SubscribeBanner/>
     </div>
   );
 }
