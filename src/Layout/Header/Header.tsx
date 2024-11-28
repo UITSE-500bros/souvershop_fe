@@ -1,10 +1,16 @@
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  IconButton,
+  TextField,
+  Toolbar
+} from "@mui/material";
+import { Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
-import SearchBar from "./SearchBar";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,17 +20,28 @@ const Header = () => {
 
       <AppBar
         position="sticky"
-        sx={{ width: "100%", backgroundColor: "#F8F2E5" }}
+        sx={{ width: "100%", backgroundColor: "#F8F2E5", gap: "10px" }}
       >
         <Toolbar>
           <Link className="px-5 text-4xl font-bold text-black" to={"/"}>
             SouverShop
           </Link>
-          <Link to={"/category"} className="text-red-700">
+          <Link to={"/category"} className="mr-5 text-red-700">
             Sale up to 40%
           </Link>
           <Box sx={{ flexGrow: 1 }}>
-            <SearchBar />
+            <TextField
+              id="outlined-basic"
+              label="Tìm kiếm sản phẩm"
+              variant="outlined"
+              size="small"
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: <Search size={24}  className="mr-3" />,
+                },
+              }}
+            />
           </Box>
           <IconButton className="bg-black" onClick={() => navigate("/cart")}>
             <ShoppingCartOutlinedIcon />
