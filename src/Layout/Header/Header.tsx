@@ -1,16 +1,11 @@
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import {
-  AppBar,
-  Box,
-  IconButton,
-  TextField,
-  Toolbar
-} from "@mui/material";
+import { AppBar, Box, IconButton, TextField, Toolbar } from "@mui/material";
 import { Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
+import CategoryMenu from "./CategoryMenu";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -26,9 +21,7 @@ const Header = () => {
           <Link className="px-5 text-4xl font-bold text-black" to={"/"}>
             SouverShop
           </Link>
-          <Link to={"/category"} className="mr-5 text-red-700">
-            Sale up to 40%
-          </Link>
+          <CategoryMenu />
           <Box sx={{ flexGrow: 1 }}>
             <TextField
               id="outlined-basic"
@@ -36,9 +29,14 @@ const Header = () => {
               variant="outlined"
               size="small"
               fullWidth
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "50px", // Adjust the border radius here
+                },
+              }}
               slotProps={{
                 input: {
-                  startAdornment: <Search size={24}  className="mr-3" />,
+                  startAdornment: <Search size={24} className="mr-3" />,
                 },
               }}
             />
