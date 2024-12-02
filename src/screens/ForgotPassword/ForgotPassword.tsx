@@ -1,6 +1,4 @@
-import { SearchBar } from "@/components";
 import { Button, TextField } from "@mui/material";
-import React from "react";
 
 export default function ForgotPassword() {
   return (
@@ -21,18 +19,6 @@ export default function ForgotPassword() {
           label={"Email"}
           placeholder="Nhập email"
           variant="outlined"
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              "&.Mui-focused fieldset": {
-                borderColor: "#153060", // Change the border color when focused
-              },
-            },
-            "& .MuiInputLabel-root": {
-              "&.Mui-focused": {
-                color: "#153060", // Change the label color when focused
-              },
-            },
-          }}
         />
 
         <Button
@@ -42,7 +28,6 @@ export default function ForgotPassword() {
             backgroundColor: "#FFC633",
             color: "#fff",
             borderRadius: "10px",
-           
           }}
         >
           Tiếp Tục

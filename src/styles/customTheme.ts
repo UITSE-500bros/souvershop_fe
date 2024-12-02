@@ -8,13 +8,11 @@ const customTheme = createTheme({
           "& .MuiOutlinedInput-root": {
             "&.Mui-focused fieldset": {
               borderColor: "#153060", // Change the border color when focused
-              transition: "border-color 0.3s ease-in-out", // Preserve the default transition
             },
           },
           "& .MuiInputLabel-root": {
             "&.Mui-focused": {
               color: "#153060", // Change the label color when focused
-              transition: "color 0.3s ease-in-out", // Preserve the default transition
             },
           },
         },

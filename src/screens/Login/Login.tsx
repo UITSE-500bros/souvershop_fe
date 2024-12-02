@@ -8,7 +8,7 @@ function Login() {
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
       <img
-        src="https://images.pexels.com/photos/1745747/pexels-photo-1745747.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        src="src\assets\login.jpeg"
         alt="login"
         className="h-lvh w-3/5 rounded-br-[40px] rounded-tr-[40px] object-cover"
       />
@@ -36,9 +36,7 @@ function Login() {
               <div>Nhớ mật khẩu</div>
             </div>
 
-            <Link to="/forgot-password">
-              Quên mật khẩu
-            </Link>
+            <Link to="/forgot-password">Quên mật khẩu</Link>
           </div>
 
           <Button
