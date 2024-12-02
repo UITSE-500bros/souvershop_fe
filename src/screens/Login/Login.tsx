@@ -1,12 +1,14 @@
 import { Button, SvgIcon, TextField } from "@mui/material";
 
 import FacebookIcon from "@mui/icons-material/Facebook";
+import { Link } from "react-router-dom";
+import ForgotPassword from "../ForgotPassword";
 
 function Login() {
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
       <img
-        src="https://hoangviettravel.vn/wp-content/uploads/2020/02/du-lich-tokyo-20-min.jpg"
+        src="https://images.pexels.com/photos/1745747/pexels-photo-1745747.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         alt="login"
         className="h-lvh w-3/5 rounded-br-[40px] rounded-tr-[40px] object-cover"
       />
@@ -34,7 +36,9 @@ function Login() {
               <div>Nhớ mật khẩu</div>
             </div>
 
-            <Button variant="text">Quên mật khẩu</Button>
+            <Link to="/forgot-password">
+              Quên mật khẩu
+            </Link>
           </div>
 
           <Button
