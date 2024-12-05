@@ -13,7 +13,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import ButtonGroup from "./ButtonGroup";
+import ButtonGroup from "../../components/ButtonGroup";
 import RatingReview from "./RatingReview";
 import ProductSlider from "@/components/ProductSlider";
 
@@ -54,7 +54,7 @@ function ProductDetail() {
     "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
   ];
 
-    const images_data = [
+  const images_data = [
     {
       id: 1,
       name: "Đồng hồ treo tường",
@@ -263,19 +263,18 @@ function ProductDetail() {
             accusamus pariatur quaerat eum eos quo sunt beatae cupiditate ea.
           </Typography>
         </TabPanel>
-        <TabPanel value={tabIndex} index={1} >
+        <TabPanel value={tabIndex} index={1}>
           <div className="h-[990px] w-full">
             <RatingReview />
           </div>
         </TabPanel>
-        <TabPanel value={tabIndex} index={2} >
+        <TabPanel value={tabIndex} index={2}>
           <Typography>FAQ content goes here.</Typography>
         </TabPanel>
       </Box>
 
       {/* Related Products */}
       <ProductSlider data={images_data} text="Sản phẩm liên quan" />
-
     </div>
   );
 }
