@@ -34,7 +34,7 @@ export default function MainRoute() {
 
         <Route path="/new-password" element={<NewPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/admin" element={<AdminApp />} />
+        <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/employees" element={<EmployeesList />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
