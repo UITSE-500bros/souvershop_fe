@@ -51,13 +51,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
         ))}
       </div>
 
-      <div className="absolute bottom-16 left-4 right-4 flex items-center gap-2">
+      <div className="absolute bottom-16 left-4 right-4 flex items-center justify-between">
         {discountPrice && (
-          <p className="text-black-500 font-semibold text-sm" style={{ width: '103px', height: '29px' }}>
+          <p className="text-black-500 font-semibold text-sm" >
             {discountPrice.toLocaleString()} đ
           </p>
         )}
-        <p className="text-gray-500 line-through text-sm" style={{ width: '116px', height: '29px' }}>
+        <p className="text-gray-500 line-through text-sm" >
           {price.toLocaleString()} đ
         </p>
       </div>
