@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { RiFilterLine } from "react-icons/ri";  
 import ProductCard from "../../components/ProductCard";
+import { getProducts } from "./service/category.service";
+import { log } from "console";
 
 const CategoryPage: React.FC = () => {
   const [priceRange, setPriceRange] = useState(1000000);
@@ -9,9 +11,31 @@ const CategoryPage: React.FC = () => {
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceRange(Number(e.target.value));
   };
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  console.log("products", products);
+
+  const data = products.slice(0, 11);
+  const chunkedProducts = [];
+  for (let i = 0; i < data.length; i += 5) {
+    chunkedProducts.push(data.slice(i, i + 5));
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8F2E5]">
+      
       <div className="my-4 flex items-center text-sm text-gray-600">
         Trang chủ <FaChevronRight className="mx-2 inline-block" /> Truyền thống
       </div>
@@ -30,7 +54,24 @@ const CategoryPage: React.FC = () => {
       <div className="flex-grow">
         <h2 className="ml-4 text-2xl font-bold">Truyền thống</h2>
 
-        <div className="grid w-full grid-cols-3 gap-2 px-2 py-4">
+        {chunkedProducts.map((chunk, index) => (
+          <div key={index} className="flex gap-4 px-2 py-4">
+            {chunk.map((item) => (
+              <ProductCard
+                key={item.product_id}
+                name={item.product_name}
+                rating={5}
+                price={item.product_selling_price}
+                imageUrl={item.product_image}
+                discountPrice={item.product_selling_price}
+                isFavorite={true}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+
+        {/* <div className="grid w-full grid-cols-3 gap-2 px-2 py-4">
           <ProductCard
             imageUrl="https://cdn.ready-market.com.tw/24cfa4d4/Templates/pic/m/img_product_3462_20140903175702-1256-9615.jpg?v=c58ca81e"
             name="Móc khóa"
@@ -45,8 +86,8 @@ const CategoryPage: React.FC = () => {
             discountPrice={400000}
             rating={5}
           />
-        </div>
-      </div>
+        </div> */}
+      
     </div>
   );
 };
