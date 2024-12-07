@@ -36,11 +36,12 @@ const CartPage: React.FC = () => {
   const total = subtotal - discount + shipping;
 
   return (
-    <div>
- 
-      <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
-      <div className="flex space-x-6"> 
-        <div className="p-6 bg-white rounded-lg shadow-md" style={{ width: '715px', height: '508px' }}>
+    <div className="pl-16"> 
+      <div className="flex space-x-6">
+        <div
+          className="p-6 bg-white rounded-lg "
+          style={{ width: '715px', height: '508px' }}
+        >
           <div className="space-y-6 overflow-y-auto h-full">
             {cartItems.map((item, index) => (
               <ProductCardCart
@@ -56,15 +57,17 @@ const CartPage: React.FC = () => {
             ))}
           </div>
         </div>
-
-        <div className="p-4 bg-white-100 rounded-lg shadow-md" style={{ width: '505px', height: '458px' }}>
+        <div
+          className="p-4 bg-white-100 rounded-lg "
+          style={{ width: '505px', height: '458px' }}
+        >
           <OrderSummaryCard
             subtotal={subtotal}
-            discount={discount} // Truyền giá trị giảm giá vào
+            discount={discount} 
             shipping={shipping}
             total={total}
           />
-         <div style={{ marginTop: '24px' }}>
+          <div style={{ marginTop: '24px' }}>
             <PromoCodeBox />
           </div>
         </div>
