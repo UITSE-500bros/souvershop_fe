@@ -1,10 +1,23 @@
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Link } from "react-router-dom";
 import SignUpTextField from "./SignUpTextField";
 
 function SignUp() {
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const handleInputChange = (field: string, value: string) => {
+    setFormValue((prev) => ({ ...prev, [field]: value }));
+  };
+  const handleSubmit = () => {
+  
+    console.log(formValue);
+  }
+
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
       <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-black">
@@ -19,11 +32,23 @@ function SignUp() {
           </Link>
         </div>
 
-        <SignUpTextField label="Email" />
-        <SignUpTextField label="Mật khẩu" isPassword />
-        <SignUpTextField label="Nhập lại mật khẩu" isPassword />
+        <SignUpTextField
+          label="Email"
+          onValueChange={(value) => handleInputChange("email", value)}
+        />
+        <SignUpTextField
+          label="Mật khẩu"
+          isPassword
+          onValueChange={(value) => handleInputChange("password", value)}
+        />
+        <SignUpTextField
+          label="Nhập lại mật khẩu"
+          isPassword
+          onValueChange={(value) => handleInputChange("confirmPassword", value)}
+        />
 
         <Button
+        onClick={handleSubmit}
           variant="contained"
           sx={{
             fontFamily: "Inter",

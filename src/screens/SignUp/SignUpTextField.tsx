@@ -5,14 +5,17 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 interface SignUpTextFieldProps {
   label: string;
   isPassword?: boolean;
+  onValueChange?: (value: string) => void;
 }
 
-const SignUpTextField: React.FC<SignUpTextFieldProps> = ({ label, isPassword }) => {
+const SignUpTextField: React.FC<SignUpTextFieldProps> = ({ label, isPassword,onValueChange }) => {
   const [value, setValue] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const newValue = e.target.value;
+    setValue(newValue);
+    onValueChange?.(newValue);
   };
 
   const handleTogglePasswordVisibility = () => {
