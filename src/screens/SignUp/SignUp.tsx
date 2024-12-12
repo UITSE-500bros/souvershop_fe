@@ -1,5 +1,8 @@
 import { Button, TextField } from "@mui/material";
+import { useState } from "react";
+
 import { Link } from "react-router-dom";
+import SignUpTextField from "./SignUpTextField";
 
 function SignUp() {
   return (
@@ -16,26 +19,10 @@ function SignUp() {
           </Link>
         </div>
 
-        <TextField
-          label="Email"
-          required
-          sx={{ width: 430 }}
-          variant="outlined"
-        />
+        <SignUpTextField label="Email" />
+        <SignUpTextField label="Mật khẩu" isPassword />
+        <SignUpTextField label="Nhập lại mật khẩu" isPassword />
 
-        <TextField
-          label="Mật khẩu"
-          required
-          sx={{ width: 430 }}
-          variant="outlined"
-        />
-
-        <TextField
-          required
-          label="Nhập lại mật khẩu"
-          sx={{ width: 430 }}
-          variant="outlined"
-        />
         <Button
           variant="contained"
           sx={{
