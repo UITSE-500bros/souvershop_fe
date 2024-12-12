@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 
 import { Link } from "react-router-dom";
 import SignUpTextField from "./SignUpTextField";
+import { signUp } from "./services/SignUp.service";
 
 function SignUp() {
   const [formValue, setFormValue] = useState({
@@ -14,9 +15,8 @@ function SignUp() {
     setFormValue((prev) => ({ ...prev, [field]: value }));
   };
   const handleSubmit = () => {
-  
-    console.log(formValue);
-  }
+
+  };
 
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
@@ -48,7 +48,7 @@ function SignUp() {
         />
 
         <Button
-        onClick={handleSubmit}
+          onClick={handleSubmit}
           variant="contained"
           sx={{
             fontFamily: "Inter",
