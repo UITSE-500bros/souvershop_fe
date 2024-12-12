@@ -10,7 +10,7 @@ function Login() {
       <img
         src="src\assets\login.jpeg"
         alt="login"
-        className="h-lvh w-3/5 rounded-br-[40px] rounded-tr-[40px] object-cover"
+        className="h-lvh w-1/2 rounded-br-[40px] rounded-tr-[40px] object-cover"
       />
 
       <div className="form ml-[75px] flex h-auto w-full flex-1 items-center justify-start">
@@ -20,7 +20,7 @@ function Login() {
           </div>
           <div className="flex flex-col justify-start self-start">
             <div>Hoặc bạn không có tài khoản?</div>
-            <a className="text-[#7B5D44] underline">Đăng ký ngay</a>
+            <Link to={'/signup'} className="text-[#7B5D44] underline">Đăng ký ngay</Link>
           </div>
           <TextField
             label="Email"

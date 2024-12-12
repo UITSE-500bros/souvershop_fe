@@ -1,23 +1,19 @@
 import { Button, TextField } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   return (
-    <div className="flex h-full w-full flex-row justify-start bg-[#DBAD34]">
-      <div className="image h-[800px] w-[862px]">
-        <img
-          src="https://hoangviettravel.vn/wp-content/uploads/2020/02/du-lich-tokyo-20-min.jpg"
-          alt="login"
-          className="h-full w-full rounded-bl-[40px] rounded-tr-[40px] object-cover"
-        />
-      </div>
-
-      <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-white">
+    <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
+      <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-black">
         <div className="self-start text-3xl">Đăng ký</div>
         <div className="flex flex-col justify-start self-start">
           <div className="text-base font-normal">Đã có tài khoản?</div>
-          <a className="text-base font-[600] text-[#7B5D44] underline">
+          <Link
+            to={"/login"}
+            className="text-base font-[600] text-[#7B5D44] underline"
+          >
             Đăng nhập ngay
-          </a>
+          </Link>
         </div>
 
         <TextField
@@ -41,23 +37,28 @@ function SignUp() {
           variant="outlined"
         />
         <Button
-            variant="contained"
-            sx={{
-                fontFamily: "Inter",
-              backgroundColor: "#7B5D44",
-              color: "white",
-              textTransform: "none",
-              width: "429px",
-              height: "53px",
-              borderRadius: "32px",
-              fontSize: "17px",
-              fontWeight: "bold",
-              boxShadow: "0px 4px 26px 0px rgba(0, 0, 0, 0.25)",
-            }}
-          >
-            Đăng Ký
-          </Button>
+          variant="contained"
+          sx={{
+            fontFamily: "Inter",
+            backgroundColor: "#7B5D44",
+            color: "white",
+            textTransform: "none",
+            width: "429px",
+            height: "53px",
+            borderRadius: "32px",
+            fontSize: "17px",
+            fontWeight: "bold",
+            boxShadow: "0px 4px 26px 0px rgba(0, 0, 0, 0.25)",
+          }}
+        >
+          Đăng Ký
+        </Button>
       </form>
+      <img
+        src="src\assets\login.jpeg"
+        alt="login"
+        className="h-lvh w-1/2 rounded-bl-[40px] rounded-tl-[40px] object-cover"
+      />
     </div>
   );
 }
