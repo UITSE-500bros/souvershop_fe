@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import SignUpTextField from "./SignUpTextField";
 import { signUp } from "./services/SignUp.service";
-
+import { log } from "console";
 
 function SignUp() {
   const [formValue, setFormValue] = useState({
@@ -26,6 +26,12 @@ function SignUp() {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return emailRegex.test(email);
   };
+  const isValidatePassword = () => {
+    const password = formValue.password;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
+    return passwordRegex.test(password);
+  };
   const isValidate = () => {
     const { email, password, confirmPassword } = formValue;
     let emailError = "";
@@ -40,8 +46,9 @@ function SignUp() {
 
     if (!password) {
       passwordError = "Mật khẩu không được để trống";
-    } else if (password.length < 6) {
-      passwordError = "Mật khẩu phải lớn hơn 6 ký tự";
+    } else if (!isValidatePassword()) {
+      passwordError =
+        "Mật khẩu phải chứa ít nhất 8 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt";
     }
 
     if (!confirmPassword) {
@@ -59,9 +66,17 @@ function SignUp() {
     return !emailError && !passwordError && !confirmPasswordError;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!isValidate()) return;
-    console.log(formValue);
+    const { email, password } = formValue;
+    try {
+      console.log(email, password);
+      const response = await signUp(email, password);
+      alert(`${response.message}`);
+    } catch (err) {
+      console.error("Error in SignUp:", err);
+    }
   };
 
   return (
@@ -100,7 +115,9 @@ function SignUp() {
         />
 
         <Button
-          onClick={handleSubmit}
+          onClick={(e) =>
+            handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)
+          }
           variant="contained"
           sx={{
             fontFamily: "Inter",

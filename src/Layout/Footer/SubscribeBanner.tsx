@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function SubscribeBanner() {
   return (
@@ -7,17 +8,11 @@ export default function SubscribeBanner() {
       Đăng ký để nhận được những thông tin mới nhất
     </div>
     <div className="inline-flex flex-col items-start justify-start gap-3.5">
-      <div className="inline-flex w-[349px] items-start justify-start gap-3 rounded-[62px] bg-white px-4 py-3">
-        <input
-          type="email"
-          placeholder="Nhập email"
-          className="w-full font-['Inter'] text-base font-normal text-black/40"
-        />
-      </div>
+      
       <div className="inline-flex w-[349px] items-center justify-center gap-3 rounded-[62px] bg-white px-4 py-3">
-        <div className="font-['Inter'] text-base font-medium text-black">
+        <Link to={'register'} className="font-['Inter'] text-base font-medium text-black">
           Đăng ký thành viên mới
-        </div>
+        </Link>
       </div>
     </div>
   </div>
