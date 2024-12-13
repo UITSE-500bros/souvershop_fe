@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import SignUpTextField from "./SignUpTextField";
 import { signUp } from "./services/SignUp.service";
-import { log } from "console";
+
 
 function SignUp() {
   const [formValue, setFormValue] = useState({

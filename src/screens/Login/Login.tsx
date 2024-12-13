@@ -2,9 +2,19 @@ import { Button, SvgIcon, TextField } from "@mui/material";
 
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
-import ForgotPassword from "../ForgotPassword";
+import { GoogleLogin } from "./services/Login.service";
 
 function Login() {
+  const handleLoginWithGoogle = async () => {
+    try{
+      const res = await GoogleLogin();
+      console.log(res);
+    }
+    catch(err){
+      console.error(err);
+    }
+  };
+
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
       <img
@@ -20,7 +30,9 @@ function Login() {
           </div>
           <div className="flex flex-col justify-start self-start">
             <div>Hoặc bạn không có tài khoản?</div>
-            <Link to={'/register'} className="text-[#7B5D44] underline">Đăng ký ngay</Link>
+            <Link to={"/register"} className="text-[#7B5D44] underline">
+              Đăng ký ngay
+            </Link>
           </div>
           <TextField
             label="Email"
@@ -117,6 +129,7 @@ function Login() {
                 </svg>
               </SvgIcon>
             }
+            onClick={handleLoginWithGoogle}
             variant="contained"
             sx={{
               justifyContent: "start",

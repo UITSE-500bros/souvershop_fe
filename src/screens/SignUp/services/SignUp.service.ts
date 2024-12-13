@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-const API_URL=process.env.API_URL;
+const API_URL=import.meta.env.API_URL;
 
 export const signUp = async (email:string,password:string) => {
     try{
