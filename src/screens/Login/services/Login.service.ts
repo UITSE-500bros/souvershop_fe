@@ -14,8 +14,10 @@ export const GoogleLogin = async () => {
     // }
 
     // const data = await response.json();
+    // console.log(data);
+    
     // return data;
-    window.location.href = `${API_URL}auth/login/federated/google`;
+     window.location.href = `${API_URL}auth/login/federated/google`;
   } catch (err) {
     console.error(err);
   }
