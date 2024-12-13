@@ -30,7 +30,7 @@ export default function MainRoute() {
         </Route>
 
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/register" element={<SignUp />} />
 
         <Route path="/new-password" element={<NewPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -20,7 +20,7 @@ function Login() {
           </div>
           <div className="flex flex-col justify-start self-start">
             <div>Hoặc bạn không có tài khoản?</div>
-            <Link to={'/signup'} className="text-[#7B5D44] underline">Đăng ký ngay</Link>
+            <Link to={'/register'} className="text-[#7B5D44] underline">Đăng ký ngay</Link>
           </div>
           <TextField
             label="Email"

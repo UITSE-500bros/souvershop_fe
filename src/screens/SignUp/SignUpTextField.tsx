@@ -6,9 +6,17 @@ interface SignUpTextFieldProps {
   label: string;
   isPassword?: boolean;
   onValueChange?: (value: string) => void;
+  error?: boolean;
+  helperText?: string;
 }
 
-const SignUpTextField: React.FC<SignUpTextFieldProps> = ({ label, isPassword,onValueChange }) => {
+const SignUpTextField: React.FC<SignUpTextFieldProps> = ({
+  label,
+  isPassword,
+  onValueChange,
+  error,
+  helperText,
+}) => {
   const [value, setValue] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -31,6 +39,8 @@ const SignUpTextField: React.FC<SignUpTextFieldProps> = ({ label, isPassword,onV
       sx={{ width: 430 }}
       variant="outlined"
       onChange={handleValueChange}
+      error={error}
+      helperText={helperText}
       InputProps={{
         endAdornment: isPassword ? (
           <InputAdornment position="end">

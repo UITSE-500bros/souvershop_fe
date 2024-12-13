@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import SignUpTextField from "./SignUpTextField";
 import { signUp } from "./services/SignUp.service";
+import { log } from "console";
 
 function SignUp() {
   const [formValue, setFormValue] = useState({
@@ -11,11 +12,56 @@ function SignUp() {
     password: "",
     confirmPassword: "",
   });
+
+  const [error, setError] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const handleInputChange = (field: string, value: string) => {
     setFormValue((prev) => ({ ...prev, [field]: value }));
   };
-  const handleSubmit = () => {
+  const isValidateEmail = () => {
+    const email = formValue.email;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+  };
+  const isValidate = () => {
+    const { email, password, confirmPassword } = formValue;
+    let emailError = "";
+    let passwordError = "";
+    let confirmPasswordError = "";
 
+    if (!email) {
+      emailError = "Email không được để trống";
+    } else if (!isValidateEmail()) {
+      emailError = "Email không hợp lệ";
+    }
+
+    if (!password) {
+      passwordError = "Mật khẩu không được để trống";
+    } else if (password.length < 6) {
+      passwordError = "Mật khẩu phải lớn hơn 6 ký tự";
+    }
+
+    if (!confirmPassword) {
+      confirmPasswordError = "Mật khẩu không được để trống";
+    } else if (confirmPassword !== password) {
+      confirmPasswordError = "Mật khẩu không khớp";
+    }
+
+    setError({
+      email: emailError,
+      password: passwordError,
+      confirmPassword: confirmPasswordError,
+    });
+
+    return !emailError && !passwordError && !confirmPasswordError;
+  };
+
+  const handleSubmit = () => {
+    if (!isValidate()) return;
+    console.log(formValue);
   };
 
   return (
@@ -33,15 +79,21 @@ function SignUp() {
         </div>
 
         <SignUpTextField
+          error={!!error.email}
+          helperText={error.email}
           label="Email"
           onValueChange={(value) => handleInputChange("email", value)}
         />
         <SignUpTextField
           label="Mật khẩu"
           isPassword
+          error={!!error.password}
+          helperText={error.password}
           onValueChange={(value) => handleInputChange("password", value)}
         />
         <SignUpTextField
+          error={!!error.confirmPassword}
+          helperText={error.confirmPassword}
           label="Nhập lại mật khẩu"
           isPassword
           onValueChange={(value) => handleInputChange("confirmPassword", value)}
