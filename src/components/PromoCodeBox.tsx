@@ -1,10 +1,17 @@
 import { Box, Typography, InputBase, Button } from "@mui/material";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"; 
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useNavigate } from "react-router-dom"; 
 
 const PromoCodeBox = () => {
+  const navigate = useNavigate(); 
+
+  const handleGoToCheckout = () => {
+    navigate("/checkout"); 
+  };
+
   return (
-    <Box display="flex" flexDirection="column" gap={3}> 
+    <Box display="flex" flexDirection="column" gap={3}>
       <Box display="flex" alignItems="center">
         <Box
           display="flex"
@@ -75,9 +82,10 @@ const PromoCodeBox = () => {
             backgroundColor: '#333',
           },
         }}
+        onClick={handleGoToCheckout} 
       >
         Go to Checkout
-        <ArrowForwardIcon style={{ width: 24, height: 24 }} /> {/* Mũi tên */}
+        <ArrowForwardIcon style={{ width: 24, height: 24 }} /> 
       </Button>
     </Box>
   );
