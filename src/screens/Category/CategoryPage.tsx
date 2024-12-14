@@ -1,14 +1,16 @@
+import { Loading } from "@/components/Loading";
+import { Product } from "@/models/Product";
 import React, { useEffect, useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { RiFilterLine } from "react-icons/ri";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts } from "./service/category.service";
-import { Loading } from "@/components/Loading";
-import { Product } from "@/models/Product";
+import { getAllProducts } from "./service/Category.service";
+import { Skeleton } from "@mui/material";
 
 const CategoryPage: React.FC = () => {
   const [priceRange, setPriceRange] = useState(1000000);
   const [products, setProducts] = useState<Product[]>([]);
+  console.log(typeof products);
 
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceRange(Number(e.target.value));
@@ -22,7 +24,7 @@ const CategoryPage: React.FC = () => {
     };
     fetchProducts();
     console.log(products);
-  }, [products]);
+  }, []);
 
   if (!products) {
     return <Loading />;
@@ -48,21 +50,32 @@ const CategoryPage: React.FC = () => {
         <h2 className="ml-4 text-2xl font-bold">Truyền thống</h2>
 
         <div className="grid w-full grid-cols-4 gap-1 p-2">
-          {products.map((product) => {
-            return (
-              <ProductCard
-              id={product.product_id}
-                key={product.product_id}
-                name={product.product_name}
-                price={product.product_selling_price}
-                imageUrl={product.product_image[0]}
-                rating={
-                  product.average_rating === null ? 0 : product.average_rating
-                }
-                isFavorite={false}
-              />
-            );
-          })}
+          {products === undefined
+            ? Array.from({ length: 8 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  variant="rectangular"
+                  width={300}
+                  height={452}
+                />
+              ))
+            : products.map((product) => {
+                return (
+                  <ProductCard
+                    id={product.product_id}
+                    key={product.product_id}
+                    name={product.product_name}
+                    price={product.product_selling_price}
+                    imageUrl={product.product_image[0]}
+                    rating={
+                      product.average_rating === null
+                        ? 0
+                        : product.average_rating
+                    }
+                    isFavorite={false}
+                  />
+                );
+              })}
         </div>
       </div>
     </div>

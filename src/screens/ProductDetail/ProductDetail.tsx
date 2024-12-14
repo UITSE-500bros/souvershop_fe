@@ -137,7 +137,7 @@ function ProductDetail() {
       {/* Product Detail */}
       <div className="mt-10 flex w-full flex-row items-center justify-center">
         <div className="h-[530px] w-[152px] object-cover">
-          {product ? <ImageSlider imageURLS={product.product_image} /> : null}
+          <ImageSlider imageURLS={product?.product_image} />
           
         </div>
 
