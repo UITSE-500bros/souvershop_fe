@@ -1,63 +1,148 @@
 import { Button, TextField } from "@mui/material";
+import { useRef, useState } from "react";
+
+import { Link } from "react-router-dom";
+import SignUpTextField from "./SignUpTextField";
+import { signUp } from "./services/SignUp.service";
+import { log } from "console";
 
 function SignUp() {
-  return (
-    <div className="flex h-full w-full flex-row justify-start bg-[#DBAD34]">
-      <div className="image h-[800px] w-[862px]">
-        <img
-          src="https://hoangviettravel.vn/wp-content/uploads/2020/02/du-lich-tokyo-20-min.jpg"
-          alt="login"
-          className="h-full w-full rounded-bl-[40px] rounded-tr-[40px] object-cover"
-        />
-      </div>
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-      <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-white">
-        <div className="self-start text-3xl">Đăng ký</div>
+  const [error, setError] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const handleInputChange = (field: string, value: string) => {
+    setFormValue((prev) => ({ ...prev, [field]: value }));
+  };
+  const isValidateEmail = () => {
+    const email = formValue.email;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+  };
+  const isValidatePassword = () => {
+    const password = formValue.password;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{8,}$/;
+    return passwordRegex.test(password);
+  };
+  const isValidate = () => {
+    const { email, password, confirmPassword } = formValue;
+    let emailError = "";
+    let passwordError = "";
+    let confirmPasswordError = "";
+
+    if (!email) {
+      emailError = "Email không được để trống";
+    } else if (!isValidateEmail()) {
+      emailError = "Email không hợp lệ";
+    }
+
+    if (!password) {
+      passwordError = "Mật khẩu không được để trống";
+    } else if (!isValidatePassword()) {
+      passwordError =
+        "Mật khẩu phải chứa ít nhất 8 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt";
+    }
+
+    if (!confirmPassword) {
+      confirmPasswordError = "Mật khẩu không được để trống";
+    } else if (confirmPassword !== password) {
+      confirmPasswordError = "Mật khẩu không khớp";
+    }
+
+    setError({
+      email: emailError,
+      password: passwordError,
+      confirmPassword: confirmPasswordError,
+    });
+
+    return !emailError && !passwordError && !confirmPasswordError;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isValidate()) return;
+    const { email, password } = formValue;
+    try {
+      console.log(email, password);
+      const response = await signUp(email, password);
+      alert(`${response.message}`);
+    } catch (err) {
+      console.error("Error in SignUp:", err);
+    }
+  };
+
+  return (
+    <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
+      <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-black">
+      <div className="self-start font-['Inter'] text-3xl font-black text-black">
+            Đăng Ký
+          </div>
         <div className="flex flex-col justify-start self-start">
           <div className="text-base font-normal">Đã có tài khoản?</div>
-          <a className="text-base font-[600] text-[#7B5D44] underline">
+          <Link
+            to={"/login"}
+            className="text-base font-[600] text-[#7B5D44] underline"
+          >
             Đăng nhập ngay
-          </a>
+          </Link>
         </div>
 
-        <TextField
+        <SignUpTextField
+          error={!!error.email}
+          helperText={error.email}
           label="Email"
-          required
-          sx={{ width: 430 }}
-          variant="outlined"
+          onValueChange={(value) => handleInputChange("email", value)}
         />
-
-        <TextField
+        <SignUpTextField
           label="Mật khẩu"
-          required
-          sx={{ width: 430 }}
-          variant="outlined"
+          isPassword
+          error={!!error.password}
+          helperText={error.password}
+          onValueChange={(value) => handleInputChange("password", value)}
+        />
+        <SignUpTextField
+          error={!!error.confirmPassword}
+          helperText={error.confirmPassword}
+          label="Nhập lại mật khẩu"
+          isPassword
+          onValueChange={(value) => handleInputChange("confirmPassword", value)}
         />
 
-        <TextField
-          required
-          label="Nhập lại mật khẩu"
-          sx={{ width: 430 }}
-          variant="outlined"
-        />
         <Button
-            variant="contained"
-            sx={{
-                fontFamily: "Inter",
-              backgroundColor: "#7B5D44",
-              color: "white",
-              textTransform: "none",
-              width: "429px",
-              height: "53px",
-              borderRadius: "32px",
-              fontSize: "17px",
-              fontWeight: "bold",
-              boxShadow: "0px 4px 26px 0px rgba(0, 0, 0, 0.25)",
-            }}
-          >
-            Đăng Ký
-          </Button>
+          onClick={(e) =>
+            handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)
+          }
+          variant="contained"
+          sx={{
+            fontFamily: "Inter",
+            backgroundColor: "#7B5D44",
+            color: "white",
+            textTransform: "none",
+            width: "429px",
+            height: "53px",
+            borderRadius: "32px",
+            fontSize: "17px",
+            fontWeight: "bold",
+            boxShadow: "0px 4px 26px 0px rgba(0, 0, 0, 0.25)",
+          }}
+        >
+          Đăng Ký
+        </Button>
+        
       </form>
+      <img
+        src="src\assets\login.jpeg"
+        alt="login"
+        className="h-lvh w-1/2 rounded-bl-[40px] rounded-tl-[40px] object-cover"
+      />
     </div>
   );
 }
