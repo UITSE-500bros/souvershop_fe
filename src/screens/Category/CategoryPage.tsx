@@ -12,44 +12,19 @@ const CategoryPage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8F2E5]">
-      
-      <div className="flex-grow">
-        <div className="my-4 flex items-center text-sm text-gray-600">
-          Trang chủ <FaChevronRight className="mx-2 inline-block" /> Truyền thống
+      <div className="my-4 flex items-center text-sm text-gray-600">
+        Trang chủ <FaChevronRight className="mx-2 inline-block" /> Truyền thống
+      </div>
+
+      <div className="w-full bg-gray-100 p-4 rounded-md mb-6">
+        <div className="flex justify-end">
+          <button className="flex items-center space-x-2 text-gray-700 font-semibold text-lg shadow-md rounded-md px-4 py-2 bg-white">
+          <RiFilterLine className="text-2xl" />
+            <span>Bộ lọc</span>
+          </button>
         </div>
+      </div>
 
-        <div className="flex items-start">
-          
-          <div className="w-1/4 rounded-md bg-gray-100 p-4 space-y-4">
-            <div className="flex items-center justify-between">
-              <p className="font-semibold">Bộ lọc</p>
-              <RiFilterLine className="text-xl" />
-            </div>
-
-            <div className="flex justify-center">
-              <label htmlFor="price-range" className="text-sm">
-                Giá: 0 đ - {priceRange.toLocaleString()} đ
-              </label>
-            </div>
-            <div className="flex items-center whitespace-nowrap">
-              <span>0 đ</span>
-              <input
-                id="price-range"
-                type="range"
-                min="0"
-                max="1000000"
-                value={priceRange}
-                onChange={handlePriceRangeChange}
-                className="mx-4 w-full"
-              />
-              <span>1,000,000 đ</span>
-            </div>
-            <div className="mt-4 flex justify-center">
-              <button className="rounded-[62px] bg-[#DBAD34] px-4 py-2 text-white">
-                Áp dụng bộ lọc
-              </button>
-            </div>
-          </div>
 
           {/* Phần sản phẩm */}
           <div className="flex-grow">
@@ -73,8 +48,8 @@ const CategoryPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    
+
   );
 };
 
