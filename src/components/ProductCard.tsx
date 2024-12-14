@@ -1,6 +1,7 @@
 import React from "react";
 import { FaStar, FaPlus } from "react-icons/fa";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { Link } from "react-router-dom";
 
 export interface ProductCardProps {
   name: string;
@@ -9,6 +10,7 @@ export interface ProductCardProps {
   imageUrl: string;
   rating: number;
   isFavorite?: boolean;
+  id: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -18,13 +20,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
   imageUrl,
   rating,
   isFavorite = false,
+  id,
 }) => {
   const discountPercentage = discountPrice
     ? Math.round(((price - discountPrice) / price) * 100)
     : 0;
 
   return (
-    <div className="product-card border-4 border-black rounded-[20px] shadow-md p-4 my-4 bg-[#F8F2E5] w-[300px] h-[452px] relative">
+    <Link to={`/product/${id}`}>
+    <div  className="product-card border-4 border-black rounded-[20px] shadow-md p-4 my-4 bg-[#F8F2E5] w-[300px] h-[452px] relative">
       <div className="relative">
         <img src={imageUrl} 
         alt={name} 
@@ -33,7 +37,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="product-info flex flex-col mt-2">
         <h2 className="font-bold text-sm flex justify-between items-center">
-          {name}
+          <span className="line-clamp-2">{name}</span>
+         
           {discountPrice && (
             <span className="bg-[#FFB2B2] text-red-600 px-2 py-1 rounded-[62px] text-xs">
               ~{discountPercentage}%
@@ -78,6 +83,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </button>
       </div>
     </div>
+    </Link>
   );
 };
 

@@ -12,12 +12,11 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text }) => {
   return (
     <div>
       {/* new products */}
-      <div className="mt-[42px] flex h-[600px] flex-shrink-0 w-full flex-col items-center justify-center">
+      <div className="mt-[42px] flex h-[600px] w-full flex-shrink-0 flex-col items-center justify-center">
         <div className="text-center text-5xl font-bold text-black">{text}</div>
         <div className="flex w-full flex-row justify-center gap-x-5">
           {data.map((item) => (
             <div key={item.name} className="h-[452px] w-[300px]">
-              <Link to ={"/product/1"}>
               <ProductCard
                 name={item.name}
                 rating={item.rating}
@@ -25,8 +24,8 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text }) => {
                 imageUrl={item.imageUrl}
                 discountPrice={item.discountPrice}
                 isFavorite={item.isFavorite}
+                id={item.id}
               />
-              </Link>
             </div>
           ))}
         </div>

@@ -51,6 +51,7 @@ const CategoryPage: React.FC = () => {
           {products.map((product) => {
             return (
               <ProductCard
+              id={product.product_id}
                 key={product.product_id}
                 name={product.product_name}
                 price={product.product_selling_price}

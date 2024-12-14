@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageSlider from "./ImageSlider";
 import {
   Button,
@@ -16,6 +16,10 @@ import {
 import ButtonGroup from "../../components/ButtonGroup";
 import RatingReview from "./RatingReview";
 import ProductSlider from "@/components/ProductSlider";
+import { Product } from "@/models/Product";
+import { getProductById } from "./service/ProductDetail.service";
+import { useParams } from "react-router-dom";
+import { log } from "console";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,6 +48,22 @@ function TabPanel(props: TabPanelProps) {
 }
 
 function ProductDetail() {
+  const [product, setProduct] = useState<Product>();
+  const { productId } = useParams<{ productId: string }>();
+  console.log(productId);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!productId) return;
+      const product = await getProductById(productId);
+      if (!product) return;
+      setProduct(product);
+    };
+    fetchProduct();
+    
+  }, [productId]);
+  console.log(product);
+
   const data = [
     "https://i.etsystatic.com/42383617/r/il/d2697c/5835188521/il_794xN.5835188521_hgfg.jpg",
     "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
@@ -117,7 +137,8 @@ function ProductDetail() {
       {/* Product Detail */}
       <div className="mt-10 flex w-full flex-row items-center justify-center">
         <div className="h-[530px] w-[152px] object-cover">
-          <ImageSlider imageURLS={data} />
+          {product ? <ImageSlider imageURLS={product.product_image} /> : null}
+          
         </div>
 
         <img
