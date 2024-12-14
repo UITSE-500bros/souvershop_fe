@@ -82,7 +82,9 @@ function SignUp() {
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
       <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-black">
-        <div className="self-start text-3xl">Đăng ký</div>
+      <div className="self-start font-['Inter'] text-3xl font-black text-black">
+            Đăng Ký
+          </div>
         <div className="flex flex-col justify-start self-start">
           <div className="text-base font-normal">Đã có tài khoản?</div>
           <Link
@@ -134,6 +136,7 @@ function SignUp() {
         >
           Đăng Ký
         </Button>
+        
       </form>
       <img
         src="src\assets\login.jpeg"
