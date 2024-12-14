@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import ButtonGroup from "./ButtonGroup"; 
 
 interface ProductCardCartProps {
   name: string;
@@ -49,21 +50,10 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({
       >
         <FaTrash size={20} />
       </button>
-
       <div className="absolute bottom-2 right-2 flex items-center border rounded-[62px] bg-gray-200 p-1 space-x-2">
-        <button
-          className="px-2 py-1 text-lg bg-gray-200 hover:bg-gray-300"
-          onClick={() => handleQuantityChange(-1)}
-        >
-          -
-        </button>
-        <span className="px-3">{quantity}</span>
-        <button
-          className="px-2 py-1 text-lg bg-gray-200 hover:bg-gray-300"
-          onClick={() => handleQuantityChange(1)}
-        >
-          +
-        </button>
+        <ButtonGroup
+          value={quantity}
+        />
       </div>
     </div>
   );

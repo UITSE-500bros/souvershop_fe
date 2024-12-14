@@ -35,7 +35,7 @@ const PromoCodeBox = () => {
           >
           </Typography>
           <InputBase
-            placeholder="Enter promo code"
+            placeholder="Nhập mã khuyến mãi"
             style={{
               width: '100%',
               height: '100%',
@@ -61,7 +61,7 @@ const PromoCodeBox = () => {
             },
           }}
         >
-          Apply
+          Áp dụng
         </Button>
       </Box>
 
@@ -84,7 +84,7 @@ const PromoCodeBox = () => {
         }}
         onClick={handleGoToCheckout} 
       >
-        Go to Checkout
+        Thanh toán
         <ArrowForwardIcon style={{ width: 24, height: 24 }} /> 
       </Button>
     </Box>
