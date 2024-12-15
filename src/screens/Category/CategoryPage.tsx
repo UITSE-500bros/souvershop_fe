@@ -10,7 +10,7 @@ import { Skeleton } from "@mui/material";
 const CategoryPage: React.FC = () => {
   const [priceRange, setPriceRange] = useState(1000000);
   const [products, setProducts] = useState<Product[]>([]);
-  console.log(typeof products);
+  const [loading, setLoading] = useState(true);
 
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceRange(Number(e.target.value));
@@ -20,11 +20,15 @@ const CategoryPage: React.FC = () => {
     const fetchProducts = async () => {
       const products = await getAllProducts();
       if (!products) return;
+
       setProducts(products);
+      setLoading(false);
     };
     fetchProducts();
     console.log(products);
   }, []);
+
+  console.log(products);
 
   if (!products) {
     return <Loading />;
@@ -49,8 +53,8 @@ const CategoryPage: React.FC = () => {
       <div className="flex-grow">
         <h2 className="ml-4 text-2xl font-bold">Truyền thống</h2>
 
-        <div className="grid w-full grid-cols-4 gap-1 p-2">
-          {products === undefined
+        <div className="mx-auto grid w-full grid-cols-4 gap-1 p-2">
+          {products.length === 0
             ? Array.from({ length: 8 }).map((_, index) => (
                 <Skeleton
                   key={index}

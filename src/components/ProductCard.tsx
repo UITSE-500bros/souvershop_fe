@@ -27,27 +27,32 @@ const ProductCard: React.FC<ProductCardProps> = ({
     : 0;
 
   return (
-    <Link to={`/product/${id}`}>
-    <div  className="product-card border-4 border-black rounded-[20px] shadow-md p-4 my-4 bg-[#F8F2E5] w-[300px] h-[452px] relative">
+    <div className="product-card relative my-4 h-[452px] w-[300px] rounded-[20px] border-4 border-black bg-[#F8F2E5] p-4 shadow-md">
       <div className="relative">
-        <img src={imageUrl} 
-        alt={name} 
-        className="w-[270px] h-[266px] object-cover rounded" />
+        <Link to={`/product/${id}`}>
+          <img
+            src={imageUrl}
+            alt={name}
+            className="h-[266px] w-[270px] rounded object-cover"
+          />
+        </Link>
       </div>
 
-      <div className="product-info flex flex-col mt-2">
-        <h2 className="font-bold text-sm flex justify-between items-center">
-          <span className="line-clamp-2">{name}</span>
-         
+      <div className="product-info mt-2 flex flex-col">
+        <h2 className="flex items-center justify-between text-sm font-bold">
+          <Link to={`/product/${id}`}>
+            <span className="line-clamp-2">{name}</span>
+          </Link>
+
           {discountPrice && (
-            <span className="bg-[#FFB2B2] text-red-600 px-2 py-1 rounded-[62px] text-xs">
+            <span className="rounded-[62px] bg-[#FFB2B2] px-2 py-1 text-xs text-red-600">
               ~{discountPercentage}%
             </span>
           )}
         </h2>
       </div>
 
-      <div className="flex my-2" style={{ width: '114px', height: '19px' }}>
+      <div className="my-2 flex" style={{ width: "114px", height: "19px" }}>
         {[...Array(5)].map((_, index) => (
           <FaStar
             key={index}
@@ -58,32 +63,31 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="absolute bottom-16 left-4 right-4 flex items-center justify-between">
         {discountPrice && (
-          <p className="text-black-500 font-semibold text-sm" >
+          <p className="text-black-500 text-sm font-semibold">
             {discountPrice.toLocaleString()} đ
           </p>
         )}
-        <p className="text-gray-500 line-through text-sm" >
+        <p className="text-sm text-gray-500 line-through">
           {price.toLocaleString()} đ
         </p>
       </div>
 
       <div className="absolute bottom-4 left-4">
-        <button className="flex items-center justify-center w-10 h-10  rounded-full p-1 transition-transform duration-200 hover:scale-105">
+        <button className="flex h-10 w-10 items-center justify-center rounded-full p-1 transition-transform duration-200 hover:scale-105">
           <FavoriteBorderOutlinedIcon
             className={`${isFavorite ? "text-red-500" : "text-black"} transition-colors duration-200`}
             fontSize="large"
-            sx={{color: "black"}}
+            sx={{ color: "black" }}
           />
         </button>
       </div>
 
       <div className="absolute bottom-4 right-4">
-        <button className="bg-white text-black p-2 rounded-full border-4 border-black flex items-center justify-center w-10 h-10 transition-transform duration-200 hover:scale-105">
+        <button className="flex h-10 w-10 items-center justify-center rounded-full border-4 border-black bg-white p-2 text-black transition-transform duration-200 hover:scale-105">
           <FaPlus className="text-black" />
         </button>
       </div>
     </div>
-    </Link>
   );
 };
 
