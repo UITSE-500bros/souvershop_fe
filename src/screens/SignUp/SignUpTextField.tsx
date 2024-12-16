@@ -30,8 +30,11 @@ const SignUpTextField: React.FC<SignUpTextFieldProps> = ({
     setShowPassword((prev) => !prev);
   };
 
+  const id = label.replace(/\s+/g, '-').toLowerCase();
+
   return (
     <TextField
+      id={id}
       type={isPassword && !showPassword ? "password" : "text"}
       value={value}
       label={label}

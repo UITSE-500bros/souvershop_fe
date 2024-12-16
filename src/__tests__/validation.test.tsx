@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isValidateEmail, isValidatePassword, isValidate } from './validation';
+import { isValidateEmail, isValidatePassword, isValidate } from '../utils/validation';
 
 describe('Validation Functions', () => {
   describe('isValidateEmail', () => {

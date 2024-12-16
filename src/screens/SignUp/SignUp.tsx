@@ -1,10 +1,9 @@
+import React, { useState } from "react";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import SignUpTextField from "./SignUpTextField";
 import { signUp } from "./services/SignUp.service";
-import { isValidate } from "@/utils/validation";
-
+import { isValidate } from "../../utils/validation";
 
 function SignUp() {
   const [formValue, setFormValue] = useState({
@@ -46,7 +45,7 @@ function SignUp() {
 
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
-      <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-black">
+      <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-black" onSubmit={handleSubmit}>
         <div className="self-start font-['Inter'] text-3xl font-black text-black">
           Đăng Ký
         </div>
@@ -79,7 +78,7 @@ function SignUp() {
         />
 
         <Button
-          onClick={(e) => handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>)}
+          type="submit"
           variant="contained"
           sx={{
             fontFamily: "Inter",

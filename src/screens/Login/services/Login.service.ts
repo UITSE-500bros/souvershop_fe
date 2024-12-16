@@ -1,3 +1,5 @@
+import { M } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const GoogleLogin = async () => {
@@ -8,3 +10,8 @@ export const GoogleLogin = async () => {
     console.error(err);
   }
 };
+export const login=async(email:string,password:string)=>{
+  return {
+    message:"Login success"
+  }
+}
