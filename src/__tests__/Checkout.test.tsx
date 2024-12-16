@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import CheckoutPage from "../screens/CheckOut/CheckoutPage";
+import CheckoutPage from "../screens/CheckoutPage";
 import { Container } from "@mui/material";
 
 // Mock the alert function
@@ -11,20 +11,20 @@ describe("CheckoutPage Component", () => {
     render(
       <Container>
         <CheckoutPage />
-      </Container>,
+      </Container>
     );
 
     // Set subtotal and payment method
-    fireEvent.change(screen.getByLabelText("Tổng tiền"), {
+    fireEvent.change(screen.getByLabelText("Tổng cộng"), {
       target: { value: subtotal },
     });
-    fireEvent.change(screen.getByLabelText("Phương thức thanh toán"), {
+    fireEvent.change(screen.getByLabelText("Chi Tiết Thanh Toán"), {
       target: { value: paymentMethod },
     });
   };
 
   it("handles successful order confirmation", async () => {
-    setup(10000, "Vnpay");
+    setup(10000, "Momo");
 
     const confirmButton = screen.getByRole("button", { name: "Xác nhận" });
     fireEvent.click(confirmButton);
@@ -35,24 +35,22 @@ describe("CheckoutPage Component", () => {
   });
 
   it("handles order confirmation with amount less than 5000", async () => {
-    setup(4000, "Vnpay");
+    setup(4000, "Momo");
 
     const confirmButton = screen.getByRole("button", { name: "Xác nhận" });
     fireEvent.click(confirmButton);
 
     await waitFor(() => {
-      expect(window.alert).toHaveBeenCalledWith(
-        "The amount must be larger than 5000 vnd",
-      );
+      expect(window.alert).toHaveBeenCalledWith("The amount must be larger than 5000 vnd");
     });
   });
 
   it("handles order confirmation failure", async () => {
-    setup(10000, "Vnpay");
+    setup(10000, "Momo");
 
     // Simulate server failure
     vi.spyOn(global, "fetch").mockImplementation(() =>
-      Promise.reject(new Error("Server error")),
+      Promise.reject(new Error("Server error"))
     );
 
     const confirmButton = screen.getByRole("button", { name: "Xác nhận" });

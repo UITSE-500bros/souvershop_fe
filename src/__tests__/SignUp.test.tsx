@@ -141,9 +141,9 @@ describe("SignUp Component", () => {
 
     mockSignUp.mockRejectedValueOnce(new Error("User already exists"));
 
-    const emailInput = screen.getByText("Email");
-    const passwordInput = screen.getByText("Mật khẩu");
-    const confirmPasswordInput = screen.getByText("Nhập lại mật khẩu");
+    const emailInput = screen.getByLabelText("Email");
+    const passwordInput = screen.getByLabelText("Mật khẩu");
+    const confirmPasswordInput = screen.getByLabelText("Nhập lại mật khẩu");
     const signUpButton = screen.getByRole("button", { name: "Đăng Ký" });
 
     fireEvent.change(emailInput, {
