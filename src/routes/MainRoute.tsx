@@ -1,5 +1,4 @@
 import AdminApp from "@/admin/AdminApp";
-import { Footer, Header } from "@/components";
 import Layout from "@/Layout";
 import Cart from "@/screens/Cart";
 import CategoryPage from "@/screens/Category";
@@ -11,11 +10,10 @@ import Home from "@/screens/Home";
 import NewPassword from "@/screens/NewPassword";
 import ProductDetail from "@/screens/ProductDetail";
 import EmployeesList from "@/admin/screens/EmployeesList";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "@/screens/Login";
 import SignUp from "@/screens/SignUp/SignUp";
 import VerifyEmail from "@/screens/VerifyEmail";
-
 
 export default function MainRoute() {
   return (
@@ -35,8 +33,7 @@ export default function MainRoute() {
         <Route path="/register" element={<SignUp />} />
         <Route path="/new-password" element={<NewPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verify-email/:accessToken" element={<VerifyEmail/>} />
-
+        <Route path="/verify-email/:accessToken" element={<VerifyEmail />} />
 
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/employees" element={<EmployeesList />} />

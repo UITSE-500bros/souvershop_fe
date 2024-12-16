@@ -7,8 +7,10 @@ import customTheme from "./styles/customTheme.ts";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
+
     <ThemeProvider theme={customTheme}>
       <App />
     </ThemeProvider>
-  </BrowserRouter>,
+  </BrowserRouter>
+ 
 );
