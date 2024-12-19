@@ -1,6 +1,7 @@
 
 
 const API_URL = import.meta.env.VITE_API_URL;
+const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 
 class Http {
   baseUrl: string;
@@ -15,7 +16,7 @@ class Http {
       method: "GET",
       headers: {
         accept: "*/*",
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     });
     return response.json();
@@ -26,7 +27,7 @@ class Http {
       headers: {
         "Content-Type": "application/json",
         accept: "*/*",
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
       body: JSON.stringify(data),
     });
@@ -40,7 +41,7 @@ class Http {
       headers: {
         "Content-Type": "application/json",
         accept: "*/*",
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
       body: JSON.stringify(data),
     });
@@ -51,7 +52,7 @@ class Http {
       method: "DELETE",
       headers: {
         accept: "*/*",
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     });
     return response.json();

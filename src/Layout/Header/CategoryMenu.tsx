@@ -1,13 +1,35 @@
-import { Menu, MenuItem } from "@mui/material";
-import React from "react";
-import { Link } from "react-router-dom";
+import http from "@/lib/Http";
+import { Category } from "@/models/Category";
 import ListIcon from "@mui/icons-material/List";
+import { Menu, MenuItem } from "@mui/material";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function CategoryMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [categories, setCategories] = React.useState<Category[]>([]);
   const handleMouseOver = (event: React.MouseEvent<HTMLAnchorElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await http.get("category");
+        console.log(res);
+
+        if (res) {
+          setCategories(res);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const categoryNames = categories.map((category) => category.category_name);
+  categoryNames.unshift("Tất cả");
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -32,31 +54,11 @@ function CategoryMenu() {
           onMouseLeave: handleClose,
         }}
       >
-        <MenuItem onClick={handleClose}>
-          <Link to={"/category"}>
-            Christmas
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to={"/category"}>
-            Birthday
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to={"/category"}>
-            Wedding
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to={"/category"}>
-            Anniversary
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to={"/category"}>
-            Graduation
-          </Link>
-        </MenuItem>
+        {categoryNames.map((category) => (
+          <MenuItem key={category} onClick={handleClose}>
+            <Link to={`/category/${category}`}>{category}</Link>
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );

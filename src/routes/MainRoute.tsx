@@ -24,7 +24,7 @@ export default function MainRoute() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="category" element={<CategoryPage />} />
+          <Route path="category/:category" element={<CategoryPage />} />
           <Route path="/customer-info" element={<CustomerInfoPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/product/:productId" element={<ProductDetail />} />
