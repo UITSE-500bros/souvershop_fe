@@ -9,27 +9,26 @@ import { Skeleton } from "@mui/material";
 
 const CategoryPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-
-
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const products = await getAllProducts();
-      if (!products) return;
-
-      setProducts(products);
-      setLoading(false);
+      try {
+        const res = await getAllProducts();
+        console.log("Response from API:", res); // Thêm dòng này để kiểm tra dữ liệu
+        if (Array.isArray(res)) {
+          setProducts(res);
+        } else {
+          console.log("Error fetching products", res);
+          
+        }
+      } catch (err) {
+        console.error("Error fetching products", err);
+      }
     };
     fetchProducts();
-    console.log(products);
   }, []);
 
-  console.log(products);
-
-  
-
-  if (products.length===0) {
+  if (products.length === 0) {
     return <Loading />;
   }
 
@@ -53,7 +52,7 @@ const CategoryPage: React.FC = () => {
         <h2 className="ml-4 text-2xl font-bold">Truyền thống</h2>
 
         <div className="mx-auto grid w-full grid-cols-4 gap-1 p-2">
-          {products.length === 0
+          {Array.isArray(products) && products.length === 0
             ? Array.from({ length: 8 }).map((_, index) => (
                 <Skeleton
                   key={index}

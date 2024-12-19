@@ -16,7 +16,7 @@ function CategoryMenu() {
     const fetchCategories = async () => {
       try {
         const res = await http.get("category");
-        console.log(res);
+      
 
         if (res) {
           setCategories(res);
