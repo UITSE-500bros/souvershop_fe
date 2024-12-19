@@ -8,13 +8,10 @@ import { getAllProducts } from "./service/Category.service";
 import { Skeleton } from "@mui/material";
 
 const CategoryPage: React.FC = () => {
-  const [priceRange, setPriceRange] = useState(1000000);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPriceRange(Number(e.target.value));
-  };
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -30,7 +27,7 @@ const CategoryPage: React.FC = () => {
 
   console.log(products);
 
-  if (!products) {
+  if (products.length===0) {
     return <Loading />;
   }
 
