@@ -5,22 +5,20 @@ import InventoryButton from "../../../admin/components/InventoryButton";
 
 export default function Inventory() {
   const [isAddingInventory, setIsAddingInventory] = useState(false);
-  const [isSelectingAddType, setIsSelectingAddType] = useState(false);
 
   const handleAddInventory = () => {
-    setIsSelectingAddType(true);  
+    setIsAddingInventory(true);  
   };
 
   const handleCloseModal = () => {
     setIsAddingInventory(false);
-    setIsSelectingAddType(false);
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5]">
       <div className="flex h-[700px] w-[1096px] flex-col gap-8 bg-white px-[20px] py-[20px] shadow-md relative">
         <div className="flex justify-between items-center">
-          <div className="text-[24px] font-bold text-[#333]">Inventory</div>
+          <div className="text-[24px] font-bold text-[#333]">Các sản phẩm</div>
           <InventoryButton onAddInventory={handleAddInventory} />
         </div>
 
@@ -50,31 +48,6 @@ export default function Inventory() {
           <div>Trang 1 trong 10</div>
           <Button variant="outlined" sx={{ textTransform: "none", marginLeft: "350px" }}>Sau</Button>
         </div>
-
-        {isSelectingAddType && (
-          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-10">
-            <div className="bg-white w-[400px] p-[20px] rounded-md shadow-lg">
-              <h2 className="text-[24px] font-bold mb-4">Chọn kiểu thêm sản phẩm</h2>
-              <div className="flex flex-col gap-4">
-                <Button
-                  variant="contained"
-                  onClick={() => { setIsAddingInventory(true); setIsSelectingAddType(false); }}
-                  sx={{ marginBottom: "10px" }}
-                >
-                  Thêm 1 sản phẩm
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={() => { setIsSelectingAddType(false); setIsAddingInventory(true); }}
-                  sx={{ marginBottom: "10px" }}
-                >
-                  Thêm nhiều sản phẩm 
-                </Button>
-                <Button variant="outlined" onClick={handleCloseModal}>Hủy bỏ</Button>
-              </div>
-            </div>
-          </div>
-        )}
 
         {isAddingInventory && (
           <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-10">
