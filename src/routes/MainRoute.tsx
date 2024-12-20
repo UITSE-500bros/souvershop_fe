@@ -11,6 +11,7 @@ import Home from "@/screens/Home";
 import NewPassword from "@/screens/NewPassword";
 import ProductDetail from "@/screens/ProductDetail";
 import EmployeesList from "@/admin/screens/EmployeesList";
+import Inventory from "@/admin/screens/Inventory";
 import { Route, Routes } from "react-router-dom";
 import Login from "@/screens/Login";
 import SignUp from "@/screens/SignUp/SignUp";
@@ -39,6 +40,7 @@ export default function MainRoute() {
 
 
         <Route path="/admin/*" element={<AdminApp />} />
+        <Route path="/inventory" element={<Inventory/>}/>
         <Route path="/employees" element={<EmployeesList />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
