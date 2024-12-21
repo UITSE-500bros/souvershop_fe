@@ -1,24 +1,77 @@
+import React, { useState, useEffect } from "react";
 import { Button, SvgIcon, TextField } from "@mui/material";
-
 import FacebookIcon from "@mui/icons-material/Facebook";
-import { Link } from "react-router-dom";
-import { GoogleLogin } from "./services/Login.service";
+import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin, LoginService } from "./services/Login.service";
+import { isValidateEmail, isValidatePassword } from "@/utils/validation";
+import { ToastContainer, toast } from "react-toastify";
+import SignUpTextField from "../SignUp/SignUpTextField";
+import { sAccessToken, sIsLogin } from "./store/loginStore";
 
 function Login() {
+  const navigate = useNavigate();
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormValue((prev) => ({ ...prev, [field]: value }));
+  };
+
   const handleLoginWithGoogle = async () => {
-    try{
+    try {
       const res = await GoogleLogin();
       console.log(res);
-    }
-    catch(err){
+    } catch (err) {
       console.error(err);
+    }
+  };
+
+  const handleLogin = async () => {
+    const emailValid = isValidateEmail(formValue.email);
+    const passwordValid = isValidatePassword(formValue.password);
+
+    if (!emailValid) {
+      setError((prev) => ({ ...prev, email: "Email không hợp lệ" }));
+    } else {
+      setError((prev) => ({ ...prev, email: "" }));
+    }
+
+    if (!passwordValid) {
+      setError((prev) => ({ ...prev, password: "Mật khẩu không hợp lệ" }));
+    } else {
+      setError((prev) => ({ ...prev, password: "" }));
+    }
+
+    if (emailValid && passwordValid) {
+      try {
+        const res = await LoginService(formValue.email, formValue.password);
+
+        if (!res.message) {
+          toast.success("Đăng nhập thành công");
+          sAccessToken.set(res.accessToken);
+          sIsLogin.set(true);
+
+          navigate("/");
+        } else {
+          toast.error("Đăng nhập thất bại: " + res.message);
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
+      <ToastContainer />
       <img
-        src="src\assets\login.jpeg"
+        src="src/assets/login.jpeg"
         alt="login"
         className="h-lvh w-1/2 rounded-br-[40px] rounded-tr-[40px] object-cover"
       />
@@ -34,13 +87,19 @@ function Login() {
               Đăng ký ngay
             </Link>
           </div>
-          <TextField
+          <SignUpTextField
+            error={!!error.email}
+            helperText={error.email}
             label="Email"
-            required
-            sx={{ width: 430 }}
-            variant="outlined"
+            onValueChange={(value) => handleInputChange("email", value)}
           />
-          <TextField label="Mật khẩu" sx={{ width: 430 }} variant="outlined" />
+          <SignUpTextField
+            label="Mật khẩu"
+            isPassword
+            error={!!error.password}
+            helperText={error.password}
+            onValueChange={(value) => handleInputChange("password", value)}
+          />
 
           <div className="remberbox flex w-[429px] flex-row items-center justify-between">
             <div className="rememberpass flex flex-row">
@@ -53,6 +112,7 @@ function Login() {
 
           <Button
             variant="contained"
+            onClick={handleLogin}
             sx={{
               backgroundColor: "#7B5D44",
               color: "white",

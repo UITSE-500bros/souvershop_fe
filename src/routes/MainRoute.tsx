@@ -16,7 +16,6 @@ import Login from "@/screens/Login";
 import SignUp from "@/screens/SignUp/SignUp";
 import VerifyEmail from "@/screens/VerifyEmail";
 
-
 export default function MainRoute() {
   return (
     <>
@@ -25,6 +24,7 @@ export default function MainRoute() {
           <Route path="/" element={<Home />} />
           <Route path="cart" element={<Cart />} />
           <Route path="category/:category" element={<CategoryPage />} />
+          <Route path="category" element={<CategoryPage />} />
           <Route path="/customer-info" element={<CustomerInfoPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/product/:productId" element={<ProductDetail />} />
@@ -35,8 +35,7 @@ export default function MainRoute() {
         <Route path="/register" element={<SignUp />} />
         <Route path="/new-password" element={<NewPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verify-email/:accessToken" element={<VerifyEmail/>} />
-
+        <Route path="/verify-email/:accessToken" element={<VerifyEmail />} />
 
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/employees" element={<EmployeesList />} />
