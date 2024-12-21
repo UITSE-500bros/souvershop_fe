@@ -19,7 +19,7 @@ class Http {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     });
-    console.log(sAccessToken.value);
+    console.log(ACCESS_TOKEN);
     return response.json();
   }
   async post(endpoint: string, data: object) {

@@ -55,7 +55,7 @@ const Header = () => {
             className="bg-black"
             onClick={() => {
               if (sIsLogin.value) {
-                navigate("/profile");
+                navigate("/customer-info");
               } else {
                 navigate("/login");
               }

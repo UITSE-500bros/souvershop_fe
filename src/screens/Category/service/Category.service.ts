@@ -4,13 +4,8 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export const getAllProducts = async () => {
   try {
-    const response = await fetch(`${API_URL}product`, {
-      method: "GET",
-      headers: {
-        accept: "*/*",
-      },
-    });
-    return response.json();
+    const response = await http.get("product");
+    return response;
   } catch (err) {
     console.error("Error in getAllProducts service:", err);
     throw err;
