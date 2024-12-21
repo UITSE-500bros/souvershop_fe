@@ -1,6 +1,7 @@
-import { log } from "console";
+import { sAccessToken } from "@/screens/Login/store/loginStore";
 
 const API_URL = import.meta.env.VITE_API_URL;
+const ACCESS_TOKEN = sAccessToken.value;
 
 class Http {
   baseUrl: string;
@@ -15,9 +16,10 @@ class Http {
       method: "GET",
       headers: {
         accept: "*/*",
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     });
+    console.log(sAccessToken.value);
     return response.json();
   }
   async post(endpoint: string, data: object) {
@@ -26,11 +28,11 @@ class Http {
       headers: {
         "Content-Type": "application/json",
         accept: "*/*",
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
       body: JSON.stringify(data),
     });
-    
+
     return response.json();
   }
 
@@ -40,7 +42,7 @@ class Http {
       headers: {
         "Content-Type": "application/json",
         accept: "*/*",
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
       body: JSON.stringify(data),
     });
@@ -51,7 +53,7 @@ class Http {
       method: "DELETE",
       headers: {
         accept: "*/*",
-        // Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     });
     return response.json();

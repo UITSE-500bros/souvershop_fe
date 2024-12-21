@@ -4,11 +4,28 @@ import { RiFilterLine } from "react-icons/ri";
 import ProductCard from "../../components/ProductCard";
 
 const CategoryPage: React.FC = () => {
-  const [priceRange, setPriceRange] = useState(1000000);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPriceRange(Number(e.target.value));
-  };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await getAllProducts();
+        console.log("Response from API:", res); // Thêm dòng này để kiểm tra dữ liệu
+        if (Array.isArray(res)) {
+          setProducts(res);
+        } else {
+          console.log("Error fetching products", res);
+        }
+      } catch (err) {
+        console.error("Error fetching products", err);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  if (products.length === 0) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8F2E5]">
