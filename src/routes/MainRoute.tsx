@@ -11,6 +11,7 @@ import Home from "@/screens/Home";
 import NewPassword from "@/screens/NewPassword";
 import ProductDetail from "@/screens/ProductDetail";
 import EmployeesList from "@/admin/screens/EmployeesList";
+import Order from "@/admin/screens/Orders";
 import { Route, Routes } from "react-router-dom";
 import Login from "@/screens/Login";
 import SignUp from "@/screens/SignUp/SignUp";
@@ -40,6 +41,7 @@ export default function MainRoute() {
 
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/employees" element={<EmployeesList />} />
+        <Route path="/Orders" element={<Order/>} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </>
