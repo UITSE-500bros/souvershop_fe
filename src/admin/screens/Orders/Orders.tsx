@@ -149,9 +149,10 @@ export default function Order() {
                 <div className="flex justify-between items-center gap-3">
                   <label className="text-[14px] text-[#333]">Tình trạng:</label>
                   <Select sx={{ width: "250px" }} defaultValue="Còn hàng">
-                    <MenuItem value="Còn hàng">Còn hàng</MenuItem>
-                    <MenuItem value="Hết hàng">Hết hàng</MenuItem>
-                    <MenuItem value="Đặt trước">Đặt trước</MenuItem>
+                    <MenuItem value="Đã xác nhận">Đã xác nhận</MenuItem>
+                    <MenuItem value="Bị trì hoãn">Bị trì hoãn</MenuItem>
+                    <MenuItem value="Đã trả lại">Đã trả lại</MenuItem>
+                    <MenuItem value="Đang giao">Đang giao</MenuItem>
                   </Select>
                 </div>
                 <div className="flex justify-between mt-4 gap-3">
