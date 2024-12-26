@@ -128,27 +128,27 @@ export default function Order() {
 
                 <div className="flex justify-between items-center gap-3">
                   <label className="text-[14px] text-[#333] w-[150px]">Sản phẩm:</label>
-                  <TextField fullWidth variant="outlined" />
+                  <TextField fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="flex justify-between items-center gap-3">
                   <label className="text-[14px] text-[#333] w-[150px]">Giá mua:</label>
-                  <TextField fullWidth variant="outlined" />
+                  <TextField fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="flex justify-between items-center gap-3">
                   <label className="text-[14px] text-[#333] w-[150px]">Số lượng:</label>
-                  <TextField fullWidth variant="outlined" />
+                  <TextField fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="flex justify-between items-center gap-10">
                   <label className="text-[14px] text-[#333] w-[100px]">Mã sản phẩm:</label>
-                  <TextField fullWidth variant="outlined" />
+                  <TextField fullWidth variant="outlined" size="small"/>
                 </div>
                 <div className="flex justify-between items-center gap-3">
                   <label className="text-[14px] text-[#333]">Dự kiến ngày giao:</label>
-                  <TextField sx={{ width: "250px" }} variant="outlined" />
+                  <TextField sx={{ width: "250px" }} variant="outlined" size="small" />
                 </div>
                 <div className="flex justify-between items-center gap-3">
                   <label className="text-[14px] text-[#333]">Tình trạng:</label>
-                  <Select sx={{ width: "250px" }} defaultValue="Còn hàng">
+                  <Select sx={{ width: "250px" }} defaultValue="Còn hàng" size="small">
                     <MenuItem value="Đã xác nhận">Đã xác nhận</MenuItem>
                     <MenuItem value="Bị trì hoãn">Bị trì hoãn</MenuItem>
                     <MenuItem value="Đã trả lại">Đã trả lại</MenuItem>
