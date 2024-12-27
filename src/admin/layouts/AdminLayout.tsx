@@ -6,11 +6,10 @@ import AdminAppBar from "./AdminTopbar/AdminAppBar";
 export default function AdminLayout() {
   return (
     <>
-      <SidebarProvider defaultOpen={false}>
+      <SidebarProvider >
         <AdminSidebar />
         <main className="w-screen">
           <AdminAppBar />
-
           <Outlet />
         </main>
       </SidebarProvider>

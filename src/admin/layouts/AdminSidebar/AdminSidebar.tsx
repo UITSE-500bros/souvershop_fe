@@ -21,11 +21,12 @@ import {
   LogOut,
 } from "lucide-react";
 import React from "react";
+import { Link } from "react-router-dom";
 //menu items
 const items = [
   {
     title: "Trang chính",
-    url: "#",
+    url: "/admin",
     icon: House,
   },
   {
@@ -40,7 +41,7 @@ const items = [
   },
   {
     title: "Nhân viên",
-    url: "#",
+    url: "/admin/employees",
     icon: CircleUserRound,
   },
 
@@ -56,9 +57,9 @@ export default function AdminSidebar() {
     <Sidebar>
       {/* Sidebar header */}
       <SidebarHeader>
-        <div className="text-center font-['Inter'] text-3xl font-semibold leading-[30px] text-[#156fee]">
+        <Link to={'/'} className="text-center font-['Inter'] text-3xl font-semibold leading-[30px] text-[#156fee]">
           SouverShop
-        </div>
+        </Link>
       </SidebarHeader>
 
       {/* Sidebar content */}
