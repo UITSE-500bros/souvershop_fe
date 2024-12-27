@@ -1,5 +1,8 @@
 import React from "react";
 import SalesIcon from "@/admin/assets/SalesIcon";
+import RevenueIcon from "@/admin/assets/RevenueIcon";
+import ProfitIcon from "@/admin/assets/ProfitIcon";
+import CostIcon from "@/admin/assets/CostIcon";
 
 export default function AdminDashboard() {
   return (
@@ -19,7 +22,7 @@ export default function AdminDashboard() {
 
           {/* Revenue */}
           <div className="flex flex-col justify-center flex-1 border-r border-gray-300 pr-5">
-            <SalesIcon className="self-center" />
+            <RevenueIcon className="self-center" />
             <div className="flex justify-between">
               <span>Doanh thu </span>
               <span>2000</span>
@@ -28,7 +31,7 @@ export default function AdminDashboard() {
 
           {/* Profit */}
           <div className="flex flex-col justify-center flex-1 border-r border-gray-300 pr-5">
-            <SalesIcon className="self-center" />
+            <ProfitIcon className="self-center" />
             <div className="flex justify-between">
               <span>Lợi nhuận </span>
               <span>1500</span>
@@ -37,7 +40,7 @@ export default function AdminDashboard() {
 
           {/* Cost */}
           <div className="flex flex-col justify-center flex-1 pr-5">
-            <SalesIcon className="self-center" />
+            <CostIcon className="self-center" />
             <div className="flex justify-between">
               <span>Chi phí </span>
               <span>500</span>
