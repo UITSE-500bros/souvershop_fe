@@ -56,8 +56,13 @@ function Login() {
           toast.success("Đăng nhập thành công");
           sAccessToken.set(res.accessToken);
           sIsLogin.set(true);
+          setTimeout(() => {
+            toast.success("Đăng nhập thành công");
+            navigate("/");
+          }, 3000);
 
-          navigate("/");
+
+        
         } else {
           toast.error("Đăng nhập thất bại: " + res.message);
         }

@@ -16,7 +16,8 @@ const CategoryPage: React.FC = () => {
       try {
         const res = await getAllProducts();
       
-        console.log("Response from API:", res); // Thêm dòng này để kiểm tra dữ liệu
+        console.log("Response from API:", res); 
+        console.log("Access token:", sAccessToken.value);
         if (Array.isArray(res)) {
           setProducts(res);
         } else {
