@@ -1,12 +1,17 @@
-import { sAccessToken } from "@/screens/Login/store/loginStore";
+
+import Cookies from "js-cookie";
 
 const API_URL = import.meta.env.VITE_API_URL;
-const ACCESS_TOKEN = sAccessToken.value;
+const ACCESS_TOKEN = Cookies.get('accessToken') 
+console.log(ACCESS_TOKEN);
+
 
 class Http {
   baseUrl: string;
   constructor() {
     this.baseUrl = API_URL;
+    
+   
   }
   private getURL(url: string) {
     return `${this.baseUrl}${url}`;
