@@ -31,7 +31,7 @@ const items = [
   },
   {
     title: "Kho đồ",
-    url: "#",
+    url: "/admin/inventory",
     icon: Database,
   },
   {
@@ -47,7 +47,7 @@ const items = [
 
   {
     title: "Nhập hàng",
-    url: "#",
+    url: "/admin/orders",
     icon: PackagePlus,
   },
 ];
@@ -57,9 +57,9 @@ export default function AdminSidebar() {
     <Sidebar>
       {/* Sidebar header */}
       <SidebarHeader>
-        <Link to={'/'} className="text-center font-['Inter'] text-3xl font-semibold leading-[30px] text-[#156fee]">
+        <div className="text-center font-['Inter'] text-3xl font-semibold leading-[30px] text-[#156fee]">
           SouverShop
-        </Link>
+        </div>
       </SidebarHeader>
 
       {/* Sidebar content */}

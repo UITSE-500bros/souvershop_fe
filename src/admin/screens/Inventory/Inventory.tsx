@@ -17,7 +17,7 @@ export default function Inventory() {
   };
 
   const handleNavigateToProductInfo = () => {
-    navigate("/admin/inventory/product-info"); 
+    navigate("/admin/product/1"); 
   };
 
   return (
