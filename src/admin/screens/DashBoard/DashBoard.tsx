@@ -1,4 +1,3 @@
-import React from "react";
 import SalesIcon from "@/admin/assets/SalesIcon";
 import RevenueIcon from "@/admin/assets/RevenueIcon";
 import ProfitIcon from "@/admin/assets/ProfitIcon";
@@ -7,17 +6,20 @@ import IconGroup from "./IconGroup";
 import Container from "./Container";
 import Quantity from "@/admin/assets/QuantityIcon";
 import BarChartComponent from "./BarChartComponent";
+import LineChartComponent from "./LineChartComponent";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import { dataBarchart, dataLineChart, tableData } from "./Fakedata";
 
-
-const data = [
-  { name: "Doanh số", value: 1000 },
-  { name: "Doanh thu", value: 2000 },
-  { name: "Lợi nhuận", value: 1500 },
-  { name: "Chi phí", value: 500 },
-];
 export default function AdminDashboard() {
   return (
-    <div className="grid grid-cols-[2fr_1fr] grid-rows-4 place-items-center gap-5">
+    <div className="grid grid-cols-[2fr_1fr] grid-rows-[1fr_1_fr_2fr_2fr] place-items-center gap-5">
       <Container title="Tổng quan doanh số">
         <IconGroup Icon={SalesIcon} label="Doanh số" value={1000} />
         <IconGroup Icon={RevenueIcon} label="Doanh thu" value={2000} />
@@ -61,10 +63,40 @@ export default function AdminDashboard() {
       </Container>
       {/* Bar chart */}
       <Container title="Mua & Bán">
-        <BarChartComponent data={data}/>
-
+        <BarChartComponent data={dataBarchart} />
       </Container>
-      
+      {/* line chart */}
+      <Container title="Tóm tắt đơn hàng">
+        <LineChartComponent data={dataLineChart} />
+      </Container>
+      {/* table */}
+      <Container title="Bảng">
+        <TableContainer>
+          <TableHead>
+            <TableRow>
+              <TableCell>Tên</TableCell>
+              <TableCell align="right">Số lượng bán</TableCell>
+              <TableCell align="right">Số lượng còn lại</TableCell>
+              <TableCell align="right">Giá</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tableData.map((row) => (
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                key={row.Tên}
+              >
+                <TableCell component="th" scope="row">
+                  {row.Tên}
+                </TableCell>
+                <TableCell align="right">{row["Số lượng bán"]}</TableCell>
+                <TableCell align="right">{row["Số lượng còn lại"]}</TableCell>
+                <TableCell align="right">{row['Giá']}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableContainer>
+      </Container>
     </div>
   );
 }
