@@ -5,6 +5,8 @@ import EmployeesList from "./screens/EmployeesList";
 import AdminDashboard from "./screens/DashBoard";
 import Order from "./screens/Orders/Orders";
 import Orders from "./screens/Orders";
+import Inventory from "./screens/Inventory";
+import ProductInfo from "./screens/ProductInfo";
 
 export default function AdminApp() {
   return (
@@ -13,6 +15,9 @@ export default function AdminApp() {
         <Route index element={<AdminDashboard />} />
         <Route path="employees" element={<EmployeesList />} />
         {/* Add more nested routes here */}
+        <Route path="inventory" element={<Inventory />}/>
+          
+        <Route path="product-info" element={<ProductInfo/>}/>
         <Route path="Orders" element={<Orders/>}/>
       </Route>
     </Routes>

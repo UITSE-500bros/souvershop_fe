@@ -20,7 +20,7 @@ export default function EmployeesList() {
     <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5]">
       <div className="flex h-[700px] w-[1096px] flex-col gap-8 bg-white px-[20px] py-[20px] shadow-md relative">
         <div className="flex justify-between items-center">
-          <div className="text-[24px] font-bold text-[#333]">Employees</div>
+          <div className="text-[24px] font-bold text-[#333]">Danh sách nhân viên</div>
           <ActionButtons onAddEmployee={handleAddEmployee} />
         </div>
 
