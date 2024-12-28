@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent } from "react";
 import { Tabs, Tab } from "@mui/material";
-import { FaUser } from "react-icons/fa";
 import ProductInfoButton from "@/admin/components/ProductInfoButton";  
 
 export default function ProductInfo() {
@@ -21,13 +20,14 @@ export default function ProductInfo() {
           <Tabs value={selectedTab} onChange={handleTabChange}>
             <Tab label="Tổng quan" />
             <Tab label="Mua hàng" />
-            <Tab label="Điều chỉnh lịch sử" />
+            <Tab label="Điều chỉnh " />
+            <Tab label="Lịch sử " />
           </Tabs>
         </div>
 
         {selectedTab === 0 && (
           <div className="flex gap-8">
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col gap-8">
               <div className="text-[18px] font-bold mb-4">Thông tin chi tiết</div>
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between">
@@ -51,12 +51,32 @@ export default function ProductInfo() {
                   <div className="font-bold">12</div>
                 </div>
               </div>
+
+              <div className="text-[18px] font-bold mb-4">Vị trí kho hàng</div>
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between">
+                  <div className="font-bold">Tên cửa hàng</div>
+                  <div className="font-bold">Hàng có sẵn</div>
+                </div>
+                <div className="flex justify-between">
+                  <div>Sulur Branch</div>
+                  <div>15</div>
+                </div>
+                <div className="flex justify-between">
+                  <div>Singanallur Branch</div>
+                  <div>19</div>
+                </div>
+              </div>
             </div>
 
-            <div className="flex-1">
+            <div className="w-[250px]">
               <div className="text-[18px] font-bold mb-4">Hình ảnh sản phẩm</div>
-              <div className="w-[200px] h-[200px] bg-gray-200 rounded-md flex items-center justify-center">
-                <FaUser size={80} color="#777777" />
+              <div className="w-[200px] h-[200px] bg-white-200 rounded-md flex items-center justify-center border-2 border-gray-300 border-dashed">
+              <img
+                  src="https://cooponline.vn/wp-content/uploads/2022/09/nuoc-tuong-dau-nanh-maggi-chai-450ml-2023529.jpg" 
+                  alt="Hình ảnh sản phẩm"
+                  className="w-full h-full object-cover rounded-md"
+                />
               </div>
               <div className="mt-4">
                 <div className="flex justify-between">
@@ -79,24 +99,6 @@ export default function ProductInfo() {
             </div>
           </div>
         )}
-
-        <div className="mt-8">
-          <div className="text-[18px] font-bold mb-4">Vị trí kho hàng</div>
-          <div className="flex flex-col gap-4">
-            <div className="flex justify-between">
-              <div className="font-bold">Tên cửa hàng</div>
-              <div className="font-bold">Hàng có sẵn</div>
-            </div>
-            <div className="flex justify-between">
-              <div>Sulur Branch</div>
-              <div>15</div>
-            </div>
-            <div className="flex justify-between">
-              <div>Singanallur Branch</div>
-              <div>19</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

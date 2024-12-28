@@ -12,9 +12,9 @@ export default function AdminApp() {
         <Route index element={<Home />} />
         <Route path="employees" element={<EmployeesList />} />
         {/* Add more nested routes here */}
-        <Route path="inventory" element={<Inventory/>}/>
-        <Route path="inventory/product-info" element={<ProductInfo/>}/>
-
+        <Route path="inventory" element={<Inventory />}/>
+          
+        <Route path="product-info" element={<ProductInfo/>}/>
       </Route>
     </Routes>
   );

@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Button, TextField, Select, MenuItem } from "@mui/material";
 import { FaUser } from "react-icons/fa";
 import InventoryButton from "../../../admin/components/InventoryButton";
+import { useNavigate } from "react-router-dom";
 
 export default function Inventory() {
   const [isAddingInventory, setIsAddingInventory] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddInventory = () => {
     setIsAddingInventory(true);
@@ -12,6 +14,10 @@ export default function Inventory() {
 
   const handleCloseModal = () => {
     setIsAddingInventory(false);
+  };
+
+  const handleNavigateToProductInfo = () => {
+    navigate("/admin/inventory/product-info"); 
   };
 
   return (
@@ -79,7 +85,11 @@ export default function Inventory() {
             <div className="flex-1 text-left">Khả dụng</div>
           </div>
           {[...Array(1)].map((_, index) => (
-            <div className="flex p-[10px] border-b border-[#ddd]" key={index}>
+            <div className="flex p-[10px] border-b border-[#ddd]" 
+            key={index}
+            onClick={handleNavigateToProductInfo}
+            style={{ cursor: "pointer" }}
+            >
               <div className="flex-1 text-left">Maggi</div>
               <div className="flex-1 text-left">250 000 VNĐ</div>
               <div className="flex-1 text-left">50 Gói</div>
