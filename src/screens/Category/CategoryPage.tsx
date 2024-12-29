@@ -6,7 +6,6 @@ import { RiFilterLine } from "react-icons/ri";
 import ProductCard from "../../components/ProductCard";
 import { getAllProducts } from "./service/Category.service";
 import { Skeleton } from "@mui/material";
-import { sAccessToken } from "../Login/store/loginStore";
 
 const CategoryPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);

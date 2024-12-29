@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Button, SvgIcon, TextField } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link, useNavigate } from "react-router-dom";
-import { GoogleLogin, LoginService } from "./services/Login.service";
 import { isValidateEmail, isValidatePassword } from "@/utils/validation";
 import { ToastContainer, toast } from "react-toastify";
 import SignUpTextField from "../SignUp/SignUpTextField";
-import { sAccessToken, sIsLogin } from "./store/loginStore";
+import useAuthStore from "@/stores/AuthStore";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,15 +21,16 @@ function Login() {
   const handleInputChange = (field: string, value: string) => {
     setFormValue((prev) => ({ ...prev, [field]: value }));
   };
+  const login = useAuthStore((state)=>state.login)
 
-  const handleLoginWithGoogle = async () => {
-    try {
-      const res = await GoogleLogin();
-      console.log(res);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const handleLoginWithGoogle = async () => {
+  //   try {
+  //     const res = await GoogleLogin();
+  //     console.log(res);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   const handleLogin = async () => {
     const emailValid = isValidateEmail(formValue.email);
@@ -50,22 +50,9 @@ function Login() {
 
     if (emailValid && passwordValid) {
       try {
-        const res = await LoginService(formValue.email, formValue.password);
-
-        if (!res.message) {
-          toast.success("Đăng nhập thành công");
-          sAccessToken.set(res.accessToken);
-          sIsLogin.set(true);
-          setTimeout(() => {
-            toast.success("Đăng nhập thành công");
-            navigate("/");
-          }, 3000);
-
-
-        
-        } else {
-          toast.error("Đăng nhập thất bại: " + res.message);
-        }
+         await login(formValue.email,formValue.password)
+        toast.success("Đăng nhập thành công");
+        navigate("/");
       } catch (err) {
         console.error(err);
       }
@@ -194,7 +181,7 @@ function Login() {
                 </svg>
               </SvgIcon>
             }
-            onClick={handleLoginWithGoogle}
+            // onClick={handleLoginWithGoogle}
             variant="contained"
             sx={{
               justifyContent: "start",

@@ -3,11 +3,10 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import SubscribeBanner from "./SubscribeBanner";
-import { sIsLogin } from "@/screens/Login/store/loginStore";
 
 export default function Footer() {
 
-  const isLogin = sIsLogin.use();
+  const isLogin = true
   return (
     <div className="relative h-[588px] w-full">
       {/* Footer */}

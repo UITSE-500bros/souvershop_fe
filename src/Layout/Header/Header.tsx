@@ -6,7 +6,6 @@ import { Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
 import CategoryMenu from "./CategoryMenu";
-import { sIsLogin } from "@/screens/Login/store/loginStore";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -54,7 +53,7 @@ const Header = () => {
           <IconButton
             className="bg-black"
             onClick={() => {
-              if (sIsLogin.value) {
+              if (true) {
                 navigate("/customer-info");
               } else {
                 navigate("/login");
