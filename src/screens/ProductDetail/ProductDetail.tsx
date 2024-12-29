@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
-import ImageSlider from "./ImageSlider";
+import ProductSlider from "@/components/ProductSlider";
+import { Product } from "@/models/Product";
+import { formatPrice } from "@/utils/PriceFormat";
 import {
+  Box,
   Button,
   FormControl,
   InputLabel,
@@ -8,18 +10,18 @@ import {
   Rating,
   Select,
   SelectChangeEvent,
-  Tabs,
   Tab,
-  Box,
+  Tabs,
   Typography,
 } from "@mui/material";
-import ButtonGroup from "../../components/ButtonGroup";
-import RatingReview from "./RatingReview";
-import ProductSlider from "@/components/ProductSlider";
-import { Product } from "@/models/Product";
-import { getProductById } from "./service/ProductDetail.service";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { log } from "console";
+import ButtonGroup from "../../components/ButtonGroup";
+import ImageSlider from "./ImageSlider";
+import RatingReview from "./RatingReview";
+import { getProductById } from "./service/ProductDetail.service";
+
+import { Loading } from "@/components/Loading";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -64,15 +66,7 @@ function ProductDetail() {
   }, [productId]);
   console.log(product);
 
-  const data = [
-    "https://i.etsystatic.com/42383617/r/il/d2697c/5835188521/il_794xN.5835188521_hgfg.jpg",
-    "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
-    "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
-    "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
-    "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
-    "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
-    "https://i.etsystatic.com/41691825/r/il/edd9a5/5317212043/il_794xN.5317212043_ff2b.jpg",
-  ];
+
 
   const images_data = [
     {
@@ -121,6 +115,7 @@ function ProductDetail() {
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue);
   };
+  if(!product)return <Loading />
 
   return (
     <div className="flex flex-col px-[80px]">
@@ -142,14 +137,14 @@ function ProductDetail() {
         </div>
 
         <img
-          className="ml-3 h-[530px] w-[444px] rounded-[20px]"
-          src="https://picsum.photos/444/530"
+          className="ml-3 p-4 h-[530px] w-[444px] rounded-[20px]"
+          src={product.product_image[0]}
         />
 
         {/* Product Info */}
         <div className="ml-10 flex h-[530px] w-[590px] flex-col gap-2">
           <div className="font-['Inter'] text-[40px] font-bold text-black">
-            One Life Graphic T-shirt
+            {product?.product_name}
           </div>
           <Rating
             name="controlled"
@@ -162,7 +157,7 @@ function ProductDetail() {
           {/* Price */}
           <div className="flex flex-row items-center justify-start gap-4">
             <div className="font-['Inter'] text-[32px] font-bold text-black">
-              $260
+              {formatPrice(product.product_selling_price)}
             </div>
             <div className="font-['Inter'] text-[32px] font-bold text-black/30 line-through">
               $300
@@ -175,10 +170,10 @@ function ProductDetail() {
           </div>
 
           {/* Description */}
-          <div className="w-[590px] font-['Inter'] text-base font-normal leading-snug text-black/60">
+          {/* <div className="w-[590px] font-['Inter'] text-base font-normal leading-snug text-black/60">
             This graphic t-shirt which is perfect for any occasion. Crafted from
             a soft and breathable fabric, it offers superior comfort and style.
-          </div>
+          </div> */}
           <hr />
           {/*Select color*/}
           <div className="font-['Inter'] text-base font-normal text-black/60">
@@ -252,36 +247,14 @@ function ProductDetail() {
         </Tabs>
 
         <TabPanel value={tabIndex} index={0}>
-          <Typography>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae,
-            vitae aliquid! Vero ipsa cumque vitae aspernatur sit quasi nulla
-            dignissimos quo sint, dolores tempore ut laudantium aliquam hic non.
-            Ratione odit veritatis voluptates nemo. Consequatur nostrum rem
-            porro distinctio? At culpa laborum ad, illum a voluptas odit debitis
-            aut facere doloremque consectetur voluptates eaque tempore
-            voluptatum dignissimos neque labore qui, minima quae? Ullam,
-            doloribus. Vero nisi delectus commodi tempore, laboriosam obcaecati
-            nostrum ducimus placeat maxime, labore ab facere vel. Asperiores
-            esse repellendus blanditiis amet, ratione aliquam impedit corporis
-            fugit officia! Qui voluptatibus earum quaerat reiciendis atque
-            voluptate, illo officia dolorem eligendi nostrum quod ratione
-            laboriosam velit exercitationem vitae excepturi eum corporis sit
-            incidunt perspiciatis fuga iure minima. Non cumque quidem quaerat
-            quis expedita asperiores autem odio quo architecto dolorum ab
-            veniam, blanditiis commodi iure voluptas, laborum vero ducimus eos
-            ipsum saepe distinctio obcaecati dicta cum. Tempora eligendi debitis
-            quas non explicabo veniam deserunt facilis nesciunt officia,
-            expedita culpa doloribus nulla esse sapiente odio? Vel a atque
-            eligendi fuga qui perferendis error, rem molestias, suscipit ut
-            doloribus distinctio ex! Quibusdam dolorum sit, nulla quas, labore
-            odit voluptate qui animi consectetur asperiores corporis at cumque,
-            ullam tempora sed. Voluptate ut obcaecati hic molestias esse odit
-            explicabo nihil deserunt dicta ea? Possimus, expedita, excepturi
-            assumenda ad accusamus amet, quae repellendus voluptatum
-            necessitatibus ut ipsa veniam? Enim mollitia atque unde totam
-            tenetur pariatur excepturi minus explicabo facere, quos facilis
-            sapiente voluptatum ratione. Optio et, velit obcaecati iste dolores
-            accusamus pariatur quaerat eum eos quo sunt beatae cupiditate ea.
+          <Typography sx={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "16px",
+            fontWeight: "400",
+            lineHeight: "1.5",
+            color: "#333",
+          }}>
+            {product.product_describe}
           </Typography>
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>

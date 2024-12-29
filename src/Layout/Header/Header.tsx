@@ -53,11 +53,9 @@ const Header = () => {
           <IconButton
             className="bg-black"
             onClick={() => {
-              if (true) {
-                navigate("/customer-info");
-              } else {
+          
                 navigate("/login");
-              }
+            
               
             }}
           >
