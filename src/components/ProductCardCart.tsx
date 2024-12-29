@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import ButtonGroup from "./ButtonGroup"; // Đảm bảo import đúng
 
 interface ProductCardCartProps {
   name: string;
@@ -23,10 +24,10 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({
   const [quantity, setQuantity] = useState(initialQuantity);
   const totalPrice = price * quantity;
 
-  const handleQuantityChange = (delta: number) => {
-    const newQuantity = quantity + delta;
-    if (newQuantity >= 1) {
-      setQuantity(newQuantity);
+  const handleIncrement = () => setQuantity((prev) => prev + 1);
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
     }
   };
 
@@ -40,7 +41,7 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({
         <h3 className="font-bold text-lg">{name}</h3>
         <p>Kích cỡ: {size}</p>
         <p>Màu sắc: {color}</p>
-        <p className="font-bold"> {totalPrice.toLocaleString()} đ</p>
+        <p className="font-bold">{totalPrice.toLocaleString()} đ</p>
       </div>
 
       <button
@@ -50,20 +51,12 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({
         <FaTrash size={20} />
       </button>
 
-      <div className="absolute bottom-2 right-2 flex items-center border rounded-[62px] bg-gray-200 p-1 space-x-2">
-        <button
-          className="px-2 py-1 text-lg bg-gray-200 hover:bg-gray-300"
-          onClick={() => handleQuantityChange(-1)}
-        >
-          -
-        </button>
-        <span className="px-3">{quantity}</span>
-        <button
-          className="px-2 py-1 text-lg bg-gray-200 hover:bg-gray-300"
-          onClick={() => handleQuantityChange(1)}
-        >
-          +
-        </button>
+      <div className="absolute bottom-2 right-2 w-32 border border-gray-300 rounded-full flex items-center justify-between p-1 bg-gray-100 ">
+        <ButtonGroup
+          value={quantity}
+          onIncrement={handleIncrement}
+          onDecrement={handleDecrement}
+        />
       </div>
     </div>
   );

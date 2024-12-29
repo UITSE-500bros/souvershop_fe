@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import ProductCardCart from "../../components/ProductCardCart";
 import OrderSummaryCard from "../../components/OrderSummaryCard";
 import PromoCodeBox from "../../components/PromoCodeBox";
@@ -36,7 +35,7 @@ const CartPage: React.FC = () => {
   const total = subtotal - discount + shipping;
 
   return (
-    <div className="pl-16"> 
+    <div className="pl-16">
       <div className="flex space-x-6">
         <div
           className="p-6 bg-white rounded-lg "
