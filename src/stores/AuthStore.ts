@@ -7,6 +7,7 @@ type AuthStore = {
     refreshToken: string,
     login: (user_email: string, user_password: string) => void,
     logout: () => void
+    loadFromStorage: () => void
 }
 
 const useAuthStore = create<AuthStore>((set)=>({
@@ -33,6 +34,13 @@ const useAuthStore = create<AuthStore>((set)=>({
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         window.location.href = '/login';
-    }
+    },
+    loadFromStorage: () => {
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (accessToken && refreshToken) {
+          set({ accessToken, refreshToken });
+        }
+      },
 }))
 export default useAuthStore;
