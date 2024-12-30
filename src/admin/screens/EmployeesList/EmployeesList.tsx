@@ -3,9 +3,13 @@ import { Button, TextField } from "@mui/material";
 import { FaUser } from "react-icons/fa";
 import ActionButtons from "../../../admin/components/ActionButtons";
 
+import { employeesData } from "@/admin/screens/EmployeesList/Fakedata";
+
 export default function EmployeesList() {
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
   const [isSelectingAddType, setIsSelectingAddType] = useState(false);
+
+  const [employees, setEmployees] = useState(employeesData);
 
   const handleAddEmployee = () => {
     setIsSelectingAddType(true);  
@@ -33,14 +37,15 @@ export default function EmployeesList() {
             <div className="flex-1 text-left">Loại nhân viên</div>
             <div className="flex-1 text-left">Lương</div>
           </div>
-          {[...Array(1)].map((_, index) => (
+          
+          {employees.map((employee, index) => (
             <div className="flex p-[10px] border-b border-[#ddd]" key={index}>
-              <div className="flex-1 text-left">Nguyễn Văn A</div>
-              <div className="flex-1 text-left">NV001</div>
-              <div className="flex-1 text-left">0123456789</div>
-              <div className="flex-1 text-left">email@example.com</div>
-              <div className="flex-1 text-left">Sale</div>
-              <div className="flex-1 text-left">10,0000,000 VNĐ</div>
+              <div className="flex-1 text-left">{employee.name}</div>
+              <div className="flex-1 text-left">{employee.employeeId}</div>
+              <div className="flex-1 text-left">{employee.phone}</div>
+              <div className="flex-1 text-left">{employee.email}</div>
+              <div className="flex-1 text-left">{employee.employeeType}</div>
+              <div className="flex-1 text-left">{employee.salary}</div>
             </div>
           ))}
         </div>
