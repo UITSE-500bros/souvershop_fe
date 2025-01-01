@@ -6,6 +6,7 @@ import AdminDashboard from "./screens/DashBoard";
 import Orders from "./screens/Orders";
 import Inventory from "./screens/Inventory";
 import ProductInfo from "./screens/ProductInfo";
+import Reports from "./screens/Reports";
 
 export default function AdminApp() {
   return (
@@ -15,6 +16,7 @@ export default function AdminApp() {
         <Route path="employees" element={<EmployeesList />} />
         <Route path="inventory" element={<Inventory />}/>
         <Route path="product/:productId" element={<ProductInfo />}/>
+        <Route path="reports" element={<Reports/>}/>
     
         <Route path="orders" element={<Orders />} />
       </Route>

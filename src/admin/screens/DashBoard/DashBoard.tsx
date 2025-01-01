@@ -3,7 +3,7 @@ import RevenueIcon from "@/admin/assets/RevenueIcon";
 import ProfitIcon from "@/admin/assets/ProfitIcon";
 import CostIcon from "@/admin/assets/CostIcon";
 import IconGroup from "./IconGroup";
-import Container from "./Container";
+import Container from "../../components/Container/Container";
 import Quantity from "@/admin/assets/QuantityIcon";
 import BarChartComponent from "./BarChartComponent";
 import LineChartComponent from "./LineChartComponent";

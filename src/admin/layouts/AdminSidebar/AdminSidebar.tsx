@@ -36,7 +36,7 @@ const items = [
   },
   {
     title: "Thống kê",
-    url: "#",
+    url: "/admin/reports",
     icon: ChartArea,
   },
   {

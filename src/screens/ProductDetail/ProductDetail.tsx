@@ -1,6 +1,6 @@
 import ProductSlider from "@/components/ProductSlider";
 import { Product } from "@/models/Product";
-import { formatPrice } from "@/utils/PriceFormat";
+import { formatPrice } from "@/utils/FormatPrice";
 import {
   Box,
   Button,
