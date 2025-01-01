@@ -4,6 +4,7 @@ import MainBanner from "../../assets/TranhDongHo.png";
 import { Footer } from "../../components";
 import Header from "../../Layout/Header/Header";
 import ProductSlider from "../../components/ProductSlider";
+import ReviewCard from "../../components/ReviewCard"; 
 import { useEffect, useState } from "react";
 import { getBannerApi } from "./Home.service";
 import Carousel from "react-multi-carousel";
@@ -65,20 +66,14 @@ const Home = () => {
       imageUrl: "https://picsum.photos/seed/picsum/200/300",
       rating: 4,
     },
-    // {
-    //   id: 5,
-    //   name: "Bình hoa sứ",
-    //   price: 300000,
-    //   imageUrl: "https://picsum.photos/seed/picsum/200/300",
-    //   rating: 5,
-    // },
-    // {
-    //   id: 6,
-    //   name: "Bình hoa sứ",
-    //   price: 300000,
-    //   imageUrl: "https://picsum.photos/seed/picsum/200/300",
-    //   rating: 4,
-    // },
+  ];
+
+  const reviews = [
+    { name: "Nguyễn Văn A", review: "Sản phẩm rất đẹp, chất lượng tốt!", rating: 5 },
+    { name: "Trần Thị B", review: "Rất hài lòng, sẽ mua thêm", rating: 4 },
+    { name: "Lê Minh C", review: "Giá hợp lý, giao hàng nhanh chóng", rating: 4 },
+    { name: "Phạm Hoàng D", review: "Mua lần 2, sản phẩm rất chất lượng!", rating: 5 },
+    { name: "Vũ Thị E", review: "Giao hàng nhanh, đóng gói cẩn thận", rating: 3 },
   ];
 
   useEffect(() => {
@@ -94,6 +89,7 @@ const Home = () => {
     fetchBanners();
   }, []);
  console.log(banners)
+
 
   return (
     <div className="flex flex-col">
@@ -161,7 +157,23 @@ const Home = () => {
       <div className="my-3 h-[1px] w-full bg-black" />
       {/* best seller */}
       <ProductSlider data={data} text="Bán chạy nhất" />
-      {/*Banner*/}
+      {/* Customer Reviews Section */}
+      <div className="reviews-section my-8">
+        <h2 className="text-center text-5xl font-bold text-black">Đánh giá của khách hàng</h2>
+        <div className="reviews flex flex-wrap justify-between gap-6">
+          {reviews.map((review) => (
+            <div key={review.name} className="w-[48%]"> 
+              <ReviewCard
+                name={review.name}
+                review={review.review}
+                rating={review.rating}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Banner */}
       {true ? (
         <Carousel
           swipeable={false}
@@ -187,7 +199,8 @@ const Home = () => {
         <Skeleton variant="rectangular" width="100%" height={300} />
       )}
 
-      {/*Footer*/}
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
