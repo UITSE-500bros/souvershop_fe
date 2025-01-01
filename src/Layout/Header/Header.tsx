@@ -1,14 +1,36 @@
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { AppBar, Box, IconButton, TextField, Toolbar } from "@mui/material";
+import { AppBar, Box, IconButton, Menu, MenuItem, TextField, Toolbar } from "@mui/material";
 import { Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
 import CategoryMenu from "./CategoryMenu";
+import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState<null|HTMLElement>(null);
+
+  const handleMenuOpen=(event: React.MouseEvent<HTMLButtonElement>)=> {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose=()=>{
+    setAnchorEl(null);
+  };
+
+  const handleProfile=()=>{
+    navigate("/customer-info");
+    handleClose();
+  };
+
+  const handleLogout=()=>{
+    navigate("/login");
+    handleClose();
+  };
+
+
   return (
     <div className="sticky left-0 top-0 z-10 w-full">
       <DiscountBanner />
@@ -50,17 +72,23 @@ const Header = () => {
           >
             <FavoriteBorderOutlinedIcon />
           </IconButton>
+
+
           <IconButton
             className="bg-black"
-            onClick={() => {
-          
-                navigate("/login");
-            
-              
-            }}
+            onClick={handleMenuOpen}
           >
             <AccountCircleOutlinedIcon />
           </IconButton>
+
+          <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          >
+            <MenuItem onClick={handleProfile}>Profile</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </div>

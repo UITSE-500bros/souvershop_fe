@@ -6,6 +6,8 @@ import { isValidateEmail, isValidatePassword } from "@/utils/validation";
 import { ToastContainer, toast } from "react-toastify";
 import SignUpTextField from "../SignUp/SignUpTextField";
 import useAuthStore from "@/stores/AuthStore";
+import axiosInstance from "@/services/AxiosInstance";
+import { loginWithGoogleApi } from "./Login.service";
 
 function Login() {
   const navigate = useNavigate();
@@ -21,16 +23,13 @@ function Login() {
   const handleInputChange = (field: string, value: string) => {
     setFormValue((prev) => ({ ...prev, [field]: value }));
   };
-  const login = useAuthStore((state)=>state.login)
+  const login = useAuthStore((state) => state.login);
 
-  // const handleLoginWithGoogle = async () => {
-  //   try {
-  //     const res = await GoogleLogin();
-  //     console.log(res);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  const handleLoginWithGoogle = async () => {
+    const res = await loginWithGoogleApi();
+    console.log(res);
+    
+  };
 
   const handleLogin = async () => {
     const emailValid = isValidateEmail(formValue.email);
@@ -50,7 +49,7 @@ function Login() {
 
     if (emailValid && passwordValid) {
       try {
-         await login(formValue.email,formValue.password)
+        await login(formValue.email, formValue.password);
         toast.success("Đăng nhập thành công");
         navigate("/");
       } catch (err) {
@@ -181,7 +180,7 @@ function Login() {
                 </svg>
               </SvgIcon>
             }
-            // onClick={handleLoginWithGoogle}
+            onClick={handleLoginWithGoogle}
             variant="contained"
             sx={{
               justifyContent: "start",

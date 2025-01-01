@@ -30,7 +30,7 @@ const responsive = {
 
 const Home = () => {
   const navigate = useNavigate();
-  const [banners, setBanners] = useState([]);
+  const [banners, setBanners] = useState({});
 
   const data = [
     {
@@ -93,7 +93,7 @@ const Home = () => {
     };
     fetchBanners();
   }, []);
-  console.log(Object.values(banners));
+ console.log(banners)
 
   return (
     <div className="flex flex-col">
@@ -162,7 +162,7 @@ const Home = () => {
       {/* best seller */}
       <ProductSlider data={data} text="Bán chạy nhất" />
       {/*Banner*/}
-      {Object.values(banners).length > 0 ? (
+      {true ? (
         <Carousel
           swipeable={false}
           draggable={false}
@@ -178,8 +178,8 @@ const Home = () => {
           dotListClass="custom-dot-list-style"
         >
           {Object.values(banners).map((banner) => (
-            <div key={banner} className="h-[300px] w-full">
-              <img src={banner} alt="banner" className="h-[300px] w-full" />
+            <div key={banner as string} className="h-[300px] w-full">
+              <img src={banner as string} alt="banner" className="h-[300px] w-full" />
             </div>
           ))}
         </Carousel>
