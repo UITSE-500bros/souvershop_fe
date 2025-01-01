@@ -1,12 +1,37 @@
-import { Button } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainBanner from "../../assets/TranhDongHo.png";
 import { Footer } from "../../components";
 import Header from "../../Layout/Header/Header";
 import ProductSlider from "../../components/ProductSlider";
+import { useEffect, useState } from "react";
+import { getBannerApi } from "./Home.service";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 1024, min: 768 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
 
 const Home = () => {
   const navigate = useNavigate();
+  const [banners, setBanners] = useState([]);
+
   const data = [
     {
       id: 1,
@@ -55,10 +80,24 @@ const Home = () => {
     //   rating: 4,
     // },
   ];
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      getBannerApi()
+        .then((res) => {
+          setBanners(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchBanners();
+  }, []);
+  console.log(Object.values(banners));
+
   return (
     <div className="flex flex-col">
       {/* banner block */}
-
       <div className="relative h-[550px] w-full">
         <img
           src={MainBanner}
@@ -115,26 +154,38 @@ const Home = () => {
           </div>
         </div>
       </div>
-
       {/* empty space */}
       <div className="h-[100px] w-full bg-[#7b5c43]" />
-
       {/* new products */}
       <ProductSlider data={data} text="Sản phẩm mới" />
-
       <div className="my-3 h-[1px] w-full bg-black" />
-
       {/* best seller */}
       <ProductSlider data={data} text="Bán chạy nhất" />
-
       {/*Banner*/}
-      <div className="my-5 h-[750px] w-full border">
-        <img
-          src="https://picsum.photos/seed/picsum/2000/750"
-          alt="banner"
-          className="h-full w-full"
-        />
-      </div>
+      {Object.values(banners).length > 0 ? (
+        <Carousel
+          swipeable={false}
+          draggable={false}
+          showDots={true}
+          responsive={responsive}
+          infinite={true}
+          autoPlay={false}
+          autoPlaySpeed={1000}
+          keyBoardControl={true}
+          customTransition="all .5"
+          transitionDuration={500}
+          containerClass="carousel-container"
+          dotListClass="custom-dot-list-style"
+        >
+          {Object.values(banners).map((banner) => (
+            <div key={banner} className="h-[300px] w-full">
+              <img src={banner} alt="banner" className="h-[300px] w-full" />
+            </div>
+          ))}
+        </Carousel>
+      ) : (
+        <Skeleton variant="rectangular" width="100%" height={300} />
+      )}
 
       {/*Footer*/}
     </div>
