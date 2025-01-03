@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
 import CategoryMenu from "./CategoryMenu";
 import { useState } from "react";
+import useAuthStore from "@/stores/AuthStore";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Header = () => {
   const handleMenuOpen=(event: React.MouseEvent<HTMLButtonElement>)=> {
     setAnchorEl(event.currentTarget);
   };
+  const logout= useAuthStore(state=>state.logout);
 
   const handleClose=()=>{
     setAnchorEl(null);
@@ -26,6 +28,7 @@ const Header = () => {
   };
 
   const handleLogout=()=>{
+    logout();
     navigate("/login");
     handleClose();
   };

@@ -1,12 +1,10 @@
-import axiosInstance from "@/services/AxiosInstance"
+import axiosInstance from "@/services/AxiosInstance";
 
-export const loginWithGoogleApi = async ()=>{
-    try{
-        const response = await axiosInstance.get('auth/login/federated/google')
-        console.log(response)
-        return response.data
-    }
-    catch(error){
-        console.log(error)
-    }
-}
+const API_URL = import.meta.env.VITE_API_URL;
+export const loginWithGoogleApi = async () => {
+  try {
+    window.location.href = `${API_URL}/auth/login/federated/google`;
+  } catch (error) {
+    console.log(error);
+  }
+};

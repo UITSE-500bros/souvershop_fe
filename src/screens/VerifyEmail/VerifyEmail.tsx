@@ -1,13 +1,21 @@
 import { Loading } from "@/components/Loading";
-import React from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function VerifyEmail() {
+  const nav=useNavigate();
   const accessToken = useParams().accessToken;
+  useEffect(()=>{
+    if(accessToken){
+      localStorage.setItem("accessToken", accessToken);
+      setTimeout(() => {
+        nav('/')
+      }, 3000);
+    
+    }
+  },[accessToken])
   return (
     <div>
-      <h1>Verify Email</h1>
-      <p>Access Token: {accessToken}</p>
       <Loading />
     </div>
   );
