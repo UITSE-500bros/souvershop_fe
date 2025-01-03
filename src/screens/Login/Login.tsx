@@ -6,7 +6,7 @@ import { isValidateEmail, isValidatePassword } from "@/utils/validation";
 import { ToastContainer, toast } from "react-toastify";
 import SignUpTextField from "../SignUp/SignUpTextField";
 import useAuthStore from "@/stores/AuthStore";
-import axiosInstance from "@/services/AxiosInstance";
+
 import { loginWithGoogleApi } from "./Login.service";
 
 function Login() {
@@ -28,7 +28,6 @@ function Login() {
   const handleLoginWithGoogle = async () => {
     const res = await loginWithGoogleApi();
     console.log(res);
-    
   };
 
   const handleLogin = async () => {
