@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import { Button, TextField, Select, MenuItem } from "@mui/material";
-import { FaUser } from "react-icons/fa";
 import InventoryButton from "../../../admin/components/InventoryButton";
 import { useNavigate } from "react-router-dom";
 
 export default function Inventory() {
   const [isAddingInventory, setIsAddingInventory] = useState(false);
   const navigate = useNavigate();
+
+  const products = [
+    {
+      name: "Maggi",
+      purchasePrice: "250 000 VNĐ",
+      quantity: "50 Gói",
+      thresholdValue: "15 Gói",
+      expirationDate: "12/1/2024",
+      availability: "Còn hàng",
+    },
+  ];
 
   const handleAddInventory = () => {
     setIsAddingInventory(true);
@@ -17,7 +27,7 @@ export default function Inventory() {
   };
 
   const handleNavigateToProductInfo = () => {
-    navigate("/admin/product/1"); 
+    navigate("product-info"); 
   };
 
   return (
@@ -77,25 +87,24 @@ export default function Inventory() {
 
         <div className="flex flex-col gap-5 overflow-auto border border-[#ddd] rounded-md">
           <div className="flex bg-[#f5f5f5] p-[10px] font-bold text-[#333]">
-            <div className="flex-1 text-left">Các sản phẩm</div>
+            <div className="flex-1 text-left">Tên sản phẩm</div>
             <div className="flex-1 text-left">Giá mua</div>
             <div className="flex-1 text-left">Số lượng</div>
             <div className="flex-1 text-left">Giá trị ngưỡng</div>
             <div className="flex-1 text-left">Ngày hết hạn</div>
-            <div className="flex-1 text-left">Khả dụng</div>
           </div>
-          {[...Array(1)].map((_, index) => (
-            <div className="flex p-[10px] border-b border-[#ddd]" 
-            key={index}
-            onClick={handleNavigateToProductInfo}
-            style={{ cursor: "pointer" }}
+          {products.map((product, index) => (
+            <div
+              className="flex p-[10px] border-b border-[#ddd]"
+              key={index}
+              onClick={handleNavigateToProductInfo}
+              style={{ cursor: "pointer" }}
             >
-              <div className="flex-1 text-left">Maggi</div>
-              <div className="flex-1 text-left">250 000 VNĐ</div>
-              <div className="flex-1 text-left">50 Gói</div>
-              <div className="flex-1 text-left">15 Gói</div>
-              <div className="flex-1 text-left">12/1/2024</div>
-              <div className="flex-1 text-left">Còn hàng</div>
+              <div className="flex-1 text-left">{product.name}</div>
+              <div className="flex-1 text-left">{product.purchasePrice}</div>
+              <div className="flex-1 text-left">{product.quantity}</div>
+              <div className="flex-1 text-left">{product.thresholdValue}</div>
+              <div className="flex-1 text-left">{product.expirationDate}</div>
             </div>
           ))}
         </div>
@@ -113,19 +122,8 @@ export default function Inventory() {
             <div className="bg-white w-[400px] p-[20px] rounded-md shadow-lg">
               <h2 className="text-[24px] font-bold mb-4">Thêm Sản Phẩm</h2>
               <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between border-dashed border-2 p-4 mt-4">
-                  <div className="w-[100px] h-[100px] rounded-full border-2 border-dashed border-[#ddd] flex justify-center items-center">
-                    <FaUser size={60} color="#777777" />
-                  </div>
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="text-[#858D9D]">Kéo hình ảnh vào đây</div>
-                    <div className="text-[#858D9D]">Hoặc</div>
-                    <div className="text-[#448DF2]">Duyệt hình ảnh</div>
-                  </div>
-                </div>
-
                 <div className="flex justify-between items-center gap-3">
-                  <label className="text-[14px] text-[#333] w-[150px]">Các sản phẩm:</label>
+                  <label className="text-[14px] text-[#333] w-[150px]">Tên sản phẩm:</label>
                   <TextField fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="flex justify-between items-center gap-3">
@@ -143,14 +141,6 @@ export default function Inventory() {
                 <div className="flex justify-between items-center gap-3">
                   <label className="text-[14px] text-[#333]">Ngày hết hạn:</label>
                   <TextField sx={{ width: "250px" }} variant="outlined" size="small" />
-                </div>
-                <div className="flex justify-between items-center gap-3">
-                  <label className="text-[14px] text-[#333]">Khả dụng:</label>
-                  <Select sx={{ width: "250px" }} defaultValue="Còn hàng" size="small">
-                    <MenuItem value="Còn hàng">Còn hàng</MenuItem>
-                    <MenuItem value="Hết hàng">Hết hàng</MenuItem>
-                    <MenuItem value="Đang cập nhật">Còn ít hàng</MenuItem>
-                  </Select>
                 </div>
                 <div className="flex justify-between mt-4 gap-3">
                   <Button variant="outlined" onClick={handleCloseModal}>
