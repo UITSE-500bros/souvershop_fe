@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProductCardCart from "../../components/ProductCardCart";
 import OrderSummaryCard from "../../components/OrderSummaryCard";
 import PromoCodeBox from "../../components/PromoCodeBox";
+import { data } from "./data";
 
 const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = useState([
@@ -42,7 +43,7 @@ const CartPage: React.FC = () => {
           style={{ width: '715px', height: '508px' }}
         >
           <div className="space-y-6 overflow-y-auto h-full">
-            {cartItems.map((item, index) => (
+            {data.map((item, index) => (
               <ProductCardCart
                 key={index}
                 name={item.name}
