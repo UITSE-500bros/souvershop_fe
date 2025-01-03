@@ -8,10 +8,10 @@ export const signUp = async (user_email: string, user_password: string) => {
       user_password,
     });
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       throw new Error("No data returned from server");
     }
-    return response;
+    return response.data;
   } catch (err) {
     console.error("Error in signUp service:", err);
     throw err; // Re-throw the error to handle it in the calling function

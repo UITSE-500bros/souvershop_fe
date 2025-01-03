@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import SignUpTextField from "./SignUpTextField";
 import { signUp } from "./services/SignUp.service";
 import { log } from "console";
+import { toast, ToastContainer } from "react-toastify";
 
 function SignUp() {
   const [formValue, setFormValue] = useState({
@@ -75,13 +76,16 @@ function SignUp() {
       const response = await signUp(email, password);
       alert(`${response.message}`);
     } catch (err) {
-      console.error("Error in SignUp:", err);
+      console.error("Error in SignUp:", err.response.data.message);
+      toast.error(`Lỗi: ${err.response.data.message}`);
     }
   };
 
   return (
+    
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
-      <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-black">
+     <ToastContainer />
+     <form className="my-auto ml-[75px] flex h-auto w-full flex-1 flex-col items-start justify-start gap-8 text-black">
       <div className="self-start font-['Inter'] text-3xl font-black text-black">
             Đăng Ký
           </div>
