@@ -14,8 +14,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentMethod, setPayme
       </Typography>
       <FormControl component="fieldset">
         <RadioGroup value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-          <FormControlLabel value="creditCard" control={<Radio />} label="Thẻ tín dụng" />
-          <FormControlLabel value="Momo" control={<Radio />} label="Momo" />
+          <FormControlLabel value="VNpapy" control={<Radio />} label="VNpay" />
           <FormControlLabel value="cod" control={<Radio />} label="Thanh toán khi nhận hàng" />
         </RadioGroup>
       </FormControl>
