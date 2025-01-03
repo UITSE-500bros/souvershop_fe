@@ -1,6 +1,7 @@
 import { Loading } from "@/components/Loading";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function VerifyEmail() {
   const nav=useNavigate();
@@ -8,6 +9,7 @@ export default function VerifyEmail() {
   useEffect(()=>{
     if(accessToken){
       localStorage.setItem("accessToken", accessToken);
+      toast.success("Xác thực email thành công");
       setTimeout(() => {
         nav('/')
       }, 3000);

@@ -89,8 +89,8 @@ const Header = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
           >
-            <MenuItem onClick={handleProfile}>Profile</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem onClick={handleProfile}>Hồ sơ</MenuItem>
+            <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
