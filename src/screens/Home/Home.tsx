@@ -16,8 +16,8 @@ const responsive = {
     items: 5,
   },
   desktop: {
-    breakpoint: { max: 1024, min: 768 },
-    items: 3,
+    breakpoint: { max: 3000, min: 1024 },
+    items: 2,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -181,7 +181,7 @@ const Home = () => {
           showDots={true}
           responsive={responsive}
           infinite={true}
-          autoPlay={false}
+          autoPlay={true}
           autoPlaySpeed={1000}
           keyBoardControl={true}
           customTransition="all .5"

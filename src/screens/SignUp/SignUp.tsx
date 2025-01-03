@@ -1,13 +1,14 @@
 import { Button, TextField } from "@mui/material";
 import { useRef, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
 import SignUpTextField from "./SignUpTextField";
 import { signUp } from "./services/SignUp.service";
 import { log } from "console";
 import { toast, ToastContainer } from "react-toastify";
 
 function SignUp() {
+  const nav = useNavigate()
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -74,7 +75,8 @@ function SignUp() {
     try {
       console.log(email, password);
       const response = await signUp(email, password);
-      alert(`${response.message}`);
+      toast.success(`${response.message}`);
+      nav('/login')
     } catch (err) {
       console.error("Error in SignUp:", err.response.data.message);
       toast.error(`Lỗi: ${err.response.data.message}`);
