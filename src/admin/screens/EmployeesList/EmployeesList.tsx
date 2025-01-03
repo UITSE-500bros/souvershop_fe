@@ -99,27 +99,27 @@ export default function EmployeesList() {
 
                 <div className="flex justify-between items-center">
                   <label className="text-[14px] text-[#333] w-[150px]">Tên nhân viên:</label>
-                  <TextField fullWidth variant="outlined" />
+                  <TextField fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="flex justify-between items-center">
                   <label className="text-[14px] text-[#333] w-[150px]">Mã nhân viên:</label>
-                  <TextField fullWidth variant="outlined" />
+                  <TextField fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="flex justify-between items-center">
                   <label className="text-[14px] text-[#333] w-[150px]">Số điện thoại:</label>
-                  <TextField fullWidth variant="outlined" />
+                  <TextField fullWidth variant="outlined" size="small"/>
                 </div>
                 <div className="flex justify-between items-center gap-10">
                   <label className="text-[14px] text-[#333] w-[100px]">E-mail:</label>
-                  <TextField fullWidth variant="outlined" />
+                  <TextField fullWidth variant="outlined" size="small"/>
                 </div>
                 <div className="flex justify-between items-center">
                   <label className="text-[14px] text-[#333]">Loại nhân viên:</label>
-                  <TextField sx={{ width: "250px" }} variant="outlined" />
+                  <TextField sx={{ width: "250px" }} variant="outlined" size="small"/>
                 </div>
                 <div className="flex justify-between items-center">
                   <label className="text-[14px] text-[#333]">Lương:</label>
-                  <TextField sx={{ width: "250px", height: "44px" }} variant="outlined" />
+                  <TextField sx={{ width: "250px", height: "44px" }} variant="outlined" size="small"/>
                 </div>
                 <div className="flex justify-between mt-4">
                   <Button variant="outlined" onClick={handleCloseModal}>Hủy bỏ</Button>
