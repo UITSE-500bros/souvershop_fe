@@ -4,7 +4,7 @@ import MainBanner from "../../assets/TranhDongHo.png";
 import { Footer } from "../../components";
 import Header from "../../Layout/Header/Header";
 import ProductSlider from "../../components/ProductSlider";
-import ReviewCard from "../../components/ReviewCard"; 
+import ReviewCard from "../../components/ReviewCard";
 import { useEffect, useState } from "react";
 import { getBannerApi } from "./Home.service";
 import Carousel from "react-multi-carousel";
@@ -88,7 +88,7 @@ const Home = () => {
     };
     fetchBanners();
   }, []);
- console.log(banners)
+  console.log(banners)
 
 
   return (
@@ -159,10 +159,19 @@ const Home = () => {
       <ProductSlider data={data} text="Bán chạy nhất" />
       {/* Customer Reviews Section */}
       <div className="reviews-section my-8">
-        <h2 className="text-center text-5xl font-bold text-black">Đánh giá của khách hàng</h2>
-        <div className="reviews flex flex-wrap justify-between gap-6">
+        <h2 className="text-center text-5xl font-bold text-black mb-6">
+          Đánh giá của khách hàng
+        </h2>
+        <div
+          className="reviews flex gap-6 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 px-4"
+          style={{ scrollSnapType: "x mandatory" }}
+        >
           {reviews.map((review) => (
-            <div key={review.name} className="w-[48%]"> 
+            <div
+              key={review.name}
+              className="flex-shrink-0 w-[300px]"
+              style={{ scrollSnapAlign: "center" }}
+            >
               <ReviewCard
                 name={review.name}
                 review={review.review}
