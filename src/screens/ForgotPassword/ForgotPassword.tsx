@@ -1,6 +1,8 @@
 import { Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function ForgotPassword() {
+  const nav = useNavigate();
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="flex h-[535px] w-[657px] flex-col gap-8 bg-[#F8F2E5] px-[60px] py-[80px]">
@@ -24,6 +26,7 @@ export default function ForgotPassword() {
         <Button
           variant="contained"
           color="primary"
+          onClick={() => nav("/new-password")}
           sx={{
             backgroundColor: "#FFC633",
             color: "#fff",

@@ -27,8 +27,8 @@ export default function Inventory() {
   };
 
   const handleNavigateToProductInfo = () => {
-    navigate("product-info"); 
-  };
+    navigate("/admin/product"); 
+  };  
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5]">
