@@ -11,9 +11,12 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Breadcrumbs,
+  Typography,
 } from "@mui/material";
 import axiosInstance from "@/services/AxiosInstance";
 import { log } from "console";
+import { Link } from "react-router-dom";
 
 const CategoryPage: React.FC = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]); // All products from API
@@ -47,7 +50,6 @@ const CategoryPage: React.FC = () => {
     fetchProducts();
   }, []);
 
-
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
 
@@ -69,9 +71,10 @@ const CategoryPage: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col bg-[#F8F2E5]">
       {/* Breadcrumb */}
-      <div className="my-4 flex items-center text-sm text-gray-600">
-        Trang chủ <FaChevronRight className="mx-2 inline-block" /> Truyền thống
-      </div>
+      <Breadcrumbs separator={<FaChevronRight />} className="p-4">
+        <Link to="/">Trang chủ</Link>
+        <Typography>Danh mục</Typography>
+      </Breadcrumbs>
 
       {/* Filter Section */}
       <div className="mb-6 w-full rounded-md p-5">

@@ -3,6 +3,7 @@ import { Product } from "@/models/Product";
 import { formatPrice } from "@/utils/FormatPrice";
 import {
   Box,
+  Breadcrumbs,
   Button,
   FormControl,
   InputLabel,
@@ -22,6 +23,8 @@ import RatingReview from "./RatingReview";
 import { getProductById } from "./service/ProductDetail.service";
 
 import { Loading } from "@/components/Loading";
+import { Link } from "react-router-dom";
+import axiosInstance from "@/services/AxiosInstance";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -62,11 +65,24 @@ function ProductDetail() {
       setProduct(product);
     };
     fetchProduct();
-    
   }, [productId]);
   console.log(product);
-
-
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axiosInstance.get("category");
+        setCategories(res.data); // Assuming categories have `id` and `name`
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
+  const productCategory = categories.find(
+    (category) => category.category_id === product?.category_id,
+  );
+  console.log(productCategory);
 
   const images_data = [
     {
@@ -115,29 +131,26 @@ function ProductDetail() {
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue);
   };
-  if(!product)return <Loading />
+  if (!product) return <Loading />;
 
   return (
     <div className="flex flex-col px-[80px]">
-      <div className="routebar inline-flex items-center gap-3">
-        <p>Trang chủ</p>
-        <p>/</p>
-        <p>Shop</p>
-        <p>/</p>
-        <p>Thời trang nam</p>
-        <p>/</p>
-        <p>Áo phông</p>
-      </div>
+      <Breadcrumbs>
+        <Link to="/">Trang chủ</Link>
+        <Link to="/category">{productCategory.category_name}</Link>
+        <Typography sx={{ color: "text.primary" }}>
+          {product.product_name}
+        </Typography>
+      </Breadcrumbs>
 
       {/* Product Detail */}
       <div className="mt-10 flex w-full flex-row items-center justify-center">
         <div className="h-[530px] w-[152px] object-cover">
           <ImageSlider imageURLS={product?.product_image} />
-          
         </div>
 
         <img
-          className="ml-3 p-4 h-[530px] w-[444px] rounded-[20px]"
+          className="ml-3 h-[530px] w-[444px] rounded-[20px] p-4"
           src={product.product_image[0]}
         />
 
@@ -247,13 +260,15 @@ function ProductDetail() {
         </Tabs>
 
         <TabPanel value={tabIndex} index={0}>
-          <Typography sx={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "16px",
-            fontWeight: "400",
-            lineHeight: "1.5",
-            color: "#333",
-          }}>
+          <Typography
+            sx={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "16px",
+              fontWeight: "400",
+              lineHeight: "1.5",
+              color: "#333",
+            }}
+          >
             {product.product_describe}
           </Typography>
         </TabPanel>
