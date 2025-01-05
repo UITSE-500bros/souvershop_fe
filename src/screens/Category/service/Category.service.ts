@@ -12,3 +12,13 @@ export const getAllProducts = async () => {
     throw err;
   }
 };
+export const getProductByCategoRyId = async (categoryId: string) => {
+  try{
+    const response = await axiosInstance.get(`category/${categoryId}`);
+    return response.data;
+  }
+  catch(err){
+    console.error("Error in getProductByCategoryId service:", err);
+    throw err;
+  }
+}

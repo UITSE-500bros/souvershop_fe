@@ -50,7 +50,10 @@ function Login() {
       try {
         await login(formValue.email, formValue.password);
         toast.success("Đăng nhập thành công");
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+       
       } catch (err) {
         console.error(err);
       }
@@ -59,7 +62,7 @@ function Login() {
 
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
-      <ToastContainer />
+
       <img
         src="src/assets/login.jpeg"
         alt="login"

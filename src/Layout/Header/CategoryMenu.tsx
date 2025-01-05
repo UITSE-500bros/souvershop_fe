@@ -1,34 +1,27 @@
-import http from "@/lib/Http";
-import { Category } from "@/models/Category";
-import ListIcon from "@mui/icons-material/List";
-import { Menu, MenuItem } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListIcon from "@mui/icons-material/List";
+import axiosInstance from "@/services/AxiosInstance";
 
-function CategoryMenu() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [categories, setCategories] = React.useState<Category[]>([]);
-  const handleMouseOver = (event: React.MouseEvent<HTMLAnchorElement>) => {
+
+const CategoryMenu = () => {
+  const [categories, setCategories] = useState([]);
+useEffect(()=>{
+  const fetchCategories = async () => {
+    const res = await axiosInstance.get("/category");
+    setCategories(res.data);
+  }
+  fetchCategories();
+},[])
+console.log(categories)
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMouseOver = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await http.get("category");
-
-        if (res) {
-          setCategories(res);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  const categoryNames = categories.map((category) => category.category_name);
-  categoryNames.unshift("Tất cả");
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -48,19 +41,24 @@ function CategoryMenu() {
         id="category-menu"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
-        onClose={() => handleClose()}
+        onClose={handleClose}
         MenuListProps={{
           onMouseLeave: handleClose,
         }}
       >
-        {categoryNames.map((category) => (
-          <MenuItem key={category} onClick={handleClose}>
-            <Link to={`/category/${category}`}>{category}</Link>
+        <MenuItem onClick={handleClose}>
+          <Link to="/category">Tất cả</Link>
+        </MenuItem>
+        {categories.map((category) => (
+          <MenuItem key={category.category_id} onClick={handleClose}>
+            <Link to={`/category/${category.category_id}`}>
+              {category.category_name}
+            </Link>
           </MenuItem>
         ))}
       </Menu>
     </div>
   );
-}
+};
 
 export default CategoryMenu;
