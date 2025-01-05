@@ -6,40 +6,35 @@ import PromoCodeBox from "../../components/PromoCodeBox";
 import { data } from "./data";
 
 const CartPage: React.FC = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      name: "Tranh Đông Hồ",
-      price: 250000,
-      imageUrl:
-        "https://mysofa.vn/wp-content/uploads/2020/02/cac-mau-tranh-thac-nuoc-phong-thuy-dep-nhat-37.jpg",
-      size: "M",
-      color: "Đen",
+  const [cartItems, setCartItems] = useState(
+    data.map((item) => ({
+      name: item.product_name,
+      price: item.product_selling_price,
+      imageUrl: item.product_image[0],
       initialQuantity: 1,
-    },
-    {
-      name: "Áo Thun",
-      price: 500000,
-      imageUrl:
-        "https://media.loveitopcdn.com/853/ao-thun-dui-nam-coc-tay-trang-3.png",
-      size: "L",
-      color: "Trắng",
-      initialQuantity: 1,
-    },
-  ]);
+      productId: item.product_id,
+    }))
+  );
+
+  const shipping = 20000;
+
+  const calculateSubtotal = (items: typeof cartItems) =>
+    items.reduce((sum, item) => sum + item.price * item.initialQuantity, 0);
+
+  const subtotal = calculateSubtotal(cartItems);
+  const total = subtotal + shipping;
 
   const handleRemove = (index: number) => {
     const updatedItems = cartItems.filter((_, i) => i !== index);
     setCartItems(updatedItems);
   };
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.initialQuantity,
-    0,
-  );
-
-  const discount = subtotal * 0.2;
-  const shipping = 20000;
-  const total = subtotal - discount + shipping;
+  const handleQuantityChange = (index: number, newQuantity: number) => {
+    const updatedItems = cartItems.map((item, i) =>
+      i === index ? { ...item, initialQuantity: newQuantity } : item
+    );
+    setCartItems(updatedItems);
+  };
 
   return (
     <div className="pl-16">
@@ -51,14 +46,15 @@ const CartPage: React.FC = () => {
           <div className="h-full space-y-6 overflow-y-auto">
             {cartItems.map((item, index) => (
               <ProductCardCart
-                key={index}
+                key={item.productId}
                 name={item.name}
                 price={item.price}
                 imageUrl={item.imageUrl}
-                size={item.size}
-                color={item.color}
                 initialQuantity={item.initialQuantity}
                 onRemove={() => handleRemove(index)}
+                onQuantityChange={(newQuantity) =>
+                  handleQuantityChange(index, newQuantity)
+                }
               />
             ))}
           </div>
@@ -69,7 +65,6 @@ const CartPage: React.FC = () => {
         >
           <OrderSummaryCard
             subtotal={subtotal}
-            discount={discount}
             shipping={shipping}
             total={total}
           />
