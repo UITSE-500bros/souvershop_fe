@@ -2,9 +2,10 @@ import React from "react";
 import ProductCard, { ProductCardProps } from "./ProductCard";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Product } from "@/models/Product";
 
 interface ProductSliderProps {
-  data: ProductCardProps[];
+  data: Product[];
   text: string;
 }
 
@@ -16,15 +17,22 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text }) => {
         <div className="text-center text-5xl font-bold text-black">{text}</div>
         <div className="flex w-full flex-row justify-center gap-x-5">
           {data.map((item) => (
-            <div key={item.id} className="h-[452px] w-[300px]">
+            <div key={item.product_id} className="h-[452px] w-[300px]">
               <ProductCard
-                name={item.name}
-                rating={item.rating}
-                price={item.price}
-                imageUrl={item.imageUrl}
-                discountPrice={item.discountPrice}
-                isFavorite={item.isFavorite}
-                id={item.id}
+                product_id={item.product_id}
+                percentage_sale={item.percentage_sale}
+                product_image={item.product_image}
+                product_name={item.product_name}
+                product_selling_price={item.product_selling_price}
+                product_quantity={item.product_quantity}
+                product_import_price={0}
+                product_describe={""}
+                is_favourited={false}
+                is_sale={false}
+                average_rating={null}
+                create_at={""}
+                update_at={""}
+                category_id={0}
               />
             </div>
           ))}

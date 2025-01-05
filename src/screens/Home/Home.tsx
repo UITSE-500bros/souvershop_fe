@@ -6,7 +6,7 @@ import Header from "../../Layout/Header/Header";
 import ProductSlider from "../../components/ProductSlider";
 import ReviewCard from "../../components/ReviewCard";
 import { useEffect, useState } from "react";
-import { getBannerApi } from "./Home.service";
+import { getBannerApi, getRandomProductsApi } from "./Home.service";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -32,6 +32,8 @@ const responsive = {
 const Home = () => {
   const navigate = useNavigate();
   const [banners, setBanners] = useState({});
+  const [newArrivals, setNewArrivals] = useState([]);
+  const [bestSellers, setBestSellers] = useState([]);
 
   const data = [
     {
@@ -69,11 +71,27 @@ const Home = () => {
   ];
 
   const reviews = [
-    { name: "Nguyễn Văn A", review: "Sản phẩm rất đẹp, chất lượng tốt!", rating: 5 },
+    {
+      name: "Nguyễn Văn A",
+      review: "Sản phẩm rất đẹp, chất lượng tốt!",
+      rating: 5,
+    },
     { name: "Trần Thị B", review: "Rất hài lòng, sẽ mua thêm", rating: 4 },
-    { name: "Lê Minh C", review: "Giá hợp lý, giao hàng nhanh chóng", rating: 4 },
-    { name: "Phạm Hoàng D", review: "Mua lần 2, sản phẩm rất chất lượng!", rating: 5 },
-    { name: "Vũ Thị E", review: "Giao hàng nhanh, đóng gói cẩn thận", rating: 3 },
+    {
+      name: "Lê Minh C",
+      review: "Giá hợp lý, giao hàng nhanh chóng",
+      rating: 4,
+    },
+    {
+      name: "Phạm Hoàng D",
+      review: "Mua lần 2, sản phẩm rất chất lượng!",
+      rating: 5,
+    },
+    {
+      name: "Vũ Thị E",
+      review: "Giao hàng nhanh, đóng gói cẩn thận",
+      rating: 3,
+    },
   ];
 
   useEffect(() => {
@@ -86,10 +104,28 @@ const Home = () => {
           console.log(err);
         });
     };
+    const fetchNewArrivals = async () => {
+      try {
+        const res = await getRandomProductsApi();
+        setNewArrivals(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const fetchBestSellers = async () => {
+      try {
+        const res = await getRandomProductsApi();
+        setBestSellers(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchNewArrivals();
+    fetchBestSellers();
     fetchBanners();
   }, []);
-  console.log(banners)
-
+  console.log(newArrivals, bestSellers);
 
   return (
     <div className="flex flex-col">
@@ -153,23 +189,23 @@ const Home = () => {
       {/* empty space */}
       <div className="h-[100px] w-full bg-[#7b5c43]" />
       {/* new products */}
-      <ProductSlider data={data} text="Sản phẩm mới" />
+      <ProductSlider data={newArrivals} text="Sản phẩm mới" />
       <div className="my-3 h-[1px] w-full bg-black" />
       {/* best seller */}
-      <ProductSlider data={data} text="Bán chạy nhất" />
+      <ProductSlider data={bestSellers} text="Bán chạy nhất" />
       {/* Customer Reviews Section */}
       <div className="reviews-section my-8">
-        <h2 className="text-center text-5xl font-bold text-black mb-6">
+        <h2 className="mb-6 text-center text-5xl font-bold text-black">
           Đánh giá của khách hàng
         </h2>
         <div
-          className="reviews flex gap-6 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 px-4"
+          className="reviews scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 flex gap-6 overflow-x-auto px-4"
           style={{ scrollSnapType: "x mandatory" }}
         >
           {reviews.map((review) => (
             <div
               key={review.name}
-              className="flex-shrink-0 w-[300px]"
+              className="w-[300px] flex-shrink-0"
               style={{ scrollSnapAlign: "center" }}
             >
               <ReviewCard
@@ -200,7 +236,11 @@ const Home = () => {
         >
           {Object.values(banners).map((banner) => (
             <div key={banner as string} className="h-[300px] w-full">
-              <img src={banner as string} alt="banner" className="h-[300px] w-full" />
+              <img
+                src={banner as string}
+                alt="banner"
+                className="h-[300px] w-full"
+              />
             </div>
           ))}
         </Carousel>
@@ -209,7 +249,6 @@ const Home = () => {
       )}
 
       {/* Footer */}
-
     </div>
   );
 };

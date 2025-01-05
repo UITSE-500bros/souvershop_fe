@@ -2,37 +2,35 @@ import React from "react";
 import { FaStar, FaPlus } from "react-icons/fa";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Link } from "react-router-dom";
+import { Product } from "@/models/Product";
 
-export interface ProductCardProps {
-  name: string;
-  price: number;
-  discountPrice?: number;
-  imageUrl: string;
-  rating: number;
-  isFavorite?: boolean;
-  id: string;
-}
+// export interface ProductCardProps {
+//   name: string;
+//   price: number;
+//   discountPrice?: number;
+//   imageUrl: string;
+//   rating: number;
+//   isFavorite?: boolean;
+//   id: string;
+// }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  name,
-  price,
-  discountPrice,
-  imageUrl,
-  rating,
-  isFavorite = false,
-  id,
+const ProductCard: React.FC<Product> = ({
+
+  product_id,
+  percentage_sale,
+  product_image,
+  product_name,
+  product_selling_price,
+  product_quantity,
+  is_favourited
 }) => {
-  const discountPercentage = discountPrice
-    ? Math.round(((price - discountPrice) / price) * 100)
-    : 0;
-
   return (
     <div className="product-card relative my-4 h-[452px] w-[300px] rounded-[20px] border-4 border-black bg-[#F8F2E5] p-4 shadow-md">
       <div className="relative">
-        <Link to={`/product/${id}`}>
+        <Link to={`/product/${product_id}`}>
           <img
-            src={imageUrl}
-            alt={name}
+            src={product_image[0]}
+            alt={product_name}
             className="h-[266px] w-[270px] rounded object-cover"
           />
         </Link>
@@ -40,42 +38,42 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="product-info mt-2 flex flex-col">
         <h2 className="flex items-center justify-between text-sm font-bold">
-          <Link to={`/product/${id}`}>
-            <span className="line-clamp-2">{name}</span>
+          <Link to={`/product/${product_id}`}>
+            <span className="line-clamp-2">{product_name}</span>
           </Link>
 
-          {discountPrice && (
+          {/* {discountPrice && (
             <span className="rounded-[62px] bg-[#FFB2B2] px-2 py-1 text-xs text-red-600">
               ~{discountPercentage}%
             </span>
-          )}
+          )} */}
         </h2>
       </div>
 
-      <div className="my-2 flex" style={{ width: "114px", height: "19px" }}>
+      {/* <div className="my-2 flex" style={{ width: "114px", height: "19px" }}>
         {[...Array(5)].map((_, index) => (
           <FaStar
             key={index}
             className={index < rating ? "text-yellow-500" : "text-gray-300"}
           />
         ))}
-      </div>
+      </div> */}
 
       <div className="absolute bottom-16 left-4 right-4 flex items-center justify-between">
-        {discountPrice && (
+        {/* {discountPrice && (
           <p className="text-black-500 text-sm font-semibold">
             {discountPrice.toLocaleString()} đ
           </p>
-        )}
+        )} */}
         <p className="text-sm text-gray-500 line-through">
-          {price.toLocaleString()} đ
+          {product_selling_price.toLocaleString()} đ
         </p>
       </div>
 
       <div className="absolute bottom-4 left-4">
         <button className="flex h-10 w-10 items-center justify-center rounded-full p-1 transition-transform duration-200 hover:scale-105">
           <FavoriteBorderOutlinedIcon
-            className={`${isFavorite ? "text-red-500" : "text-black"} transition-colors duration-200`}
+            className={`${is_favourited ? "text-red-500" : "text-black"} transition-colors duration-200`}
             fontSize="large"
             sx={{ color: "black" }}
           />

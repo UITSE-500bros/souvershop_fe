@@ -9,3 +9,13 @@ export const getBannerApi = async () => {
         console.log(error)
     }
 }
+
+export const getRandomProductsApi = async () => {
+    try{
+        const response = await axiosInstance.get('product/search_random')
+        return response.data
+    }
+    catch(error){
+        console.log(error)
+    }
+}
