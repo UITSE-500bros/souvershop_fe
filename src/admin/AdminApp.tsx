@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
 import EmployeesList from "./screens/EmployeesList";
 import AdminDashboard from "./screens/DashBoard";
-
+import AddOrder from "./screens/AddOrder";
 import Orders from "./screens/Orders";
 import Inventory from "./screens/Inventory";
 import ProductInfo from "./screens/ProductInfo";
@@ -19,6 +19,7 @@ export default function AdminApp() {
         <Route path="reports" element={<Reports/>}/>
     
         <Route path="orders" element={<Orders />} />
+        <Route path="orders/:add-order" element={<AddOrder/>}/>
       </Route>
     </Routes>
   );

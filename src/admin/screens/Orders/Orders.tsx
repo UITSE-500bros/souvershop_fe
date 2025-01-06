@@ -1,20 +1,28 @@
-import React, { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 import OrderButton from "@/admin/components/OrderButtons";
 
-export default function Order() {
-  const [isAddingOrder, setIsAddingOrder] = useState(false);
+interface Order {
+  productName: string;
+  orderValue: string;
+  quantity: string;
+  orderCode: string;
+  deliveryDate: string;
+}
+
+const Orders: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation(); 
+  const importedOrders = location.state?.importedOrders || []; 
 
   const handleAddOrder = () => {
-    setIsAddingOrder(true);
+    navigate("add-order"); 
   };
 
-  const handleCloseModal = () => {
-    setIsAddingOrder(false);
-  };
-
-  // Example orders data
-  const orders = [
+  
+  const orders: Order[] = [
+    ...importedOrders, 
     {
       productName: "Maggi",
       orderValue: "250 000 VNĐ",
@@ -108,41 +116,9 @@ export default function Order() {
             Sau
           </Button>
         </div>
-
-        {isAddingOrder && (
-          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-10">
-            <div className="bg-white w-[400px] p-[20px] rounded-md shadow-lg">
-              <h2 className="text-[24px] font-bold mb-4">Thêm Đơn Hàng</h2>
-              <div className="flex flex-col gap-4">
-                <div className="flex justify-between items-center gap-3">
-                  <label className="text-[14px] text-[#333] w-[150px]">Sản phẩm:</label>
-                  <TextField fullWidth variant="outlined" size="small" />
-                </div>
-                <div className="flex justify-between items-center gap-3">
-                  <label className="text-[14px] text-[#333] w-[150px]">Giá mua:</label>
-                  <TextField fullWidth variant="outlined" size="small" />
-                </div>
-                <div className="flex justify-between items-center gap-3">
-                  <label className="text-[14px] text-[#333] w-[150px]">Số lượng:</label>
-                  <TextField fullWidth variant="outlined" size="small" />
-                </div>
-                <div className="flex justify-between items-center gap-3">
-                  <label className="text-[14px] text-[#333]">Dự kiến ngày giao:</label>
-                  <TextField sx={{ width: "250px" }} variant="outlined" size="small" />
-                </div>
-                <div className="flex justify-between mt-4 gap-3">
-                  <Button variant="outlined" onClick={handleCloseModal}>
-                    Hủy bỏ
-                  </Button>
-                  <Button variant="contained" color="primary" onClick={handleCloseModal}>
-                    Thêm đơn hàng
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
-}
+};
+
+export default Orders;
