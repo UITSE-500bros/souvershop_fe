@@ -10,40 +10,55 @@ import {
   TextField,
   Toolbar,
   Badge,
+  Popover,
 } from "@mui/material";
 import { Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
-import CategoryMenu from "./CategoryMenu";
 import { useState } from "react";
 import useAuthStore from "@/stores/AuthStore";
 import ListIcon from "@mui/icons-material/List";
 import useCartStore from "@/screens/Cart/store/CartStore";
+import CartPreview from "@/screens/Cart/CartPreview";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const cartQuantity=useCartStore((state)=>state.getLength());
-
-  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const [popoverAnchorEl, setPopoverAnchorEl] = useState<null | HTMLElement>(
+    null,
+  );
+  const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const cartQuantity = useCartStore((state) => state.getLength());
   const logout = useAuthStore((state) => state.logout);
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setPopoverAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setPopoverAnchorEl(null);
+  };
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
   };
 
   const handleProfile = () => {
     navigate("/customer-info");
-    handleClose();
+    handleMenuClose();
   };
 
   const handleLogout = () => {
     logout();
     navigate("/login");
-    handleClose();
+    handleMenuClose();
   };
+
+  const isPopoverOpen = Boolean(popoverAnchorEl);
+  const isMenuOpen = Boolean(menuAnchorEl);
 
   return (
     <div className="sticky left-0 top-0 z-10 w-full">
@@ -83,10 +98,40 @@ const Header = () => {
               }}
             />
           </Box>
-          <IconButton className="bg-black" onClick={() => navigate("/cart")}>
-            <Badge badgeContent={cartQuantity} color="error">  
+          <IconButton
+            onMouseLeave={handlePopoverClose}
+            onMouseEnter={handlePopoverOpen}
+            className="bg-black"
+            onClick={() => navigate("/cart")}
+          >
+            <Badge badgeContent={cartQuantity} color="error">
               <ShoppingCartOutlinedIcon />
             </Badge>
+
+            <Popover
+              open={isPopoverOpen}
+              anchorEl={popoverAnchorEl}
+              onClose={handlePopoverClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              sx={{
+                pointerEvents: "none",
+              }}
+              slotProps={{
+                paper: {
+                  onMouseEnter: () => setPopoverAnchorEl(popoverAnchorEl),
+                  onMouseLeave: handlePopoverClose,
+                },
+              }}
+            >
+              <CartPreview />
+            </Popover>
           </IconButton>
           <IconButton
             className="bg-black"
@@ -100,9 +145,9 @@ const Header = () => {
           </IconButton>
 
           <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
+            anchorEl={menuAnchorEl}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
           >
             <MenuItem onClick={handleProfile}>Hồ sơ</MenuItem>
             <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
