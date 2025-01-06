@@ -8,7 +8,6 @@ const CustomerInfoPage: React.FC = () => {
     phone: "0901234567",
     customerName: "Nguyễn Văn A",
     imageSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBodQoJhJGB1qoSvJ-mZeCy61dpq0XZOM8pA&s",
-    balance: "1,000,000 VND"
   };
 
   const [selectedTab, setSelectedTab] = useState(0);
@@ -27,7 +26,7 @@ const CustomerInfoPage: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh', }}>
+    <div style={{ display: 'flex', height: '100vh' }}>
       <div style={{
         width: '250px', padding: '20px', backgroundColor: '#fff',
         borderRadius: '12px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', marginRight: '16px',
@@ -37,7 +36,7 @@ const CustomerInfoPage: React.FC = () => {
           style={{
             fontWeight: 'bold',
             marginBottom: '16px',
-            textAlign: 'center' 
+            textAlign: 'center'
           }}
         >
           Cài đặt
@@ -51,7 +50,10 @@ const CustomerInfoPage: React.FC = () => {
         </Tabs>
       </div>
 
-      <div style={{ width: '70%', padding: '24px', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', marginLeft: '-16px' }}>
+      <div style={{
+        width: '70%', padding: '24px', backgroundColor: '#fff', borderRadius: '12px',
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', marginLeft: '-16px'
+      }}>
         {selectedTab === 0 && (
           <div>
             <Typography variant="h5" style={{ marginBottom: '16px' }}>Thông tin cá nhân</Typography>
@@ -110,18 +112,58 @@ const CustomerInfoPage: React.FC = () => {
                   />
                 </div>
               </div>
-
-              <TextField
-                label="Số dư"
-                variant="outlined"
-                fullWidth
-                value={customerInfo.balance}
-                disabled
-                style={{ marginBottom: '16px' }}
-              />
             </div>
 
             <CustomerInfo handleSaveChanges={handleSaveChanges} profileImage={profileImage} />
+          </div>
+        )}
+
+        {selectedTab === 1 && (
+          <div>
+            <Typography variant="h5" style={{ marginBottom: '16px' }}>Đổi mật khẩu</Typography>
+            <TextField
+              label="Mật khẩu cũ"
+              variant="outlined"
+              fullWidth
+              type="password"
+              style={{ marginBottom: '16px' }}
+            />
+            <TextField
+              label="Mật khẩu mới"
+              variant="outlined"
+              fullWidth
+              type="password"
+              style={{ marginBottom: '16px' }}
+            />
+            <TextField
+              label="Xác nhận mật khẩu"
+              variant="outlined"
+              fullWidth
+              type="password"
+              style={{ marginBottom: '16px' }}
+            />
+            <Button variant="contained" style={{ marginTop: '16px' }}>Lưu thay đổi</Button>
+          </div>
+        )}
+
+        {selectedTab === 2 && (
+          <div>
+            <Typography variant="h5" style={{ marginBottom: '16px' }}>Lịch sử giao dịch</Typography>
+            <Typography>No transaction history available.</Typography>
+          </div>
+        )}
+
+        {selectedTab === 3 && (
+          <div>
+            <Typography variant="h5" style={{ marginBottom: '16px' }}>Mã giảm giá</Typography>
+            <Typography>Manage your discount codes here.</Typography>
+          </div>
+        )}
+
+        {selectedTab === 4 && (
+          <div>
+            <Typography variant="h5" style={{ marginBottom: '16px' }}>Thông báo</Typography>
+            <Typography>Manage your notifications here.</Typography>
           </div>
         )}
       </div>
