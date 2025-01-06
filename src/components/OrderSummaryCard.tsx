@@ -2,14 +2,12 @@ import React from 'react';
 
 interface OrderSummaryCardProps {
   subtotal: number;
-  discount: number;
   shipping: number;
   total: number;
 }
 
 const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
   subtotal,
-  discount,
   shipping,
   total,
 }) => {
@@ -21,10 +19,6 @@ const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
         <div className="flex justify-between mb-2">
           <span>Tổng phụ</span>
           <span>{subtotal.toLocaleString()} đ</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span>Giảm giá (-20%)</span>
-          <span className="text-red-500">{discount.toLocaleString()} đ</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Phí vận chuyển</span>

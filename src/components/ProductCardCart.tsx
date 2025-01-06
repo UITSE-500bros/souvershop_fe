@@ -1,33 +1,38 @@
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import ButtonGroup from "./ButtonGroup"; // Đảm bảo import đúng
+import ButtonGroup from "./ButtonGroup";
 
 interface ProductCardCartProps {
   name: string;
   price: number;
   imageUrl: string;
-  size: string;
-  color: string;
   initialQuantity: number;
   onRemove: () => void;
+  onQuantityChange: (newQuantity: number) => void;
 }
 
 const ProductCardCart: React.FC<ProductCardCartProps> = ({
   name,
   price,
   imageUrl,
-  size,
-  color,
   initialQuantity,
   onRemove,
+  onQuantityChange,
 }) => {
   const [quantity, setQuantity] = useState(initialQuantity);
   const totalPrice = price * quantity;
 
-  const handleIncrement = () => setQuantity((prev) => prev + 1);
+  const handleIncrement = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    onQuantityChange(newQuantity);
+  };
+
   const handleDecrement = () => {
     if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      onQuantityChange(newQuantity);
     }
   };
 
@@ -37,11 +42,9 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({
         <img src={imageUrl} alt={name} className="w-full h-auto object-cover" />
       </div>
 
-      <div className="flex-1 px-4">
+      <div className="flex-1 px-4 relative">
         <h3 className="font-bold text-lg">{name}</h3>
-        <p>Kích cỡ: {size}</p>
-        <p>Màu sắc: {color}</p>
-        <p className="font-bold">{totalPrice.toLocaleString()} đ</p>
+        <p className="font-bold absolute bottom-0 left-0">{totalPrice.toLocaleString()} đ</p>
       </div>
 
       <button
