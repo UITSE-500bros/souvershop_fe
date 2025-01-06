@@ -1,26 +1,22 @@
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import ButtonGroup from "./ButtonGroup";
+import CartItem from "@/models/CartItem";
+import useCartStore from "@/screens/Cart/store/CartStore";
+import { formatPrice } from "@/utils/FormatPrice";
 
 interface ProductCardCartProps {
-  name: string;
-  price: number;
-  imageUrl: string;
-  initialQuantity: number;
-  onRemove: () => void;
-  onQuantityChange: (newQuantity: number) => void;
+  cartItem: CartItem;
 }
 
-const ProductCardCart: React.FC<ProductCardCartProps> = ({
-  name,
-  price,
-  imageUrl,
-  initialQuantity,
-  onRemove,
-  onQuantityChange,
-}) => {
-  const [quantity, setQuantity] = useState(initialQuantity);
-  const totalPrice = price * quantity;
+const ProductCardCart: React.FC<ProductCardCartProps> = ({ cartItem }) => {
+  const [quantity, setQuantity] = useState(cartItem.quantity);
+  const removeItem = useCartStore((state) => state.removeFromCart);
+
+  const totalPrice = cartItem.product_selling_price * quantity;
+  const onQuantityChange = (newQuantity: number) => {
+    setQuantity(newQuantity);
+  }
 
   const handleIncrement = () => {
     const newQuantity = quantity + 1;
@@ -37,24 +33,26 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({
   };
 
   return (
-    <div className="relative flex w-full max-w-3xl p-4 border rounded-lg shadow-md bg-white mb-4">
+    <div className="relative mb-4 flex w-full max-w-3xl rounded-lg border bg-white p-4 shadow-md">
       <div className="w-1/4">
-        <img src={imageUrl} alt={name} className="w-full h-auto object-cover" />
+        <img src={cartItem.product_image[0]} alt={cartItem.product_name} className="h-auto w-full object-cover" />
       </div>
 
-      <div className="flex-1 px-4 relative">
-        <h3 className="font-bold text-lg">{name}</h3>
-        <p className="font-bold absolute bottom-0 left-0">{totalPrice.toLocaleString()} đ</p>
+      <div className="relative flex-1 px-4">
+        <h3 className="text-lg max-h-[80px]  overflow-hidden font-bold">{cartItem.product_name}</h3>
+        <p className="absolute bottom-0 left-0 font-bold">
+          {formatPrice(totalPrice)}
+        </p>
       </div>
 
       <button
-        onClick={onRemove}
-        className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+        onClick={()=>removeItem(cartItem.product_id)}
+        className="absolute right-2 top-2 text-red-500 hover:text-red-700"
       >
         <FaTrash size={20} />
       </button>
 
-      <div className="absolute bottom-2 right-2 w-32 border border-gray-300 rounded-full flex items-center justify-between p-1 bg-gray-100 ">
+      <div className="absolute bottom-2 right-2 flex w-32 items-center justify-between rounded-full border border-gray-300 bg-gray-100 p-1">
         <ButtonGroup
           value={quantity}
           onIncrement={handleIncrement}

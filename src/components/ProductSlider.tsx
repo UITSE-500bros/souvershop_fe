@@ -1,15 +1,17 @@
-import React from "react";
-import ProductCard, { ProductCardProps } from "./ProductCard";
-import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import { Product } from "@/models/Product";
+import { Button } from "@mui/material";
+import React from "react";
+import ProductCard from "./ProductCard";
+import { useNavigate } from "react-router-dom";
 
 interface ProductSliderProps {
   data: Product[];
   text: string;
+  navigate: (path: string) => void;
 }
 
-const ProductSlider: React.FC<ProductSliderProps> = ({ data, text }) => {
+const ProductSlider: React.FC<ProductSliderProps> = ({ data, text,navigate }) => {
+
   return (
     <div>
       {/* new products */}
@@ -18,26 +20,12 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text }) => {
         <div className="flex w-full flex-row justify-center gap-x-5">
           {data.map((item) => (
             <div key={item.product_id} className="h-[452px] w-[300px]">
-              <ProductCard
-                product_id={item.product_id}
-                percentage_sale={item.percentage_sale}
-                product_image={item.product_image}
-                product_name={item.product_name}
-                product_selling_price={item.product_selling_price}
-                product_quantity={item.product_quantity}
-                product_import_price={0}
-                product_describe={""}
-                is_favourited={false}
-                is_sale={false}
-                average_rating={null}
-                create_at={""}
-                update_at={""}
-                category_id={0}
-              />
+              <ProductCard product={item} />
             </div>
           ))}
         </div>
         <Button
+          onAbort={() => navigate("/category")}
           variant="contained"
           sx={{
             width: 210,

@@ -1,36 +1,21 @@
-import React from "react";
-import { FaStar, FaPlus } from "react-icons/fa";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { Link } from "react-router-dom";
 import { Product } from "@/models/Product";
+import useCartStore from "@/screens/Cart/store/CartStore";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+type ProductCardProps = {
+  product: Product;
+};
 
-// export interface ProductCardProps {
-//   name: string;
-//   price: number;
-//   discountPrice?: number;
-//   imageUrl: string;
-//   rating: number;
-//   isFavorite?: boolean;
-//   id: string;
-// }
-
-const ProductCard: React.FC<Product> = ({
-
-  product_id,
-  percentage_sale,
-  product_image,
-  product_name,
-  product_selling_price,
-  product_quantity,
-  is_favourited
-}) => {
+const ProductCard = ({ product }: ProductCardProps) => {
+  const addToCart = useCartStore((state) => state.addToCart);
   return (
     <div className="product-card relative my-4 h-[452px] w-[300px] rounded-[20px] border-4 border-black bg-[#F8F2E5] p-4 shadow-md">
       <div className="relative">
-        <Link to={`/product/${product_id}`}>
+        <Link to={`/product/${product.product_id}`}>
           <img
-            src={product_image[0]}
-            alt={product_name}
+            src={product.product_image[0]}
+            alt={product.product_name}
             className="h-[266px] w-[270px] rounded object-cover"
           />
         </Link>
@@ -38,8 +23,8 @@ const ProductCard: React.FC<Product> = ({
 
       <div className="product-info mt-2 flex flex-col">
         <h2 className="flex items-center justify-between text-sm font-bold">
-          <Link to={`/product/${product_id}`}>
-            <span className="line-clamp-2">{product_name}</span>
+          <Link to={`/product/${product.product_id}`}>
+            <span className="line-clamp-2">{product.product_name}</span>
           </Link>
 
           {/* {discountPrice && (
@@ -66,14 +51,14 @@ const ProductCard: React.FC<Product> = ({
           </p>
         )} */}
         <p className="text-sm text-gray-500 line-through">
-          {product_selling_price.toLocaleString()} đ
+          {product.product_selling_price.toLocaleString()} đ
         </p>
       </div>
 
       <div className="absolute bottom-4 left-4">
         <button className="flex h-10 w-10 items-center justify-center rounded-full p-1 transition-transform duration-200 hover:scale-105">
           <FavoriteBorderOutlinedIcon
-            className={`${is_favourited ? "text-red-500" : "text-black"} transition-colors duration-200`}
+            className={`${product.is_favourited ? "text-red-500" : "text-black"} transition-colors duration-200`}
             fontSize="large"
             sx={{ color: "black" }}
           />
@@ -81,7 +66,12 @@ const ProductCard: React.FC<Product> = ({
       </div>
 
       <div className="absolute bottom-4 right-4">
-        <button className="flex h-10 w-10 items-center justify-center rounded-full border-4 border-black bg-white p-2 text-black transition-transform duration-200 hover:scale-105">
+        <button
+          onClick={() => {
+            addToCart(product);
+          }}
+          className="flex h-10 w-10 items-center justify-center rounded-full border-4 border-black bg-white p-2 text-black transition-transform duration-200 hover:scale-105"
+        >
           <FaPlus className="text-black" />
         </button>
       </div>

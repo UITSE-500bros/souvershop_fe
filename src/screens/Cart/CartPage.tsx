@@ -4,22 +4,25 @@ import OrderSummaryCard from "../../components/OrderSummaryCard";
 import PromoCodeBox from "../../components/PromoCodeBox";
 
 import { data } from "./data";
+import useCartStore from "./store/CartStore";
 
 const CartPage: React.FC = () => {
-  const [cartItems, setCartItems] = useState(
-    data.map((item) => ({
-      name: item.product_name,
-      price: item.product_selling_price,
-      imageUrl: item.product_image[0],
-      initialQuantity: 1,
-      productId: item.product_id,
-    }))
-  );
+  // const [cartItems, setCartItems] = useState(
+  //   data.map((item) => ({
+  //     name: item.product_name,
+  //     price: item.product_selling_price,
+  //     imageUrl: item.product_image[0],
+  //     initialQuantity: 1,
+  //     productId: item.product_id,
+  //   })),
+  // );
+  const cartItems = useCartStore((state) => state.cartItems);
+
 
   const shipping = 20000;
 
   const calculateSubtotal = (items: typeof cartItems) =>
-    items.reduce((sum, item) => sum + item.price * item.initialQuantity, 0);
+    items.reduce((sum, item) => sum + item.product_selling_price * item.quantity, 0);
 
   const subtotal = calculateSubtotal(cartItems);
   const total = subtotal + shipping;
@@ -31,7 +34,7 @@ const CartPage: React.FC = () => {
 
   const handleQuantityChange = (index: number, newQuantity: number) => {
     const updatedItems = cartItems.map((item, i) =>
-      i === index ? { ...item, initialQuantity: newQuantity } : item
+      i === index ? { ...item, initialQuantity: newQuantity } : item,
     );
     setCartItems(updatedItems);
   };
@@ -44,17 +47,10 @@ const CartPage: React.FC = () => {
           style={{ width: "715px", height: "508px" }}
         >
           <div className="h-full space-y-6 overflow-y-auto">
-            {cartItems.map((item, index) => (
+            {cartItems.map((item) => (
               <ProductCardCart
-                key={item.productId}
-                name={item.name}
-                price={item.price}
-                imageUrl={item.imageUrl}
-                initialQuantity={item.initialQuantity}
-                onRemove={() => handleRemove(index)}
-                onQuantityChange={(newQuantity) =>
-                  handleQuantityChange(index, newQuantity)
-                }
+              key={item.product_id}
+              cartItem={item}
               />
             ))}
           </div>

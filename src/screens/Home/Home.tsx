@@ -189,10 +189,10 @@ const Home = () => {
       {/* empty space */}
       <div className="h-[100px] w-full bg-[#7b5c43]" />
       {/* new products */}
-      <ProductSlider data={newArrivals} text="Sản phẩm mới" />
+      <ProductSlider navigate={navigate} data={newArrivals} text="Sản phẩm mới" />
       <div className="my-3 h-[1px] w-full bg-black" />
       {/* best seller */}
-      <ProductSlider data={bestSellers} text="Bán chạy nhất" />
+      <ProductSlider navigate={navigate} data={bestSellers} text="Bán chạy nhất" />
       {/* Customer Reviews Section */}
       <div className="reviews-section my-8">
         <h2 className="mb-6 text-center text-5xl font-bold text-black">
