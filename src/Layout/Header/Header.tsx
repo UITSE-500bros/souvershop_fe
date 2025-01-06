@@ -9,6 +9,7 @@ import {
   MenuItem,
   TextField,
   Toolbar,
+  Badge,
 } from "@mui/material";
 import { Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,10 +18,12 @@ import CategoryMenu from "./CategoryMenu";
 import { useState } from "react";
 import useAuthStore from "@/stores/AuthStore";
 import ListIcon from "@mui/icons-material/List";
+import useCartStore from "@/screens/Cart/store/CartStore";
 
 const Header = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const cartQuantity=useCartStore((state)=>state.getLength());
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -81,7 +84,9 @@ const Header = () => {
             />
           </Box>
           <IconButton className="bg-black" onClick={() => navigate("/cart")}>
-            <ShoppingCartOutlinedIcon />
+            <Badge badgeContent={cartQuantity} color="error">  
+              <ShoppingCartOutlinedIcon />
+            </Badge>
           </IconButton>
           <IconButton
             className="bg-black"

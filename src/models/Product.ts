@@ -12,7 +12,7 @@ export interface Product {
   average_rating: number | null;
   create_at: string;
   update_at: string;
-  category_id: number;
+  category_id: string;
 }
 
 

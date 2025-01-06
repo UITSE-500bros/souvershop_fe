@@ -122,23 +122,7 @@ const CategoryPage: React.FC = () => {
                 />
               ))
             : filteredProducts.map((product) => (
-                <ProductCard
-                  product_id={product.product_id}
-                  key={product.product_id}
-                  product_name={product.product_name}
-                  product_selling_price={product.product_selling_price}
-                  product_image={product.product_image}
-                  product_import_price={0}
-                  product_quantity={0}
-                  product_describe={""}
-                  is_favourited={false}
-                  is_sale={false}
-                  percentage_sale={0}
-                  average_rating={null}
-                  create_at={""}
-                  update_at={""}
-                  category_id={0}
-                />
+                <ProductCard product={product} />
               ))}
         </div>
       </div>
