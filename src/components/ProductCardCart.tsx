@@ -12,16 +12,20 @@ interface ProductCardCartProps {
 const ProductCardCart: React.FC<ProductCardCartProps> = ({ cartItem }) => {
   const [quantity, setQuantity] = useState(cartItem.quantity);
   const removeItem = useCartStore((state) => state.removeFromCart);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
 
   const totalPrice = cartItem.product_selling_price * quantity;
   const onQuantityChange = (newQuantity: number) => {
     setQuantity(newQuantity);
+    updateQuantity(cartItem.product_id, newQuantity);
+
   }
 
   const handleIncrement = () => {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     onQuantityChange(newQuantity);
+    
   };
 
   const handleDecrement = () => {

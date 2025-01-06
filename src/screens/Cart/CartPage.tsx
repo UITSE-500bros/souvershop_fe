@@ -17,6 +17,7 @@ const CartPage: React.FC = () => {
   //   })),
   // );
   const cartItems = useCartStore((state) => state.cartItems);
+  const removeItem = useCartStore((state) => state.removeFromCart);
 
 
   const shipping = 20000;
@@ -26,18 +27,6 @@ const CartPage: React.FC = () => {
 
   const subtotal = calculateSubtotal(cartItems);
   const total = subtotal + shipping;
-
-  const handleRemove = (index: number) => {
-    const updatedItems = cartItems.filter((_, i) => i !== index);
-    setCartItems(updatedItems);
-  };
-
-  const handleQuantityChange = (index: number, newQuantity: number) => {
-    const updatedItems = cartItems.map((item, i) =>
-      i === index ? { ...item, initialQuantity: newQuantity } : item,
-    );
-    setCartItems(updatedItems);
-  };
 
   return (
     <div className="pl-16">
