@@ -18,7 +18,6 @@ import useProductStore from "./store/category.store";
 
 const CategoryPage: React.FC = () => {
   const allProducts = useProductStore((state) => state.product_list);
-  console.log(allProducts);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts); // Products to display
   const [categories, setCategories] = useState<{ category_id: string; category_name: string }[]>([]); // List of categories
   const [selectedCategory, setSelectedCategory] = useState(""); // Currently selected category
