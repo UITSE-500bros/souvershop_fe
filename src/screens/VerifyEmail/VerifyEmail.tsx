@@ -1,23 +1,34 @@
-import { Loading } from "@/components/Loading";
-import useAuthStore from "@/stores/AuthStore";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAuthStore from "@/stores/AuthStore";
+import { Loading } from "@/components/Loading";
 
 export default function VerifyEmail() {
-  const nav=useNavigate();
-  const accessToken = useParams().accessToken;
- 
-  useEffect(()=>{
-    if(accessToken){
+  const nav = useNavigate();
+  const location = useLocation();
+  const { set } = useAuthStore();
+
+  const queryParams = new URLSearchParams(location.search);
+  const accessToken = queryParams.get("accessToken");
+  const refreshToken = queryParams.get("refreshToken");
+  console.log(accessToken, refreshToken);
+  
+
+  useEffect(() => {
+    if (accessToken) {
       localStorage.setItem("accessToken", accessToken);
+      if (refreshToken) {
+        localStorage.setItem("refreshToken", refreshToken);
+      }
+      set({ accessToken, isLogin: true });
       toast.success("Xác thực email thành công");
       setTimeout(() => {
-        nav('/')
+        nav('/');
       }, 3000);
-    
     }
-  },[accessToken])
+  }, [accessToken, refreshToken, set, nav]);
+
   return (
     <div>
       <Loading />

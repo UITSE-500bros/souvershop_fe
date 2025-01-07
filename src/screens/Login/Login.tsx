@@ -10,6 +10,7 @@ import useAuthStore from "@/stores/AuthStore";
 import { loginWithGoogleApi } from "./Login.service";
 
 function Login() {
+  const { role } = useAuthStore((state) => state);
   const navigate = useNavigate();
   const [formValue, setFormValue] = useState({
     email: "",
@@ -50,10 +51,14 @@ function Login() {
       try {
         await login(formValue.email, formValue.password);
         toast.success("Đăng nhập thành công");
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
-       
+        switch (role) {
+          case "chủ cửa hàng":
+            navigate("/admin");
+            break;
+          default:
+            navigate("/");
+            break;
+        }
       } catch (err) {
         console.error(err);
       }
@@ -62,7 +67,6 @@ function Login() {
 
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
-
       <img
         src="src/assets/login.jpeg"
         alt="login"

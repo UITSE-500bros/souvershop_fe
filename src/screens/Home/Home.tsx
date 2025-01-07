@@ -125,7 +125,6 @@ const Home = () => {
     fetchBestSellers();
     fetchBanners();
   }, []);
-  console.log(newArrivals, bestSellers);
 
   return (
     <div className="flex flex-col">
