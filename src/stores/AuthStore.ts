@@ -7,7 +7,7 @@ type AuthStore = {
   isLogin: boolean;
   accessToken: string;
   refreshToken: string;
-  login: (user_email: string, user_password: string) => void;
+  login: (user_email: string, user_password: string) => Promise<string | undefined>;
   logout: () => void;
   loadFromStorage: () => void;
   role: string | null;
@@ -34,6 +34,7 @@ const useAuthStore = create<AuthStore>((set) => ({
         set({ isLogin: true, accessToken, refreshToken, role });
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        return role;
       }
     } catch (err) {
       console.error(err);

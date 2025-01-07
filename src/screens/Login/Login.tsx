@@ -10,7 +10,6 @@ import useAuthStore from "@/stores/AuthStore";
 import { loginWithGoogleApi } from "./Login.service";
 
 function Login() {
-  const { role } = useAuthStore((state) => state);
   const navigate = useNavigate();
   const [formValue, setFormValue] = useState({
     email: "",
@@ -49,15 +48,13 @@ function Login() {
 
     if (emailValid && passwordValid) {
       try {
-        await login(formValue.email, formValue.password);
-        toast.success("Đăng nhập thành công");
-        switch (role) {
-          case "chủ cửa hàng":
-            navigate("/admin");
-            break;
-          default:
-            navigate("/");
-            break;
+        const role = await login(formValue.email, formValue.password);
+        console.log(role);
+        if (role === "chủ cửa hàng") {
+          navigate("/admin");
+        }
+        else{
+          navigate("/");
         }
       } catch (err) {
         console.error(err);
