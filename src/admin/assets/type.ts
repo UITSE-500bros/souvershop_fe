@@ -1,5 +1,6 @@
-type AdminIcon = {
+type AdminIconProps = {
   className?: string;
+  children: React.ReactNode;
 };
 
-export default AdminIcon;
+export default AdminIconProps;

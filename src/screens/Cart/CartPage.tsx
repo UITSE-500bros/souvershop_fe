@@ -49,7 +49,9 @@ const CartPage: React.FC = () => {
             quantity: item.quantity,
           };
         }),
-      }).then((res) => console.log(res));
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.error(err));
     }
   };
 
