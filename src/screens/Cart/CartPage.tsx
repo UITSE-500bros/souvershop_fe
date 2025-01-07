@@ -50,7 +50,9 @@ const CartPage: React.FC = () => {
           };
         }),
       })
-        .then((res) => console.log(res))
+        .then((res) => {
+          window.location.href = res;
+        })
         .catch((err) => console.error(err));
     }
   };

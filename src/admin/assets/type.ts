@@ -1,6 +1,6 @@
 type AdminIconProps = {
   className?: string;
-  children: React.ReactNode;
+  icon:string
 };
 
 export default AdminIconProps;
