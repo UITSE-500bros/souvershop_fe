@@ -1,8 +1,12 @@
 import { Button } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import React from "react";
+type InventoryButtonProps = {
+  onAddInventory: () => void;
+  exportExcel: () => void;
+};
 
-export default function InventoryButton({ onAddInventory }: { onAddInventory: () => void }) {
+export default function InventoryButton({ onAddInventory,exportExcel }: InventoryButtonProps) {
   return (
     <div className="flex gap-2">
       <Button

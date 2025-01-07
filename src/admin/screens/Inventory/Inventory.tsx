@@ -5,23 +5,25 @@ import { useNavigate } from "react-router-dom";
 import { getProductInventory } from "./service/Inventory.service";
 import { Loading } from "@/components/Loading";
 import { Product } from "@/models/Product";
+import { getAllProducts } from "@/screens/Category/service/Category.service";
 
 export default function Inventory() {
   const [isAddingInventory, setIsAddingInventory] = useState(false);
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState<Product[]>([]);
+  const [modalData, setModalData] = useState({
+    productName: "",
+    productImportPrice: "",
+    productSellingPrice: "",
+    productQuantity: "",
+  });
 
-  // const products = [
-  //   {
-  //     name: "Maggi",
-  //     purchasePrice: "250 000 VNĐ",
-  //     quantity: "50 Gói",
-  //     thresholdValue: "15 Gói",
-  //     expirationDate: "12/1/2024",
-  //     availability: "Còn hàng",
-  //   },
-  // ];
+  const exportToExcel = async () => {
+    const products = await getAllProducts();
+    console.log(products);
+
+  }
 
   const handleAddInventory = () => {
     setIsAddingInventory(true);
@@ -129,7 +131,7 @@ export default function Inventory() {
               onClick={handleNavigateToProductInfo}
               style={{ cursor: "pointer" }}
             >
-              <div className="line-clamp-3  flex-1 overflow-hidden text-ellipsis text-left">
+              <div className="line-clamp-3 flex-1 overflow-hidden text-ellipsis text-left">
                 {product.product_name}
               </div>
               <div className="flex-1 text-left">
@@ -166,9 +168,17 @@ export default function Inventory() {
               <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between gap-3">
                   <label className="w-[150px] text-[14px] text-[#333]">
-                    Tên sản phẩm:
+                  Tên sản phẩm:
                   </label>
-                  <TextField fullWidth variant="outlined" size="small" />
+                  <TextField
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  value={modalData.productName}
+                  onChange={(e) =>
+                    setModalData({ ...modalData, productName: e.target.value })
+                  }
+                  />
                 </div>
                 <div className="flex items-center justify-between gap-3">
                   <label className="w-[150px] text-[14px] text-[#333]">
@@ -178,26 +188,17 @@ export default function Inventory() {
                 </div>
                 <div className="flex items-center justify-between gap-3">
                   <label className="w-[150px] text-[14px] text-[#333]">
-                    Số lượng:
+                    Giá bán
                   </label>
                   <TextField fullWidth variant="outlined" size="small" />
                 </div>
                 <div className="flex items-center justify-between gap-10">
                   <label className="w-[100px] text-[14px] text-[#333]">
-                    Giá trị ngưỡng:
+                    Số lượng:
                   </label>
                   <TextField fullWidth variant="outlined" size="small" />
                 </div>
-                <div className="flex items-center justify-between gap-3">
-                  <label className="text-[14px] text-[#333]">
-                    Ngày hết hạn:
-                  </label>
-                  <TextField
-                    sx={{ width: "250px" }}
-                    variant="outlined"
-                    size="small"
-                  />
-                </div>
+
                 <div className="mt-4 flex justify-between gap-3">
                   <Button variant="outlined" onClick={handleCloseModal}>
                     Hủy bỏ
