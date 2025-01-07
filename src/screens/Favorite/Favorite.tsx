@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
+import useFavoriteStore from "./store/FavoriteStore";
 
 export interface ProductCardProps {
   name: string;
@@ -15,30 +16,10 @@ export interface ProductCardProps {
 }
 
 const Favorite: React.FC = () => {
-  const [favoriteItems, setFavoriteItems] = useState<ProductCardProps[]>([
-    {
-      name: "Product 1",
-      price: 500000,
-      discountPrice: 450000,
-      imageUrl:
-        "https://mysofa.vn/wp-content/uploads/2020/02/cac-mau-tranh-thac-nuoc-phong-thuy-dep-nhat-37.jpg",
-      rating: 4,
-      isFavorite: true,
-      id: "1",
-    },
-    {
-      name: "Product 2",
-      price: 700000,
-      imageUrl:
-        "https://media.loveitopcdn.com/853/ao-thun-dui-nam-coc-tay-trang-3.png",
-      rating: 5,
-      isFavorite: true,
-      id: "2",
-    },
-  ]);
+  const favoriteItems = useFavoriteStore((state) => state.favoriteItems);
 
   const handleRemoveFromFavorites = (id: string) => {
-    setFavoriteItems(favoriteItems.filter((item) => item.id !== id));
+    useFavoriteStore.getState().removeFromFavorite(id);
   };
 
   return (
@@ -50,32 +31,32 @@ const Favorite: React.FC = () => {
       <div className="favorite-items grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {favoriteItems.map((item) => (
           <div
-            key={item.id}
+            key={item.product_id}
             className="favorite-item flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm bg-[#F8F2E5] transition-transform hover:scale-105"
           >
-            <Link to={`/product/${item.id}`}>
+            <Link to={`/product/${item.product_id}`}>
               <img
-                src={item.imageUrl}
-                alt={item.name}
+                src={item.product_image[0]}
+                alt={item.product_name}
                 className="h-56 w-56 object-cover rounded-lg mb-4 transition-transform hover:scale-110"
               />
             </Link>
 
             <div className="product-info text-center">
-              <h3 className="font-semibold text-lg mb-2">{item.name}</h3>
-              <div className="my-2 flex justify-center">
+              <h3 className="font-semibold text-lg mb-2">{item.product_name}</h3>
+              {/* <div className="my-2 flex justify-center">
                 {[...Array(5)].map((_, index) => (
                   <FaStar
                     key={index}
-                    className={index < item.rating ? "text-yellow-500" : "text-gray-300"}
+                    className={index < item.pr ? "text-yellow-500" : "text-gray-300"}
                   />
                 ))}
-              </div>
+              </div> */}
 
               <p className="text-gray-500">
-                {item.discountPrice
-                  ? item.discountPrice.toLocaleString()
-                  : item.price.toLocaleString()}{" "}
+                {item.product_selling_price
+                  ? item.product_selling_price.toLocaleString()
+                  : item.product_selling_price.toLocaleString()}{" "}
                 đ
               </p>
             </div>
@@ -83,7 +64,7 @@ const Favorite: React.FC = () => {
             <div className="mt-4 flex items-center space-x-3">
               <button
                 className="flex items-center text-red-500 border border-gray-300 px-2 py-1 rounded-lg hover:bg-red-100 transition"
-                onClick={() => handleRemoveFromFavorites(item.id)}
+                onClick={() => handleRemoveFromFavorites(item.product_id)}
               >
                 <DeleteOutlineIcon fontSize="small" />
                 <span className="ml-1 text-sm">Xóa khỏi danh sách</span>

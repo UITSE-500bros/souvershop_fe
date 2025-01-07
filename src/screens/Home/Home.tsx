@@ -8,6 +8,7 @@ import ProductSlider from "../../components/ProductSlider";
 import ReviewCard from "../../components/ReviewCard";
 import useCartStore from "../Cart/store/CartStore";
 import { getBannerApi, getRandomProductsApi } from "./Home.service";
+import useFavoriteStore from "../Favorite/store/FavoriteStore";
 
 const responsive = {
   superLargeDesktop: {
@@ -86,7 +87,7 @@ const Home = () => {
     };
 
     useCartStore.getState().setCartItems();
-
+    useFavoriteStore.getState().setFavoriteItems();
     fetchNewArrivals();
     fetchBestSellers();
     fetchBanners();
