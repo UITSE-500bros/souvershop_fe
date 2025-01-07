@@ -17,6 +17,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { checkoutVNpayApi } from "./service/Cart.service";
 
 const CartPage: React.FC = () => {
   const [shippingMethod, setShippingMethod] = useState<string>("standard");
@@ -34,15 +36,21 @@ const CartPage: React.FC = () => {
   const subtotal = calculateSubtotal(cartItems);
   const total = subtotal + shipping;
 
-  const navigate = useNavigate();
-  const handleGoToCheckout = () => {
-    navigate("/checkout", {
-      state: {
-        total,
-        shipping,
-        subtotal,
-      },
-    });
+  const handleCheckout = () => {
+    if (paymentMethod === "cod") {
+      toast.success("Đăt hàng thành công!");
+    } else {
+      checkoutVNpayApi({
+        amount: total,
+        productList: cartItems.map((item) => {
+          return {
+            product_id: item.product_id,
+            product_total: item.total,
+            quantity: item.quantity,
+          };
+        }),
+      }).then((res) => console.log(res));
+    }
   };
 
   return (
@@ -96,7 +104,7 @@ const CartPage: React.FC = () => {
               onChange={(e) => setPaymentMethod(e.target.value)}
             >
               <FormControlLabel
-                value="VNpapy"
+                value="VNpay"
                 control={<Radio />}
                 label="VNpay"
               />
@@ -182,7 +190,7 @@ const CartPage: React.FC = () => {
                   backgroundColor: "#333",
                 },
               }}
-              onClick={handleGoToCheckout}
+              onClick={handleCheckout}
             >
               Thanh toán
               <ArrowForwardIcon style={{ width: 24, height: 24 }} />

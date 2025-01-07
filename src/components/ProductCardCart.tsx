@@ -14,7 +14,6 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ cartItem }) => {
   const removeItem = useCartStore((state) => state.removeFromCart);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
 
-  const totalPrice = cartItem.product_selling_price * quantity;
   const onQuantityChange = (newQuantity: number) => {
     setQuantity(newQuantity);
     updateQuantity(cartItem.product_id, newQuantity);
@@ -45,7 +44,7 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ cartItem }) => {
       <div className="relative flex-1 px-4">
         <h3 className="text-lg max-h-[80px]  overflow-hidden font-bold">{cartItem.product_name}</h3>
         <p className="absolute bottom-0 left-0 font-bold">
-          {formatPrice(totalPrice)}
+          {formatPrice(cartItem.total)}
         </p>
       </div>
 
