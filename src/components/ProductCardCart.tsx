@@ -24,7 +24,6 @@ const ProductCardCart: React.FC<ProductCardCartProps> = ({ cartItem }) => {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     onQuantityChange(newQuantity);
-    
   };
 
   const handleDecrement = () => {

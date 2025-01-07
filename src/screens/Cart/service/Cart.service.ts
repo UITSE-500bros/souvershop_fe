@@ -12,3 +12,20 @@ export const getCart = async () => {
   const response = await axiosInstance.get("customer/cart");
   return response.data;
 };
+export const addProductToCart = async (productId: string, quantity: number) => {
+  const response = await axiosInstance.post(`customer/cart`, {
+    product_id: productId,
+    quantity,
+  });
+  return response.data;
+};
+export const removeProductFromCart = async (productId: string) => {
+  const response = await axiosInstance.delete(`customer/cart/${productId}`);
+  return response.data;
+}
+export const updateProductQuantity = async (productId: string, quantity: number) => {
+  const response = await axiosInstance.put(`customer/cart/${productId}`, {
+    quantity
+  });
+  return response.data;
+}
