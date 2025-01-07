@@ -10,8 +10,14 @@ import BarChartComponent from "./BarChartComponent";
 import { dataBarchart, dataLineChart, tableData } from "./Fakedata";
 import IconGroup from "./IconGroup";
 import LineChartComponent from "./LineChartComponent";
+import { useState } from "react";
 
 export default function AdminDashboard() {
+  const [reportData, setReportData] = useState({
+    productOverview:{
+      
+    }
+  });
   return (
     <div className="grid grid-cols-[2fr_1fr] grid-rows-[1fr_1_fr_2fr_2fr] place-items-center gap-5">
       <Container title="Tổng quan doanh số">
@@ -42,7 +48,7 @@ export default function AdminDashboard() {
 
       {/*Product overview*/}
       <Container title="Tóm tắt sản phẩm">
-        <IconGroup label="Số lượng nhà cung cấp" value={869} icon="suppliers" />
+        <IconGroup label="Số lượng sản phẩm" value={869} icon="quantity" />
         <IconGroup
           label="Số lượng danh mục"
           value={869}
