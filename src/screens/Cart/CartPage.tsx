@@ -123,7 +123,7 @@ const CartPage: React.FC = () => {
 
         <div style={{ marginTop: "24px" }}>
           <Box display="flex" flexDirection="column" gap={3}>
-            <Box display="flex" alignItems="center">
+            {/* <Box display="flex" alignItems="center">
               <Box
                 display="flex"
                 alignItems="center"
@@ -175,7 +175,7 @@ const CartPage: React.FC = () => {
               >
                 Áp dụng
               </Button>
-            </Box>
+            </Box> */}
 
             <Button
               variant="contained"

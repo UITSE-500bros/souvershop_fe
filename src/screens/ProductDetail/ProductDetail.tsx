@@ -69,17 +69,15 @@ function ProductDetail() {
   console.log(product);
 
   const [ratingvValue, setRatingValue] = React.useState<number | null>(2);
-  const [color, setColor] = React.useState<string>("");
+
   const [quantity, setQuantity] = React.useState<number>(1);
   const [tabIndex, setTabIndex] = useState(0);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setColor(event.target.value as string);
-  };
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue);
   };
+  console.log(product);
+  
 
   if (product) {
     return (
@@ -137,24 +135,7 @@ function ProductDetail() {
             a soft and breathable fabric, it offers superior comfort and style.
           </div> */}
             <hr />
-            {/*Select color*/}
-            <div className="font-['Inter'] text-base font-normal text-black/60">
-              Select Colors
-            </div>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">color</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={color}
-                label="Age"
-                onChange={handleChange}
-              >
-                <MenuItem value={"red"}>Red</MenuItem>
-                <MenuItem value={"blue"}>Blue</MenuItem>
-                <MenuItem value={"green"}>Green</MenuItem>
-              </Select>
-            </FormControl>
+
             <hr />
             {/*Quantity*/}
             <div className="mt-auto flex items-center justify-center">
@@ -205,7 +186,6 @@ function ProductDetail() {
           >
             <Tab label="Product Details" sx={{ width: "30%" }} />
             <Tab label="Rating & Reviews" sx={{ width: "30%" }} />
-            <Tab label="FAQ" sx={{ width: "30%" }} />
           </Tabs>
 
           <TabPanel value={tabIndex} index={0}>
@@ -225,9 +205,6 @@ function ProductDetail() {
             <div className="h-[990px] w-full">
               <RatingReview />
             </div>
-          </TabPanel>
-          <TabPanel value={tabIndex} index={2}>
-            <Typography>FAQ content goes here.</Typography>
           </TabPanel>
         </Box>
 
