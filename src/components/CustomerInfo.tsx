@@ -1,12 +1,11 @@
+import { Button } from '@mui/material';
 import React from 'react';
-import { Button, Typography } from '@mui/material';
 
 interface CustomerInfoProps {
   handleSaveChanges: () => void;
-  profileImage: string;
 }
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({ handleSaveChanges, profileImage }) => {
+const CustomerInfo: React.FC<CustomerInfoProps> = ({ handleSaveChanges }) => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>

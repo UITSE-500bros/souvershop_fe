@@ -1,30 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography, Button, TextField, Tabs, Tab } from '@mui/material';
 import CustomerInfo from '@/components/CustomerInfo';
+import { Profile } from '../../models/Profile';
+import { getCustomerInfo, updateCustomerInfo } from './service/profile.service';
+import { toast } from 'react-toastify';
+
 
 const CustomerInfoPage: React.FC = () => {
-  const customerInfo = {
-    email: "12345@gmail.com",
-    phone: "0901234567",
-    customerName: "Nguyễn Văn A",
-    imageSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBodQoJhJGB1qoSvJ-mZeCy61dpq0XZOM8pA&s",
-  };
-
+  const [profile, setProfile] = useState<Profile>();
   const [selectedTab, setSelectedTab] = useState(0);
-  const [firstName, setFirstName] = useState(customerInfo.customerName.split(' ')[0]);
-  const [lastName, setLastName] = useState(customerInfo.customerName.split(' ').slice(1).join(' '));
-  const [phoneNumber, setPhoneNumber] = useState(customerInfo.phone);
-  const [emailAddress, setEmailAddress] = useState(customerInfo.email);
-  const [profileImage, setProfileImage] = useState(customerInfo.imageSrc);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
+  const [originalProfile, setOriginalProfile] = useState(profile); // Backup of original profile
 
   const handleSaveChanges = () => {
-    console.log('Changes saved');
-  };
+    const isInvalidPhone = profile?.user_phone_number && !/^0\d{9}$/.test(profile.user_phone_number);
+    const isInvalidEmail = profile?.user_email && !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(profile.user_email);
 
+    if (!profile?.user_phone_number || !profile?.user_email) {
+      toast.error('Vui lòng nhập đầy đủ thông tin');
+
+    } else if (isInvalidPhone && profile?.user_phone_number !== originalProfile?.user_phone_number) {
+      toast.error("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại hợp lệ.");
+    } else if (isInvalidEmail && profile?.user_email !== originalProfile?.user_email) {
+      toast.error("Email không hợp lệ. Vui lòng nhập email hợp lệ.");
+    } else {
+      updateCustomerInfo(profile).then((data) => {
+        setProfile(data);
+        setOriginalProfile(data); // Update backup
+        toast.success('Cập nhật thông tin thành công');
+      });
+      return;
+    }
+
+    setTimeout(() => {
+      setProfile(originalProfile);
+    }, 1000);
+  };
+  useEffect(() => {
+    getCustomerInfo().then((data) => {
+      setProfile(data);
+      setOriginalProfile(data);
+    });
+    
+  }, []);
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <div style={{
@@ -60,7 +81,7 @@ const CustomerInfoPage: React.FC = () => {
 
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
               <div style={{ width: '120px', height: '120px', borderRadius: '50%', overflow: 'hidden', marginRight: '16px' }}>
-                <img src={profileImage} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={profile?.user_avatar || '../../../../public/profile.png'} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <Button variant="outlined" style={{ textTransform: 'none' }}>
                 Thay đổi ảnh đại diện
@@ -74,8 +95,8 @@ const CustomerInfoPage: React.FC = () => {
                     label="Họ"
                     variant="outlined"
                     fullWidth
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    // value={firstName}
+                    // onChange={(e) => setFirstName(e.target.value)}
                     style={{ marginBottom: '16px' }}
                   />
                 </div>
@@ -84,8 +105,8 @@ const CustomerInfoPage: React.FC = () => {
                     label="Tên"
                     variant="outlined"
                     fullWidth
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    // value={}
+                    // onChange={(e) => setLastName(e.target.value)}
                     style={{ marginBottom: '16px' }}
                   />
                 </div>
@@ -93,28 +114,28 @@ const CustomerInfoPage: React.FC = () => {
               <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
                 <div style={{ flex: 1 }}>
                   <TextField
-                    label="Số điện thoại"
+                    label={originalProfile?.user_phone_number ? '' : 'Số điện thoại'}
                     variant="outlined"
                     fullWidth
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    value={originalProfile?.user_phone_number}
+                    onChange={(e) => setProfile(profile ? { ...profile, user_phone_number: e.target.value } : undefined)}
                     style={{ marginBottom: '16px' }}
                   />
                 </div>
                 <div style={{ flex: 1 }}>
                   <TextField
-                    label="Email"
+                    label={originalProfile?.user_email ? '' : 'Email'}
                     variant="outlined"
                     fullWidth
-                    value={emailAddress}
-                    onChange={(e) => setEmailAddress(e.target.value)}
+                    value={profile?.user_email}
+                    onChange={(e) => setProfile(profile ? { ...profile, user_email: e.target.value } : undefined)}
                     style={{ marginBottom: '16px' }}
                   />
                 </div>
               </div>
             </div>
 
-            <CustomerInfo handleSaveChanges={handleSaveChanges} profileImage={profileImage} />
+            <CustomerInfo handleSaveChanges={handleSaveChanges} />
           </div>
         )}
 
