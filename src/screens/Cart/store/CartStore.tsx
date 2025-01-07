@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import CartItem from "@/models/CartItem";
 import { Product } from "@/models/Product";
+import { getCart } from "../service/Cart.service";
 
 
 type CartStore = {
   cartItems: CartItem[];
-  setCartItems: (product: Product[]) => void
+  setCartItems: () => void
   addToCart: (product: Product) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
@@ -15,14 +16,26 @@ type CartStore = {
 
 const useCartStore = create<CartStore>((set, get) => ({
   cartItems: [],
-  setCartItems: (products: Product[] = []) =>{
-    set(() => ({
-      cartItems: products.map((product) => ({
-        ...product,
-        quantity: product.quantity || 1, // Default to 1 if quantity is undefined
-        total: product.product_selling_price * (product.quantity || 1),
-      })),
-    }))
+  setCartItems: () => {
+    getCart().then(
+      (res) => {
+      set(() => ({
+        cartItems: res.products_list.reduce((merged: CartItem[], product: Product) => {
+          const existing = merged.find((item) => item.product_id === product.product_id);
+          if (existing) {
+            existing.quantity += product.quantity || 1;
+            existing.total = existing.product_selling_price * existing.quantity;
+          } else {
+            merged.push({
+              ...product,
+              quantity: product.quantity || 1,
+              total: product.product_selling_price * (product.quantity || 1),
+            });
+          }
+          return merged;
+        }, []),
+      }));
+    }).catch((err) => console.error(err));
   },
   addToCart: (product) => {
     set((state) => {
