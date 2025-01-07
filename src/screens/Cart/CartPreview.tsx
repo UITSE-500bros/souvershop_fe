@@ -1,12 +1,11 @@
-import React from "react";
 import {
   Box,
-  Typography,
+  Button,
   Divider,
   List,
   ListItem,
   ListItemText,
-  Button,
+  Typography,
 } from "@mui/material";
 import useCartStore from "./store/CartStore";
 const CartPreview = () => {

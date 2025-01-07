@@ -18,7 +18,7 @@ import { getAllProducts } from "./service/Category.service";
 const CategoryPage: React.FC = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]); // All products from API
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Products to display
-  const [categories, setCategories] = useState([]); // List of categories
+  const [categories, setCategories] = useState<{ category_id: string; category_name: string }[]>([]); // List of categories
   const [selectedCategory, setSelectedCategory] = useState(""); // Currently selected category
 
   useEffect(() => {
@@ -104,8 +104,8 @@ const CategoryPage: React.FC = () => {
         <h2 className="ml-4 text-2xl font-bold">
           {selectedCategory
             ? categories.find(
-                (category: any) => category.id === selectedCategory,
-              )?.name || "Danh mục"
+                (category) => category.category_id === selectedCategory,
+              )?.category_name || "Danh mục"
             : "Tất cả sản phẩm"}
         </h2>
         <div className="mx-auto grid w-full grid-cols-4 gap-1 p-2">
