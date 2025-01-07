@@ -1,8 +1,7 @@
 import { Product } from "@/models/Product";
-import { Button } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 import React from "react";
 import ProductCard from "./ProductCard";
-import { useNavigate } from "react-router-dom";
 
 interface ProductSliderProps {
   data: Product[];
@@ -10,7 +9,7 @@ interface ProductSliderProps {
   navigate: (path: string) => void;
 }
 
-const ProductSlider: React.FC<ProductSliderProps> = ({ data, text,navigate }) => {
+const ProductSlider: React.FC<ProductSliderProps> = ({ data, text, navigate }) => {
 
   return (
     <div>
@@ -18,11 +17,21 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text,navigate }) =>
       <div className="mt-[42px] flex h-[600px] w-full flex-shrink-0 flex-col items-center justify-center">
         <div className="text-center text-5xl font-bold text-black">{text}</div>
         <div className="flex w-full flex-row justify-center gap-x-5">
-          {data.map((item) => (
-            <div key={item.product_id} className="h-[452px] w-[300px]">
-              <ProductCard product={item} />
-            </div>
-          ))}
+          {
+            data.length > 0 ? (data.map((item) => (
+              <div key={item.product_id} className="h-[452px] w-[300px]">
+                <ProductCard product={item} />
+              </div>
+            )))
+              : (
+                Array.from({ length: 5 }).map((_, index: number) => (
+                  <Skeleton key={index} width={300}
+                    height={452}>
+
+                  </Skeleton>
+                ))
+              )
+          }
         </div>
         <Button
           onClick={() => navigate("/category")}

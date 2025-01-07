@@ -16,11 +16,11 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { checkoutVNpayApi } from "./service/Cart.service";
 
 const CartPage: React.FC = () => {
+
   const [shippingMethod, setShippingMethod] = useState<string>("standard");
   const [paymentMethod, setPaymentMethod] = useState<string>("VNpay");
   const cartItems = useCartStore((state) => state.cartItems);

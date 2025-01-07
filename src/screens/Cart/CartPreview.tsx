@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import useCartStore from "./store/CartStore";
 const CartPreview = () => {
+  
   const cartItems = useCartStore((state) => state.cartItems);
   const recentItems = cartItems.slice(0, 3);
-
   return (
     <Box
       sx={{

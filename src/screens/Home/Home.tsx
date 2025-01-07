@@ -1,14 +1,16 @@
 import { Button, Skeleton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import MainBanner from "../../assets/TranhDongHo.png";
-import { Footer } from "../../components";
-import Header from "../../Layout/Header/Header";
-import ProductSlider from "../../components/ProductSlider";
-import ReviewCard from "../../components/ReviewCard";
 import { useEffect, useState } from "react";
-import { getBannerApi, getRandomProductsApi } from "./Home.service";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { useNavigate } from "react-router-dom";
+import MainBanner from "../../assets/TranhDongHo.png";
+import ProductSlider from "../../components/ProductSlider";
+import ReviewCard from "../../components/ReviewCard";
+import useCartStore from "../Cart/store/CartStore";
+import useProductStore from "../Category/store/category.store";
+import useFavoriteStore from "../Favorite/store/FavoriteStore";
+import { getBannerApi, getRandomProductsApi } from "./Home.service";
+import { ClassNames } from "@emotion/react";
 
 const responsive = {
   superLargeDesktop: {
@@ -34,42 +36,6 @@ const Home = () => {
   const [banners, setBanners] = useState({});
   const [newArrivals, setNewArrivals] = useState([]);
   const [bestSellers, setBestSellers] = useState([]);
-
-  const data = [
-    {
-      id: 1,
-      name: "Đồng hồ treo tường",
-      price: 500000,
-      discountPrice: 300000,
-      imageUrl: "https://picsum.photos/seed/picsum/200/300",
-      rating: 4,
-    },
-    {
-      id: 2,
-      name: "Tranh nghệ thuật",
-      price: 1200000,
-      discountPrice: 800000,
-      imageUrl: "https://picsum.photos/seed/picsum/200/300",
-      rating: 5,
-    },
-    {
-      id: 3,
-      name: "Bình hoa sứ",
-      price: 300000,
-      discountPrice: 100000,
-      imageUrl: "https://picsum.photos/seed/picsum/200/300",
-      rating: 3,
-    },
-    {
-      id: 4,
-      name: "Bình hoa sứ",
-      price: 300000,
-      discountPrice: 250000,
-      imageUrl: "https://picsum.photos/seed/picsum/200/300",
-      rating: 4,
-    },
-  ];
-
   const reviews = [
     {
       name: "Nguyễn Văn A",
@@ -93,7 +59,6 @@ const Home = () => {
       rating: 3,
     },
   ];
-
   useEffect(() => {
     const fetchBanners = async () => {
       getBannerApi()
@@ -121,6 +86,10 @@ const Home = () => {
         console.log(err);
       }
     };
+
+    useCartStore.getState().setCartItems();
+    useFavoriteStore.getState().setFavoriteItems();
+    useProductStore.getState().setProductList();
     fetchNewArrivals();
     fetchBestSellers();
     fetchBanners();
@@ -188,10 +157,14 @@ const Home = () => {
       {/* empty space */}
       <div className="h-[100px] w-full bg-[#7b5c43]" />
       {/* new products */}
+
       <ProductSlider navigate={navigate} data={newArrivals} text="Sản phẩm mới" />
+
       <div className="my-3 h-[1px] w-full bg-black" />
       {/* best seller */}
+
       <ProductSlider navigate={navigate} data={bestSellers} text="Bán chạy nhất" />
+
       {/* Customer Reviews Section */}
       <div className="reviews-section my-8">
         <h2 className="mb-6 text-center text-5xl font-bold text-black">

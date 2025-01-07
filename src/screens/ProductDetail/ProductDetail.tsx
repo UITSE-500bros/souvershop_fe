@@ -231,6 +231,10 @@ function ProductDetail() {
           </TabPanel>
         </Box>
 
+      {/* Related Products */}
+      {/* <ProductSlider data={images_data} text="Sản phẩm liên quan" /> */}
+    </div>
+  );
         {/* Related Products */}
         {/* <ProductSlider data={images_data} text="Sản phẩm liên quan" /> */}
       </div>
