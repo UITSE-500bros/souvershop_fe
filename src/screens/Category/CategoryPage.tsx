@@ -13,11 +13,13 @@ import React, { useEffect, useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
-import { getAllProducts } from "./service/Category.service";
+
+import useProductStore from "./store/category.store";
 
 const CategoryPage: React.FC = () => {
-  const [allProducts, setAllProducts] = useState<Product[]>([]); // All products from API
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Products to display
+  const allProducts = useProductStore((state) => state.product_list);
+  console.log(allProducts);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts); // Products to display
   const [categories, setCategories] = useState<{ category_id: string; category_name: string }[]>([]); // List of categories
   const [selectedCategory, setSelectedCategory] = useState(""); // Currently selected category
 
@@ -32,19 +34,8 @@ const CategoryPage: React.FC = () => {
       }
     };
 
-    // Fetch all products
-    const fetchProducts = async () => {
-      try {
-        const res = await getAllProducts();
-        setAllProducts(res);
-        setFilteredProducts(res); // Initially display all products
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      }
-    };
-
+    
     fetchCategories();
-    fetchProducts();
   }, []);
 
   const handleCategoryChange = (categoryId: string) => {

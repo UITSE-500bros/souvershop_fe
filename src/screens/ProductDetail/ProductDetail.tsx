@@ -283,7 +283,7 @@ function ProductDetail() {
       </Box>
 
       {/* Related Products */}
-      <ProductSlider data={images_data} text="Sản phẩm liên quan" />
+      {/* <ProductSlider data={images_data} text="Sản phẩm liên quan" /> */}
     </div>
   );
 }

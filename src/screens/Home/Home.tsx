@@ -9,6 +9,9 @@ import ReviewCard from "../../components/ReviewCard";
 import useCartStore from "../Cart/store/CartStore";
 import { getBannerApi, getRandomProductsApi } from "./Home.service";
 import useFavoriteStore from "../Favorite/store/FavoriteStore";
+import { getAllProducts } from "../Category/service/Category.service";
+import { Product } from "../../models/Product";
+import useProductStore from "../Category/store/category.store";
 
 const responsive = {
   superLargeDesktop: {
@@ -57,7 +60,8 @@ const Home = () => {
       rating: 3,
     },
   ];
-
+  const [allProducts, setAllProducts] = useState<Product[]>([]); // All products from API
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Products to display
   useEffect(() => {
     const fetchBanners = async () => {
       getBannerApi()
@@ -88,6 +92,7 @@ const Home = () => {
 
     useCartStore.getState().setCartItems();
     useFavoriteStore.getState().setFavoriteItems();
+    useProductStore.getState().setProductList();
     fetchNewArrivals();
     fetchBestSellers();
     fetchBanners();
