@@ -7,11 +7,10 @@ import MainBanner from "../../assets/TranhDongHo.png";
 import ProductSlider from "../../components/ProductSlider";
 import ReviewCard from "../../components/ReviewCard";
 import useCartStore from "../Cart/store/CartStore";
-import { getBannerApi, getRandomProductsApi } from "./Home.service";
-import useFavoriteStore from "../Favorite/store/FavoriteStore";
-import { getAllProducts } from "../Category/service/Category.service";
-import { Product } from "../../models/Product";
 import useProductStore from "../Category/store/category.store";
+import useFavoriteStore from "../Favorite/store/FavoriteStore";
+import { getBannerApi, getRandomProductsApi } from "./Home.service";
+import { ClassNames } from "@emotion/react";
 
 const responsive = {
   superLargeDesktop: {
@@ -60,8 +59,6 @@ const Home = () => {
       rating: 3,
     },
   ];
-  const [allProducts, setAllProducts] = useState<Product[]>([]); // All products from API
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Products to display
   useEffect(() => {
     const fetchBanners = async () => {
       getBannerApi()
@@ -97,7 +94,6 @@ const Home = () => {
     fetchBestSellers();
     fetchBanners();
   }, []);
-  console.log(newArrivals, bestSellers);
 
   return (
     <div className="flex flex-col">
@@ -161,10 +157,14 @@ const Home = () => {
       {/* empty space */}
       <div className="h-[100px] w-full bg-[#7b5c43]" />
       {/* new products */}
+
       <ProductSlider navigate={navigate} data={newArrivals} text="Sản phẩm mới" />
+
       <div className="my-3 h-[1px] w-full bg-black" />
       {/* best seller */}
+
       <ProductSlider navigate={navigate} data={bestSellers} text="Bán chạy nhất" />
+
       {/* Customer Reviews Section */}
       <div className="reviews-section my-8">
         <h2 className="mb-6 text-center text-5xl font-bold text-black">
