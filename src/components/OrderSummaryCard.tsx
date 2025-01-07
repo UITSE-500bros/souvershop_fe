@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface OrderSummaryCardProps {
+export interface PaymentInfo{
   subtotal: number;
   shipping: number;
   total: number;
 }
 
-const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
+const OrderSummaryCard: React.FC<PaymentInfo> = ({
   subtotal,
   shipping,
   total,
@@ -17,7 +17,7 @@ const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
 
       <div className="p-5 bg-[#F8F2E5] rounded-lg shadow-md">
         <div className="flex justify-between mb-2">
-          <span>Tổng phụ</span>
+          <span>Tổng đơn hàng</span>
           <span>{subtotal.toLocaleString()} đ</span>
         </div>
         <div className="flex justify-between mb-2">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Typography,
   Radio,
@@ -12,10 +12,8 @@ interface ShippingOptionsProps {
   setShippingMethod: (method: string) => void;
 }
 
-const ShippingOptions: React.FC<ShippingOptionsProps> = ({
-  shippingMethod,
-  setShippingMethod,
-}) => {
+const ShippingOptions = () => {
+  const [shippingMethod, setShippingMethod] = useState<string>("standard");
   return (
     <div style={{ padding: "20px" }}>
       <Typography variant="h4" gutterBottom>

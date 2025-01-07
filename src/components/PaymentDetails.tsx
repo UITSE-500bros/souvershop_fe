@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Radio, RadioGroup, FormControlLabel, FormControl } from '@mui/material';
 
-interface PaymentDetailsProps {
-  paymentMethod: string;
-  setPaymentMethod: (method: string) => void;
-}
 
-const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentMethod, setPaymentMethod }) => {
+
+const PaymentDetails = () => {
+  const [paymentMethod,setPaymentMethod]=useState('')
   return (
     <div style={{ padding: '20px' }}>
       <Typography variant="h4" gutterBottom>

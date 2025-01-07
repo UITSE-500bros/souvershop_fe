@@ -4,16 +4,17 @@ import PaymentDetails from "../../components/PaymentDetails";
 import OrderSummaryCard from "../../components/OrderSummaryCard";
 import ConfirmationButton from "../../components/ConfirmationButton";
 import { Container } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const CheckoutPage: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState<string>("creditCard");
   const [shippingMethod, setShippingMethod] = useState<string>("standard");
+  const location = useLocation()
+  const {total,shipping,subtotal}=location.state||{total:0,shipping:0,subtotal:0}
 
-  const subtotal = 100000;
-  const discount = 20000;
 
-  const shipping = shippingMethod === "standard" ? 20000 : 50000;
-  const total = subtotal - discount + shipping;
+
+
 
   const handleConfirm = () => {
     alert("Đơn hàng đã được xác nhận!");
@@ -32,7 +33,6 @@ const CheckoutPage: React.FC = () => {
       />
       <OrderSummaryCard
         subtotal={subtotal}
-        discount={discount}
         shipping={shipping}
         total={total}
       />

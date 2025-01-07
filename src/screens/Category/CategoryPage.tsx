@@ -1,22 +1,19 @@
-import { Loading } from "@/components/Loading";
 import { Product } from "@/models/Product";
-import React, { useEffect, useState } from "react";
-import { FaChevronRight } from "react-icons/fa";
-import { RiFilterLine } from "react-icons/ri";
-import ProductCard from "../../components/ProductCard";
-import { getAllProducts } from "./service/Category.service";
+import axiosInstance from "@/services/AxiosInstance";
 import {
-  Skeleton,
+  Breadcrumbs,
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
-  Breadcrumbs,
+  Select,
+  Skeleton,
   Typography,
 } from "@mui/material";
-import axiosInstance from "@/services/AxiosInstance";
-import { log } from "console";
+import React, { useEffect, useState } from "react";
+import { FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import ProductCard from "../../components/ProductCard";
+import { getAllProducts } from "./service/Category.service";
 
 const CategoryPage: React.FC = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]); // All products from API
@@ -64,9 +61,9 @@ const CategoryPage: React.FC = () => {
     }
   };
 
-  if (filteredProducts.length === 0 && allProducts.length === 0) {
-    return <Loading />;
-  }
+  // if (filteredProducts.length === 0 && allProducts.length === 0) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F8F2E5]">
@@ -122,7 +119,7 @@ const CategoryPage: React.FC = () => {
                 />
               ))
             : filteredProducts.map((product) => (
-                <ProductCard product={product} />
+                <ProductCard key={product.product_id} product={product} />
               ))}
         </div>
       </div>

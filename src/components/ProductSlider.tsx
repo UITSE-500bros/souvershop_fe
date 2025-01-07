@@ -25,7 +25,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ data, text,navigate }) =>
           ))}
         </div>
         <Button
-          onAbort={() => navigate("/category")}
+          onClick={() => navigate("/category")}
           variant="contained"
           sx={{
             width: 210,
