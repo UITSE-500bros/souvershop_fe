@@ -9,8 +9,8 @@ export default function ButtonGroup({
   onDecrement,
 }: {
   value: number;
-  onIncrement: () => void;
-  onDecrement: () => void;
+  onIncrement?: () => void;
+  onDecrement?: () => void;
 }) {
   return (
     <div className="flex h-full w-full flex-row items-center justify-between">
