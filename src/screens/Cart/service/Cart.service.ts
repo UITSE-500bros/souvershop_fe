@@ -8,3 +8,7 @@ export const checkoutVNpayApi = async (receipt: Receipt) => {
   });
   return response.data;
 };
+export const getCart = async () => {
+  const response = await axiosInstance.get("customer/cart");
+  return response.data;
+};

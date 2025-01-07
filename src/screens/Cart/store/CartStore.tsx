@@ -2,8 +2,10 @@ import { create } from "zustand";
 import CartItem from "@/models/CartItem";
 import { Product } from "@/models/Product";
 
+
 type CartStore = {
   cartItems: CartItem[];
+  setCartItems: (product: Product[]) => void
   addToCart: (product: Product) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
@@ -11,8 +13,17 @@ type CartStore = {
   getLength: () => number;
 };
 
-const useCartStore = create<CartStore>((set,get) => ({
+const useCartStore = create<CartStore>((set, get) => ({
   cartItems: [],
+  setCartItems: (products: Product[] = []) =>{
+    set(() => ({
+      cartItems: products.map((product) => ({
+        ...product,
+        quantity: product.quantity || 1, // Default to 1 if quantity is undefined
+        total: product.product_selling_price * (product.quantity || 1),
+      })),
+    }))
+  },
   addToCart: (product) => {
     set((state) => {
       const existingItem = state.cartItems.find(

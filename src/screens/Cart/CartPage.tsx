@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OrderSummaryCard from "../../components/OrderSummaryCard";
 import ProductCardCart from "../../components/ProductCardCart";
 
@@ -18,9 +18,15 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { checkoutVNpayApi } from "./service/Cart.service";
+import { checkoutVNpayApi, getCart } from "./service/Cart.service";
 
 const CartPage: React.FC = () => {
+  useEffect(() => {
+    getCart().then((res) => {
+      useCartStore.getState().setCartItems(res.products_list)
+    })
+  }, []);
+
   const [shippingMethod, setShippingMethod] = useState<string>("standard");
   const [paymentMethod, setPaymentMethod] = useState<string>("VNpay");
   const cartItems = useCartStore((state) => state.cartItems);
