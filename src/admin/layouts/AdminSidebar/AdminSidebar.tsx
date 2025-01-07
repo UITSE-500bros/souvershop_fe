@@ -7,21 +7,19 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
+  SidebarMenuItem
 } from "@/components/ui/sidebar";
+import useAuthStore from "@/stores/AuthStore";
 
 import {
-  House,
   ChartArea,
-  PackagePlus,
   CircleUserRound,
   Database,
-  Settings,
+  House,
   LogOut,
+  PackagePlus,
+  Settings,
 } from "lucide-react";
-import React from "react";
-import { Link } from "react-router-dom";
 //menu items
 const items = [
   {
@@ -53,6 +51,7 @@ const items = [
 ];
 
 export default function AdminSidebar() {
+  const {logout}=useAuthStore();
   return (
     <Sidebar>
       {/* Sidebar header */}
@@ -93,7 +92,7 @@ export default function AdminSidebar() {
               </a>
             </SidebarMenuButton>
 
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton onClick={logout} asChild>
               <a href="#">
                 <LogOut className="h-8 w-8" />
                 <span>Đăng xuất</span>
