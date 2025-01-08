@@ -15,7 +15,7 @@ import {
 import { Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAuthStore from "@/stores/AuthStore";
 import ListIcon from "@mui/icons-material/List";
 import useCartStore from "@/screens/Cart/store/CartStore";
@@ -84,6 +84,11 @@ const Header = () => {
 
   const isPopoverOpen = Boolean(popoverAnchorEl);
   const isMenuOpen = Boolean(menuAnchorEl);
+
+  useEffect(() => {
+    useCartStore.getState().setCartItems();
+    useFavoriteStore.getState().setFavoriteItems();
+  }, []);
 
   return (
     <div className="sticky left-0 top-0 z-10 w-full">

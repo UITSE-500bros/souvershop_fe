@@ -1,3 +1,4 @@
+import { TopReview } from "@/models/TopReview";
 import { Button, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
@@ -6,12 +7,8 @@ import { useNavigate } from "react-router-dom";
 import MainBanner from "../../assets/TranhDongHo.png";
 import ProductSlider from "../../components/ProductSlider";
 import ReviewCard from "../../components/ReviewCard";
-import useCartStore from "../Cart/store/CartStore";
 import useProductStore from "../Category/store/category.store";
-import useFavoriteStore from "../Favorite/store/FavoriteStore";
 import { getBannerApi, getRandomProductsApi, getTopReviewApi } from "./Home.service";
-import { ClassNames } from "@emotion/react";
-import { TopReview } from "@/models/TopReview";
 
 const responsive = {
   superLargeDesktop: {
@@ -76,8 +73,7 @@ const Home = () => {
       }
     };
 
-    useCartStore.getState().setCartItems();
-    useFavoriteStore.getState().setFavoriteItems();
+
     useProductStore.getState().setProductList();
     fetchNewArrivals();
     fetchBestSellers();

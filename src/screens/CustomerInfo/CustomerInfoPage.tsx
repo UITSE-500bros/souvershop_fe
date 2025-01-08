@@ -151,8 +151,6 @@ const CustomerInfoPage: React.FC = () => {
           <Tab label="Thông tin cá nhân" />
           <Tab label="Đổi mật khẩu" />
           <Tab label="Lịch sử giao dịch" />
-          <Tab label="Mã giảm giá" />
-          <Tab label="Thông báo" />
         </Tabs>
       </div>
 
@@ -177,7 +175,6 @@ const CustomerInfoPage: React.FC = () => {
                 />
               </div>
               <input type="file" onChange={handleFileChange} accept="image/*" />
-              <button onClick={handleUpload}>Upload</button>
             </div>
 
             <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
@@ -227,24 +224,6 @@ const CustomerInfoPage: React.FC = () => {
                 getRowId={(row) => row.receipt_id} // Use `receipt_id` as the unique identifier
               />
             </Box>
-          </div>
-        )}
-
-        {selectedTab === 3 && (
-          <div>
-            <Typography variant="h5" style={{ marginBottom: "16px" }}>
-              Mã giảm giá
-            </Typography>
-            <Typography>Manage your discount codes here.</Typography>
-          </div>
-        )}
-
-        {selectedTab === 4 && (
-          <div>
-            <Typography variant="h5" style={{ marginBottom: "16px" }}>
-              Thông báo
-            </Typography>
-            <Typography>Manage your notifications here.</Typography>
           </div>
         )}
       </div>
