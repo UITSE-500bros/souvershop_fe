@@ -5,7 +5,7 @@ import React from "react";
 type SalesIconProps = {
   icon: string;
   label: string;
-  value: number;
+  value: string;
   hasBorder?: boolean;
 };
 

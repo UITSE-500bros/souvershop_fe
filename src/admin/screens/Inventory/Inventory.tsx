@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField, Select, MenuItem } from "@mui/material";
+import { Button, TextField, Select, MenuItem, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 import InventoryButton from "../../../admin/components/InventoryButton";
 import { useNavigate } from "react-router-dom";
 import { getProductInventory } from "./service/Inventory.service";
 import { Loading } from "@/components/Loading";
 import { Product } from "@/models/Product";
 import { getAllProducts } from "@/screens/Category/service/Category.service";
+import { Table } from "@mui/material";
 
 export default function Inventory() {
   const [isAddingInventory, setIsAddingInventory] = useState(false);
@@ -22,8 +23,7 @@ export default function Inventory() {
   const exportToExcel = async () => {
     const products = await getAllProducts();
     console.log(products);
-
-  }
+  };
 
   const handleAddInventory = () => {
     setIsAddingInventory(true);
@@ -114,36 +114,53 @@ export default function Inventory() {
         </div>
         <div className="flex items-center justify-between">
           <div className="text-[24px] font-bold text-[#333]">Các sản phẩm</div>
-          <InventoryButton onAddInventory={handleAddInventory} />
+          <InventoryButton exportExcel={()=>{}} onAddInventory={handleAddInventory} />
         </div>
 
-        <div className="flex flex-col gap-5 overflow-auto rounded-md border border-[#ddd]">
-          <div className="flex bg-[#f5f5f5] p-[10px] font-bold text-[#333]">
-            <div className="flex-1 text-left">Tên sản phẩm</div>
-            <div className="flex-1 text-left">Giá mua</div>
-            <div className="flex-1 text-left">Giá bán</div>
-            <div className="flex-1 text-left">Số lượng</div>
-          </div>
-          {products.map((product) => (
-            <div
-              className="flex border-b border-[#ddd] p-[10px]"
-              key={product.product_id}
-              onClick={handleNavigateToProductInfo}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="line-clamp-3 flex-1 overflow-hidden text-ellipsis text-left">
-                {product.product_name}
-              </div>
-              <div className="flex-1 text-left">
-                {product.product_import_price}
-              </div>
-              <div className="flex-1 text-left">
-                {product.product_selling_price}
-              </div>
-              <div className="flex-1 text-left">{product.product_quantity}</div>
-            </div>
-          ))}
-        </div>
+        <TableContainer
+          component={Paper}
+          sx={{ maxHeight: 400, overflow: "auto", border: "1px solid #ddd" }}
+        >
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell style={{ fontWeight: "bold", color: "#333" }}>
+                  Tên sản phẩm
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", color: "#333" }}>
+                  Giá mua
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", color: "#333" }}>
+                  Giá bán
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", color: "#333" }}>
+                  Số lượng
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {products.map((product: any) => (
+                <TableRow
+                  key={product.product_id}
+                  hover
+                  onClick={() =>
+                    handleNavigateToProductInfo(product.product_id)
+                  }
+                  style={{ cursor: "pointer" }}
+                >
+                  <TableCell>
+                    <div className="line-clamp-3 overflow-hidden text-ellipsis">
+                      {product.product_name}
+                    </div>
+                  </TableCell>
+                  <TableCell>{product.product_import_price}</TableCell>
+                  <TableCell>{product.product_selling_price}</TableCell>
+                  <TableCell>{product.product_quantity}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
         <div className="mt-[auto] flex items-center justify-center gap-[20px] p-[10px]">
           <Button
             variant="outlined"
@@ -168,16 +185,19 @@ export default function Inventory() {
               <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between gap-3">
                   <label className="w-[150px] text-[14px] text-[#333]">
-                  Tên sản phẩm:
+                    Tên sản phẩm:
                   </label>
                   <TextField
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  value={modalData.productName}
-                  onChange={(e) =>
-                    setModalData({ ...modalData, productName: e.target.value })
-                  }
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    value={modalData.productName}
+                    onChange={(e) =>
+                      setModalData({
+                        ...modalData,
+                        productName: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className="flex items-center justify-between gap-3">
