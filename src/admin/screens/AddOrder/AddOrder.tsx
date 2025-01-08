@@ -119,7 +119,6 @@ const OrdersList: React.FC = () => {
                 <th className="border border-gray-300 p-4 text-left text-lg">
                   Số lượng
                 </th>
-                
               </tr>
             </thead>
             <tbody>
@@ -211,9 +210,7 @@ const OrdersList: React.FC = () => {
                 />
               </div>
               <div className="flex items-center justify-between gap-3">
-                <label className="w-[150px] text-[14px] text-[#333]">
-                  Ngày giao hàng:
-                </label>
+                
                 <TextField
                   fullWidth
                   variant="outlined"
