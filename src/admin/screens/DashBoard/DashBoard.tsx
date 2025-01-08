@@ -13,6 +13,7 @@ import LineChartComponent from "./LineChartComponent";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/services/AxiosInstance";
 import { LowStockItem } from "@/models/LowStockItem";
+import { TableItem } from "./model/TableItem";
 
 export default function AdminDashboard() {
   const [reportData, setReportData] = useState({
@@ -37,8 +38,16 @@ export default function AdminDashboard() {
       total_return: "",
     },
   });
+  const [table, setTable] = useState<TableItem[]>([]);
   const [lowStock, setLowStock] = useState<LowStockItem[]>([]);
-
+  const fetchTableData = async () => {
+    try {
+      const res = await axiosInstance.get("report/sales_product");
+      setTable(res.data);
+    } catch (error) {
+      console.error("Error fetching table data:", error);
+    }
+  }
   const fetchLowStock = async () => {
     try {
       const res = await axiosInstance.get("report/low-stock");
@@ -91,8 +100,9 @@ export default function AdminDashboard() {
     fetchLowStock();
     fetchBuyReport();
     fetchStockData();
+    fetchTableData();
   }, []);
-  console.log(lowStock);
+  console.log(table);
 
   return (
     <div className="grid grid-cols-[2fr_1fr] grid-rows-[1fr_1_fr_2fr_2fr] place-items-center gap-5">
@@ -186,7 +196,7 @@ export default function AdminDashboard() {
         <LineChartComponent data={dataLineChart} />
       </Container>
       {/* table */}
-      <Container title="Bảng">
+      <Container title="Đã bán">
         <TableContainer sx={{width: "100%"}}>
           <TableHead>
             <TableRow>
@@ -197,17 +207,14 @@ export default function AdminDashboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableData.map((row) => (
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                key={row.Tên}
-              >
+            {table.map((row) => (
+              <TableRow key={row.product_name}>
                 <TableCell component="th" scope="row">
-                  {row.Tên}
+                  {row.product_name}
                 </TableCell>
-                <TableCell align="right">{row["Số lượng bán"]}</TableCell>
-                <TableCell align="right">{row["Số lượng còn lại"]}</TableCell>
-                <TableCell align="right">{row["Giá"]}</TableCell>
+                <TableCell align="right">{row.total_sold_quantity}</TableCell>
+                <TableCell align="right">{row.stock_remaining}</TableCell>
+                <TableCell align="right">{row.total_revenue}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -25,6 +25,7 @@ export default function Inventory() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState<Product[]>([]);
+  const [orderReport, setOrderReport] = useState({});
   const [modalData, setModalData] = useState({
     productName: "",
     productImportPrice: "",
@@ -66,13 +67,23 @@ export default function Inventory() {
       console.error("Error fetching products:", err);
     }
   };
+
+  const fetchOrderReport = async () => {
+    try {
+      const res = await axiosInstance.get("report/orders");
+      setOrderReport(res.data);
+    } catch (error) {
+      console.error("Error fetching order report:", error);
+    }
+  };
   useEffect(() => {
     fetchProducts();
   }, [page]);
-  useEffect(()=>{
+  useEffect(() => {
     fetchInventoryReport();
-  },[])
-  console.log(inventoryReport);
+    fetchOrderReport();
+  }, []);
+  console.log(orderReport);
 
   const handleNextPage = () => {
     if (page < 10) setPage((prevPage) => prevPage + 1);
@@ -94,35 +105,40 @@ export default function Inventory() {
           <div className="mt-2 flex justify-start gap-[75px]">
             <div className="flex w-[200px] flex-col items-start justify-start gap-y-2 rounded-md p-[10px]">
               <div className="font-bold text-[#1570EF]">Thể loại</div>
-              <div className="text-[14px] font-bold">{inventoryReport.category_count}</div>
-            
+              <div className="text-[14px] font-bold">
+                {inventoryReport.category_count}
+              </div>
             </div>
 
             <div className="flex w-[200px] flex-col items-start justify-start rounded-md p-[10px]">
               <div className="font-bold text-[#E19133]">Tổng sản phẩm</div>
               <div className="mt-2 flex w-full justify-between">
-                <div className="text-[14px] font-bold">{inventoryReport.product_count}</div>
-                <div className="text-[14px] font-bold">{inventoryReport.revenue}</div>
+                <div className="text-[14px] font-bold">
+                  {inventoryReport.product_count}
+                </div>
+                <div className="text-[14px] font-bold">
+                  {inventoryReport.revenue}
+                </div>
               </div>
               <div className="mt-2 flex w-full justify-between">
-                <div className="text-[14px] text-[#858D9D]">7 ngày qua</div>
+                <div className="text-[14px] text-[#858D9D]">Loại sản phẩm</div>
                 <div className="text-[14px] text-[#858D9D]">Doanh thu</div>
               </div>
             </div>
 
             <div className="flex w-[200px] flex-col items-start justify-start rounded-md p-[10px]">
-              <div className="font-bold text-[#845EBC]">Bán chạy nhất</div>
+              <div className="font-bold text-[#845EBC]">Đơn đặt hàng</div>
               <div className="mt-2 flex w-full justify-between">
-                <div className="text-[14px] font-bold">2</div>
-                <div className="text-[14px] font-bold">25,000 VNĐ</div>
+                <div className="text-[14px] font-bold">{orderReport.total_orders}</div>
+                <div className="text-[14px] font-bold">{orderReport.total_revenue}</div>
               </div>
               <div className="mt-2 flex w-full justify-between">
-                <div className="text-[14px] text-[#858D9D]">7 ngày qua</div>
+                <div className="text-[14px] text-[#858D9D]">đơn</div>
                 <div className="text-[14px] text-[#858D9D]">Trị giá</div>
               </div>
             </div>
 
-            <div className="flex w-[200px] flex-col items-start justify-start rounded-md p-[10px]">
+            {/* <div className="flex w-[200px] flex-col items-start justify-start rounded-md p-[10px]">
               <div className="font-bold text-[#F36960]">Cổ phiếu thấp</div>
               <div className="mt-2 flex w-full justify-between">
                 <div className="text-[14px] font-bold">12</div>
@@ -134,7 +150,7 @@ export default function Inventory() {
                   Không có trong kho
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="flex items-center justify-between">

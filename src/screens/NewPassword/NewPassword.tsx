@@ -1,10 +1,12 @@
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NewPassword() {
+  const nav = useNavigate();
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="flex h-[535px] w-[657px] flex-col gap-1 bg-[#F8F2E5] px-[60px] py-[80px]">
+      <div className="flex h-[700px] w-[657px] flex-col items-center justify-center gap-1 bg-[#F8F2E5] px-[60px] py-[80px]">
         <div className="text-[45px] font-bold text-[#153060]">SouverShop</div>
         <div className="font-['Open Sans'] w-[537px] text-[45px] font-normal leading-[52px] text-[#153060]">
           Mật khẩu mới
@@ -36,7 +38,30 @@ export default function NewPassword() {
             }}
           />
         </div>
+
+        <Button
+          variant="contained"
+          onAbort={() => nav("/")}
+        sx={{
+          backgroundColor: "#153060",
+          marginTop: "50px",
+          color: "white",
+          width: "207px",
+          height: "48px",
+          textTransform: "none",
+          fontSize: "14px",
+          fontWeight: "bold",
+          borderRadius: "24px",
+          "&:hover": {
+            backgroundColor: "#153060",
+          },
+        }}
+        >
+          Xác nhận
+        </Button>
+       
       </div>
+    
     </div>
   );
 }
