@@ -11,6 +11,7 @@ const CustomerInfoPage: React.FC = () => {
   const [originalProfile, setOriginalProfile] = useState<Profile | undefined>();
   const [selectedTab, setSelectedTab] = useState(0);
   const [rows, setRows] = useState<GridRowsProp>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => setSelectedTab(newValue);
 
@@ -46,7 +47,7 @@ const CustomerInfoPage: React.FC = () => {
     { field: 'receipt_id', headerName: 'ID', width: 200, resizable: false },
     { field: 'created_at', headerName: 'Ngày đặt hàng', width: 250, resizable: false },
     { field: 'total', headerName: 'Tổng tiền', width: 200, resizable: false },
-    { field: 'transaction_status', headerName: 'Trạng thái', width: 200 , resizable: false},
+    { field: 'transaction_status', headerName: 'Trạng thái', width: 200, resizable: false },
     {
       field: 'action',
       headerName: 'Hành động',
@@ -64,6 +65,45 @@ const CustomerInfoPage: React.FC = () => {
       resizable: false
     }
   ];
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files[0]) {
+      const file = files[0];
+      setSelectedFile(file);
+
+      // Generate a preview URL for the selected image
+      const previewURL = URL.createObjectURL(file);
+      setProfile((prevProfile) => prevProfile ? { ...prevProfile, user_avatar: previewURL } : undefined);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      alert('Please select a file!');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      const response = await fetch('YOUR_BACKEND_URL/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const result = await response.json();
+      alert('File uploaded successfully!');
+      // Optionally update `profile.user_avatar` with the URL returned from the backend
+      if (result.fileUrl) {
+        setProfile((prevProfile) => prevProfile ? { ...prevProfile, user_avatar: result } : undefined);
+      }
+    } catch (error) {
+      console.error('Error uploading the file:', error);
+      alert('Failed to upload file.');
+    }
+  };
+
 
   useEffect(() => {
     getCustomerInfo().then((data) => {
@@ -121,16 +161,23 @@ const CustomerInfoPage: React.FC = () => {
           <div>
             <Typography variant="h5" style={{ marginBottom: '16px' }}>Thông tin cá nhân</Typography>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
-              <div style={{ width: '120px', height: '120px', borderRadius: '50%', overflow: 'hidden', marginRight: '16px' }}>
+              <div
+                style={{
+                  width: '120px',
+                  height: '120px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  marginRight: '16px',
+                }}
+              >
                 <img
-                  src={profile?.user_avatar || '/profile.png'}
+                  src={profile?.user_avatar || 'profile.png'}
                   alt="Profile"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
-              <Button variant="outlined" style={{ textTransform: "none" }}>
-                Thay đổi ảnh đại diện
-              </Button>
+              <input type="file" onChange={handleFileChange} accept="image/*" />
+              <button onClick={handleUpload}>Upload</button>
             </div>
 
             <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
