@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import axiosInstance from '@/services/AxiosInstance';
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  TextField,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+import axiosInstance from "@/services/AxiosInstance";
+import { addEmployee } from "./Employee.service";
+import { toast } from "react-toastify";
 
 interface Employee {
-  user_name: string | null;
+  user_name: string;
   user_email: string;
-  user_address: string | null;
-  user_phone_number: string | null;
+  user_address: string;
+  user_phoneNumber: string;
   salary: number;
   create_at: string;
 }
@@ -15,20 +27,21 @@ const EmployeesList = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
   const [newEmployee, setNewEmployee] = useState<Employee>({
-    user_name: '',
-    user_email: '',
-    user_address: '',
-    user_phone_number: '',
+    user_name: "",
+    user_email: "",
+    user_address: "",
+    user_phoneNumber: "",
     salary: 0,
     create_at: new Date().toISOString(),
   });
   const [errors, setErrors] = useState({
-    user_name: '',
-    user_email: '',
-    user_address: '',
-    user_phone_number: '',
-    salary: '',
+    user_name: "",
+    user_email: "",
+    user_address: "",
+    user_phoneNumber: "",
+    salary: "",
   });
+  const [isLoading, setIsLoading] = useState(false); // To handle loading state during the API call
 
   const fetchEmployees = async () => {
     try {
@@ -46,35 +59,55 @@ const EmployeesList = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewEmployee({ ...newEmployee, [name]: value });
-    setErrors({ ...errors, [name]: '' });
+    setErrors({ ...errors, [name]: "" });
   };
 
   const validateForm = () => {
     const newErrors = {
-      user_name: newEmployee.user_name ? '' : 'Tên nhân viên không được để trống',
-      user_email: newEmployee.user_email ? '' : 'Email không được để trống',
-      user_address: newEmployee.user_address ? '' : 'Địa chỉ không được để trống',
-      user_phone_number: newEmployee.user_phone_number ? '' : 'Số điện thoại không được để trống',
-      salary: newEmployee.salary > 0 ? '' : 'Lương phải lớn hơn 0',
+      user_name: newEmployee.user_name
+        ? ""
+        : "Tên nhân viên không được để trống",
+      user_email: newEmployee.user_email ? "" : "Email không được để trống",
+      user_address: newEmployee.user_address
+        ? ""
+        : "Địa chỉ không được để trống",
+      user_phoneNumber: newEmployee.user_phoneNumber
+        ? ""
+        : "Số điện thoại không được để trống",
+      salary: newEmployee.salary > 0 ? "" : "Lương phải lớn hơn 0",
     };
 
     setErrors(newErrors);
 
-    return Object.values(newErrors).every((error) => error === '');
+    return Object.values(newErrors).every((error) => error === "");
   };
 
-  const handleAddEmployee = () => {
+  const handleAddEmployee = async () => {
     if (validateForm()) {
-      setEmployees([...employees, newEmployee]);
-      setIsAddingEmployee(false);
-      setNewEmployee({
-        user_name: '',
-        user_email: '',
-        user_address: '',
-        user_phone_number: '',
-        salary: 0,
-        create_at: new Date().toISOString(),
-      });
+      try {
+        setIsLoading(true); // Start loading when the API call begins
+        let employee = {
+          user_name: newEmployee.user_name,
+          user_email: newEmployee.user_email,
+          user_address: newEmployee.user_address,
+          user_phoneNumber: newEmployee.user_phoneNumber,
+          salary: newEmployee.salary,
+          create_at: new Date().toISOString(),
+          user_password: "Souveshop123@",
+          file: null,
+        };
+        const res = await addEmployee(employee);
+        if (res.status === 201) {
+          toast.success("Thêm nhân viên thành công");
+        }
+        fetchEmployees();
+        setIsAddingEmployee;
+      } catch (error) {
+        console.error("Error adding employee:", error);
+        // Optionally set an error state here to show an error message to the user
+      } finally {
+        setIsLoading(false); // Stop loading when the API call completes
+      }
     }
   };
 
@@ -108,6 +141,12 @@ const EmployeesList = () => {
                 helperText={errors.user_email}
               />
               <TextField
+                label="Mật khẩu"
+                name="user_password"
+                value="Souveshop123@"
+                disabled
+              />
+              <TextField
                 label="Địa chỉ"
                 name="user_address"
                 value={newEmployee.user_address}
@@ -118,12 +157,12 @@ const EmployeesList = () => {
               />
               <TextField
                 label="Số điện thoại"
-                name="user_phone_number"
-                value={newEmployee.user_phone_number}
+                name="user_phoneNumber"
+                value={newEmployee.user_phoneNumber}
                 onChange={handleInputChange}
                 fullWidth
-                error={!!errors.user_phone_number}
-                helperText={errors.user_phone_number}
+                error={!!errors.user_phoneNumber}
+                helperText={errors.user_phoneNumber}
               />
               <TextField
                 label="Lương"
@@ -135,10 +174,17 @@ const EmployeesList = () => {
                 error={!!errors.salary}
                 helperText={errors.salary}
               />
-              <Button variant="contained" onClick={handleAddEmployee}>
-                Thêm
+              <Button
+                variant="contained"
+                onClick={handleAddEmployee}
+                disabled={isLoading}
+              >
+                {isLoading ? "Đang thêm..." : "Thêm"}
               </Button>
-              <Button variant="outlined" onClick={() => setIsAddingEmployee(false)}>
+              <Button
+                variant="outlined"
+                onClick={() => setIsAddingEmployee(false)}
+              >
                 Hủy
               </Button>
             </div>
@@ -164,9 +210,11 @@ const EmployeesList = () => {
                 <TableCell>{employee.user_name}</TableCell>
                 <TableCell>{employee.user_email}</TableCell>
                 <TableCell>{employee.user_address}</TableCell>
-                <TableCell>{employee.user_phone_number}</TableCell>
+                <TableCell>{employee.user_phoneNumber}</TableCell>
                 <TableCell>{employee.salary}</TableCell>
-                <TableCell>{new Date(employee.create_at).toLocaleDateString()}</TableCell>
+                <TableCell>
+                  {new Date(employee.create_at).toLocaleDateString()}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
