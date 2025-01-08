@@ -27,8 +27,14 @@ export default function AdminDashboard() {
       total_cost: "",
     },
     stock: {
-      product_count: "94",
-      total_quantity: "9291",
+      total_products: "",
+      total_shipping_products: "",
+    },
+    buy: {
+      total_purchase: "",
+      total_expense: "",
+      total_canceled: "",
+      total_return: "",
     },
   });
   const [lowStock, setLowStock] = useState<LowStockItem[]>([]);
@@ -40,7 +46,16 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error("Error fetching low stock data:", error);
     }
-  }
+  };
+
+  const fetchBuyReport = async () => {
+    try {
+      const res = await axiosInstance.get("report/buyreport");
+      setReportData((prev) => ({ ...prev, buy: res.data }));
+    } catch (error) {
+      console.error("Error fetching report data:", error);
+    }
+  };
 
   const fetchRevenueData = async () => {
     try {
@@ -59,12 +74,23 @@ export default function AdminDashboard() {
     }
   };
 
+  const fetchStockData = async () => {
+    try {
+      const res = await axiosInstance.get("report/summary-stock");
+      setReportData((prev) => ({ ...prev, stock: res.data }));
+    } catch (error) {
+      console.error("Error fetching report data:", error);
+    }
+  };
+
   console.log(reportData);
 
   useEffect(() => {
     fetchRevenueData();
     fetchProductOverviewData();
     fetchLowStock();
+    fetchBuyReport();
+    fetchStockData();
   }, []);
   console.log(lowStock);
 
@@ -96,10 +122,14 @@ export default function AdminDashboard() {
 
       {/*Stock */}
       <Container title="Kho hàng">
-        <IconGroup label="Số lượng hàng tồn" value={869} icon="quantity" />
+        <IconGroup
+          label="Số lượng hàng tồn"
+          value={reportData.stock.total_products}
+          icon="quantity"
+        />
         <IconGroup
           label="Đang vận chuyển"
-          value={869}
+          value={reportData.stock.total_shipping_products}
           icon="onTheWay"
           hasBorder={false}
         />
@@ -107,10 +137,30 @@ export default function AdminDashboard() {
 
       {/*Purchase Overview */}
       <Container title="Tổng quan mua hàng">
-        <IconGroup label="Mua" value={1000} icon="buy" />
-        <IconGroup label="Bán" value={2000} icon="c ost" />
-        <IconGroup label="Hủy bỏ" value={1000} icon="cancel" />
-        <IconGroup label="Trả về" value={1000} icon="profit" />
+        <IconGroup
+          label="Mua"
+          value={reportData.buy.total_purchase}
+          icon="buy"
+        />
+        <IconGroup
+          label="Bán"
+          value={reportData.buy.total_expense}
+          icon="c ost"
+        />
+        <IconGroup
+          label="Hủy bỏ"
+          value={
+            reportData.buy.total_canceled ? reportData.buy.total_canceled : "0"
+          }
+          icon="cancel"
+        />
+        <IconGroup
+          label="Trả về"
+          value={
+            reportData.buy.total_return ? reportData.buy.total_return : "0"
+          }
+          icon="profit"
+        />
       </Container>
 
       {/*Product overview*/}
@@ -166,31 +216,33 @@ export default function AdminDashboard() {
 
       {/*Low stock */}
       <Container title="Hàng tồn kho thấp">
-            {lowStock.map((item) => (
-                <div key={item.product_id} className="flex w-full items-center justify-evenly gap-4">
-                <img
-                  className="h-[70px] w-[60px] rounded"
-                  src={item.product_image[0]}
-                />
-      
-                <div className="flex flex-grow h-[82px] flex-col items-start justify-start gap-1">
-                  <div className="font-['Inter'] overflow-y-hidden text-ellipsis text-base font-semibold leading-normal text-[#383e49]">
-                    {item.product_name}
-                  </div>
-                  <div className="font-['Inter'] text-sm font-normal leading-tight text-[#667085]">
-                    Số lượng còn lại: {item.product_quantity}
-                    <br />
-                  </div>
-                </div>
-      
-      
-                <div className="inline-flex h-[22px] items-center justify-center gap-1 rounded-2xl bg-[#feeceb] py-0.5 pl-1.5 pr-2">
-                  <div className="text-center font-['Inter'] text-xs font-medium leading-[18px] text-[#aa3028]">
-                    Thấp
-                  </div>
-                </div>
+        {lowStock.map((item) => (
+          <div
+            key={item.product_id}
+            className="flex w-full items-center justify-evenly gap-4"
+          >
+            <img
+              className="h-[70px] w-[60px] rounded"
+              src={item.product_image[0]}
+            />
+
+            <div className="flex h-[82px] flex-grow flex-col items-start justify-start gap-1">
+              <div className="overflow-y-hidden text-ellipsis font-['Inter'] text-base font-semibold leading-normal text-[#383e49]">
+                {item.product_name}
               </div>
-            ))}
+              <div className="font-['Inter'] text-sm font-normal leading-tight text-[#667085]">
+                Số lượng còn lại: {item.product_quantity}
+                <br />
+              </div>
+            </div>
+
+            <div className="inline-flex h-[22px] items-center justify-center gap-1 rounded-2xl bg-[#feeceb] py-0.5 pl-1.5 pr-2">
+              <div className="text-center font-['Inter'] text-xs font-medium leading-[18px] text-[#aa3028]">
+                Thấp
+              </div>
+            </div>
+          </div>
+        ))}
       </Container>
     </div>
   );

@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField, Select, MenuItem, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+} from "@mui/material";
 import InventoryButton from "../../../admin/components/InventoryButton";
 import { useNavigate } from "react-router-dom";
 import { getProductInventory } from "./service/Inventory.service";
@@ -7,6 +18,7 @@ import { Loading } from "@/components/Loading";
 import { Product } from "@/models/Product";
 import { getAllProducts } from "@/screens/Category/service/Category.service";
 import { Table } from "@mui/material";
+import axiosInstance from "@/services/AxiosInstance";
 
 export default function Inventory() {
   const [isAddingInventory, setIsAddingInventory] = useState(false);
@@ -19,6 +31,16 @@ export default function Inventory() {
     productSellingPrice: "",
     productQuantity: "",
   });
+  const [inventoryReport, setInventoryReport] = useState({});
+
+  const fetchInventoryReport = async () => {
+    try {
+      const res = await axiosInstance.get("report/inventory-report");
+      setInventoryReport(res.data);
+    } catch (error) {
+      console.error("Error fetching inventory report:", error);
+    }
+  };
 
   const exportToExcel = async () => {
     const products = await getAllProducts();
@@ -47,7 +69,10 @@ export default function Inventory() {
   useEffect(() => {
     fetchProducts();
   }, [page]);
-  console.log(products);
+  useEffect(()=>{
+    fetchInventoryReport();
+  },[])
+  console.log(inventoryReport);
 
   const handleNextPage = () => {
     if (page < 10) setPage((prevPage) => prevPage + 1);
@@ -69,15 +94,15 @@ export default function Inventory() {
           <div className="mt-2 flex justify-start gap-[75px]">
             <div className="flex w-[200px] flex-col items-start justify-start gap-y-2 rounded-md p-[10px]">
               <div className="font-bold text-[#1570EF]">Thể loại</div>
-              <div className="text-[14px] font-bold">7</div>
-              <div className="text-[14px] text-[#858D9D]">7 ngày qua</div>
+              <div className="text-[14px] font-bold">{inventoryReport.category_count}</div>
+            
             </div>
 
             <div className="flex w-[200px] flex-col items-start justify-start rounded-md p-[10px]">
               <div className="font-bold text-[#E19133]">Tổng sản phẩm</div>
               <div className="mt-2 flex w-full justify-between">
-                <div className="text-[14px] font-bold">868</div>
-                <div className="text-[14px] font-bold">25,000 VNĐ</div>
+                <div className="text-[14px] font-bold">{inventoryReport.product_count}</div>
+                <div className="text-[14px] font-bold">{inventoryReport.revenue}</div>
               </div>
               <div className="mt-2 flex w-full justify-between">
                 <div className="text-[14px] text-[#858D9D]">7 ngày qua</div>
@@ -114,7 +139,10 @@ export default function Inventory() {
         </div>
         <div className="flex items-center justify-between">
           <div className="text-[24px] font-bold text-[#333]">Các sản phẩm</div>
-          <InventoryButton exportExcel={()=>{}} onAddInventory={handleAddInventory} />
+          <InventoryButton
+            exportExcel={() => {}}
+            onAddInventory={handleAddInventory}
+          />
         </div>
 
         <TableContainer
