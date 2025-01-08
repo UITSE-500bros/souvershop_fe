@@ -2,19 +2,11 @@ import { TopReview } from "@/models/TopReview";
 import { Button, Rating } from "@mui/material";
 import axios from "axios";
 
-
 type ReviewProps = {
   Reviews: TopReview[];
 };
 
 export default function RatingReview({ Reviews }: ReviewProps) {
-  // const handleWriteReview = () => {
-  //   axios.post("review", {
-  //     product_id: Reviews[0].product_id,
-  //     review_text: "Good product",
-  //     rating: 5,
-  //   });
-  // }
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex flex-row items-center justify-between">
@@ -22,7 +14,6 @@ export default function RatingReview({ Reviews }: ReviewProps) {
           All Reviews({Reviews.length})
         </div>
         <Button
-        // onClick={handleWriteReview}
           variant="contained"
           color="primary"
           sx={{
