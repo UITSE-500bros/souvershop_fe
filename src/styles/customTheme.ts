@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import type {} from '@mui/x-data-grid/themeAugmentation';
 
 const customTheme = createTheme({
   components: {
@@ -15,6 +16,13 @@ const customTheme = createTheme({
               color: "#153060", // Change the label color when focused
             },
           },
+        },
+      },
+    },
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'white',
         },
       },
     },
