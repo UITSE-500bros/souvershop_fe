@@ -15,12 +15,13 @@ import {
 import { Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import DiscountBanner from "./DiscountBanner";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import useAuthStore from "@/stores/AuthStore";
 import ListIcon from "@mui/icons-material/List";
 import useCartStore from "@/screens/Cart/store/CartStore";
 import CartPreview from "@/screens/Cart/CartPreview";
 import useFavoriteStore from "@/screens/Favorite/store/FavoriteStore";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -34,6 +35,25 @@ const Header = () => {
   const logout = useAuthStore((state) => state.logout);
   const favoriteItems = useFavoriteStore((state) => state.favoriteItems);
   let favoriteQuantity = favoriteItems.length;
+
+  const queryRef = useRef(""); // Use useRef to store the query without triggering re-renders
+
+  const handleKeyDown = async (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" && queryRef.current.trim()) {
+      fetch(`${VITE_API_URL}/product/search/${queryRef.current}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => 
+
+          navigate(`/product/${data[0].product_id}`)
+        )
+        .catch(error => console.error('There was a problem with the fetch operation:', error));
+    }
+  };
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setPopoverAnchorEl(event.currentTarget);
@@ -58,7 +78,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-   
+
     handleMenuClose();
   };
 
@@ -101,6 +121,10 @@ const Header = () => {
                   startAdornment: <Search size={24} className="mr-3" />,
                 },
               }}
+              defaultValue={queryRef.current} // Use defaultValue instead of value to prevent re-render
+              onChange={(e) => (queryRef.current = e.target.value)} // Update queryRef on change
+              onKeyDown={handleKeyDown}
+
             />
           </Box>
           <IconButton

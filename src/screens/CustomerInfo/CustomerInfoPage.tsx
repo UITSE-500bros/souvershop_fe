@@ -195,8 +195,14 @@ const CustomerInfoPage: React.FC = () => {
                 value={profile?.user_email || ''}
                 onChange={(e) => setProfile((prev) => prev ? { ...prev, user_email: e.target.value } : undefined)}
               />
+              <TextField
+                label="Address"
+                variant="outlined"
+                fullWidth
+                value={profile?.user_address || ''}
+                onChange={(e) => setProfile((prev) => prev ? { ...prev, user_address: e.target.value } : undefined)}
+              />
             </div>
-
             <CustomerInfo handleSaveChanges={handleSaveChanges} />
           </div>
         )}
