@@ -20,11 +20,14 @@ import { useParams } from "react-router-dom";
 import ButtonGroup from "../../components/ButtonGroup";
 import ImageSlider from "./ImageSlider";
 import RatingReview from "./RatingReview";
-import { getProductById } from "./service/ProductDetail.service";
+import { getProductById, getProductReviews } from "./service/ProductDetail.service";
 
 import { Loading } from "@/components/Loading";
 import { Link } from "react-router-dom";
 import axiosInstance from "@/services/AxiosInstance";
+import ProductDetailSkeleton from "./ProductDetailSkeleton";
+import useCartStore from "../Cart/store/CartStore";
+import { log } from "console";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -56,6 +59,7 @@ function ProductDetail() {
   const [product, setProduct] = useState<Product>();
   const { productId } = useParams<{ productId: string }>();
   console.log(productId);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -64,22 +68,62 @@ function ProductDetail() {
       if (!product) return;
       setProduct(product);
     };
+    const fetchReviews = async () => {
+      if (!productId) return;
+      const res = await getProductReviews(productId);
+      setReviews(res);
+    }
     fetchProduct();
+    fetchReviews();
   }, [productId]);
-  console.log(product);
 
-  const [ratingvValue, setRatingValue] = React.useState<number | null>(2);
+  
+
+  const [ratingvValue, setRatingValue] = React.useState<number | undefined>(product?.average_rating ?? undefined);
 
   const [quantity, setQuantity] = React.useState<number>(1);
   const [tabIndex, setTabIndex] = useState(0);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const upDateQuantity = useCartStore((state) => state.updateQuantity);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue);
   };
   console.log(product);
-  
-
+  const onQuantityChange = (newQuantity: number) => {
+    setQuantity(newQuantity);
+    if (product) {
+      upDateQuantity(product.product_id, newQuantity);
+    }
+  };
+  const handleOnInCrease = () => {
+    let newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    onQuantityChange(newQuantity);
+  };
+  const handleOnDecrease = () => {
+    if (quantity > 1) {
+      let newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      onQuantityChange(newQuantity);
+    }
+  };
+  const handleAddToCart = () => {
+    if (!product) return;
+    addToCart(product);
+  };
+  let originPrice = product?.product_selling_price;
   if (product) {
+    if (product.percentage_sale !== undefined) {
+      product.product_selling_price =
+        product.product_selling_price -
+        (product.product_selling_price * product.percentage_sale) / 100;
+    }
+  }
+
+  if (!product) {
+    return <ProductDetailSkeleton />;
+  } else {
     return (
       <div className="flex flex-col px-[80px]">
         <Breadcrumbs>
@@ -110,7 +154,9 @@ function ProductDetail() {
               name="controlled"
               value={ratingvValue}
               onChange={(event, newvalue) => {
-                setRatingValue(newvalue);
+                if (newvalue !== null) {
+                  setRatingValue(newvalue);
+                }
               }}
             />
 
@@ -119,14 +165,18 @@ function ProductDetail() {
               <div className="font-['Inter'] text-[32px] font-bold text-black">
                 {formatPrice(product.product_selling_price)}
               </div>
-              <div className="font-['Inter'] text-[32px] font-bold text-black/30 line-through">
-                $300
-              </div>
-              <div className="inline-flex h-[31px] items-center justify-center gap-3 rounded-[62px] bg-[#ff3333]/10 px-3.5 py-1.5">
-                <div className="font-['Inter'] text-base font-medium text-[#ff3333]">
-                  -40%
-                </div>
-              </div>
+              {product.is_sale && (
+                <>
+                  <div className="font-['Inter'] text-[32px] font-bold text-black/30 line-through">
+                   {originPrice !== undefined ? formatPrice(originPrice) : ''}
+                  </div>
+                  <div className="inline-flex h-[31px] items-center justify-center gap-3 rounded-[62px] bg-[#ff3333]/10 px-3.5 py-1.5">
+                    <div className="font-['Inter'] text-base font-medium text-[#ff3333]">
+                      {product.percentage_sale}%
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Description */}
@@ -140,11 +190,16 @@ function ProductDetail() {
             {/*Quantity*/}
             <div className="mt-auto flex items-center justify-center">
               <div className="flex h-[52px] w-[170px] flex-row items-center justify-between rounded-[62px] bg-[#efefef] px-5 py-4">
-                <ButtonGroup value={quantity} />
+                <ButtonGroup
+                  value={quantity}
+                  onIncrement={handleOnInCrease}
+                  onDecrement={handleOnDecrease}
+                />
               </div>
               <>
                 <Button
                   variant="contained"
+                  onClick={handleAddToCart}
                   sx={{
                     backgroundColor: "#000",
                     color: "#ffff",
@@ -154,7 +209,7 @@ function ProductDetail() {
                     marginLeft: "20px",
                   }}
                 >
-                  Add to cart
+                  Thêm vào giỏ hàng
                 </Button>
               </>
             </div>
@@ -203,7 +258,12 @@ function ProductDetail() {
           </TabPanel>
           <TabPanel value={tabIndex} index={1}>
             <div className="h-[990px] w-full">
-              <RatingReview />
+              <RatingReview Reviews={[{
+                content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem unde blanditiis perspiciatis sunt a harum assumenda officia officiis veritatis ea fugit, ab iusto quaerat ex ratione id nobis dolorum cupiditate?",
+                name: "Samantha D.",
+                date: "Posted on August 16, 2023",
+                rating: 4
+              }]}/>
             </div>
           </TabPanel>
         </Box>

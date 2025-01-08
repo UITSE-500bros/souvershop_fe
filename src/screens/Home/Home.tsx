@@ -9,8 +9,9 @@ import ReviewCard from "../../components/ReviewCard";
 import useCartStore from "../Cart/store/CartStore";
 import useProductStore from "../Category/store/category.store";
 import useFavoriteStore from "../Favorite/store/FavoriteStore";
-import { getBannerApi, getRandomProductsApi } from "./Home.service";
+import { getBannerApi, getRandomProductsApi, getTopReviewApi } from "./Home.service";
 import { ClassNames } from "@emotion/react";
+import { TopReview } from "@/models/TopReview";
 
 const responsive = {
   superLargeDesktop: {
@@ -36,29 +37,17 @@ const Home = () => {
   const [banners, setBanners] = useState({});
   const [newArrivals, setNewArrivals] = useState([]);
   const [bestSellers, setBestSellers] = useState([]);
-  const reviews = [
-    {
-      name: "Nguyễn Văn A",
-      review: "Sản phẩm rất đẹp, chất lượng tốt!",
-      rating: 5,
-    },
-    { name: "Trần Thị B", review: "Rất hài lòng, sẽ mua thêm", rating: 4 },
-    {
-      name: "Lê Minh C",
-      review: "Giá hợp lý, giao hàng nhanh chóng",
-      rating: 4,
-    },
-    {
-      name: "Phạm Hoàng D",
-      review: "Mua lần 2, sản phẩm rất chất lượng!",
-      rating: 5,
-    },
-    {
-      name: "Vũ Thị E",
-      review: "Giao hàng nhanh, đóng gói cẩn thận",
-      rating: 3,
-    },
-  ];
+  const [reviews, setReviews] = useState<TopReview[]>([]);
+  const fetchReview = async () => {
+    try{
+      const res = await getTopReviewApi();
+      setReviews(res);
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+  
   useEffect(() => {
     const fetchBanners = async () => {
       getBannerApi()
@@ -93,6 +82,7 @@ const Home = () => {
     fetchNewArrivals();
     fetchBestSellers();
     fetchBanners();
+    fetchReview();
   }, []);
 
   return (
@@ -176,13 +166,13 @@ const Home = () => {
         >
           {reviews.map((review) => (
             <div
-              key={review.name}
+              key={review.customer_id}
               className="w-[300px] flex-shrink-0"
               style={{ scrollSnapAlign: "center" }}
             >
               <ReviewCard
-                name={review.name}
-                review={review.review}
+                name={review.user_name}
+                review={review.review_text}
                 rating={review.rating}
               />
             </div>

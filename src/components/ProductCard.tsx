@@ -1,14 +1,35 @@
 import { Product } from "@/models/Product";
 import useCartStore from "@/screens/Cart/store/CartStore";
+import useFavoriteStore from "@/screens/Favorite/store/FavoriteStore";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 type ProductCardProps = {
   product: Product;
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const addToCart = useCartStore((state) => state.addToCart);
+  const addToFavorite = useFavoriteStore((state) => state.addToFavorite);
+  const removeFromFavorite = useFavoriteStore(
+    (state) => state.removeFromFavorite,
+  );
+  const favoriteItems = useFavoriteStore((state) => state.favoriteItems);
+  const isFavorited = favoriteItems.some(
+    (item) => item.product_id === product.product_id,
+  );
+
+  const handleFavoriteClick = () => {
+    console.log("favorite clicked", isFavorited);
+    if (isFavorited) {
+      removeFromFavorite(product.product_id);
+    } else {
+      addToFavorite(product);
+    }
+  };
+
   return (
     <div className="product-card relative my-4 h-[452px] w-[300px] rounded-[20px] border-4 border-black bg-[#F8F2E5] p-4 shadow-md">
       <div className="relative">
@@ -56,12 +77,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </div>
 
       <div className="absolute bottom-4 left-4">
-        <button className="flex h-10 w-10 items-center justify-center rounded-full p-1 transition-transform duration-200 hover:scale-105">
-          <FavoriteBorderOutlinedIcon
-            className={`${product.is_favourited ? "text-red-500" : "text-black"} transition-colors duration-200`}
-            fontSize="large"
-            sx={{ color: "black" }}
-          />
+        <button
+          onClick={handleFavoriteClick}
+          className="flex h-10 w-10 items-center justify-center rounded-full p-1 transition-transform duration-200 hover:scale-105"
+        >
+          {isFavorited ? (
+            <FavoriteIcon fontSize="large" className="text-red-500" />
+          ) : (
+            <FavoriteBorderOutlinedIcon
+              className={`transition-colors duration-200`}
+              fontSize="large"
+            
+            />
+          )}
         </button>
       </div>
 

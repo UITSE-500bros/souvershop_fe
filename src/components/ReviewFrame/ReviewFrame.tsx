@@ -1,7 +1,14 @@
 import { Rating } from '@mui/material'
 import React from 'react'
 
-export default function ReviewFrame() {
+export type ReviewFrameProps = {
+  content: string
+  name: string
+  date: string
+  rating: number
+}
+
+export default function ReviewFrame(review: ReviewFrameProps) {
   return (
     <div  className="w-[610px] h-[241.58px] px-8 py-7 flex-col rounded-[20px] border border-black/10 justify-start items-start flex">
       <Rating name="read-only" value={4} readOnly />

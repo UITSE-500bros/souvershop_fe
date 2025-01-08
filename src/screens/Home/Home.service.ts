@@ -19,3 +19,12 @@ export const getRandomProductsApi = async () => {
         console.log(error)
     }
 }
+export const  getTopReviewApi = async () => {
+    try{
+        const response = await axiosInstance.get('review/top')
+        return response.data
+    }
+    catch(error){
+        console.log(error)
+    }
+}
