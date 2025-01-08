@@ -187,7 +187,7 @@ export default function AdminDashboard() {
       </Container>
       {/* table */}
       <Container title="Bảng">
-        <TableContainer>
+        <TableContainer sx={{width: "100%"}}>
           <TableHead>
             <TableRow>
               <TableCell>Tên</TableCell>

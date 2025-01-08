@@ -12,7 +12,7 @@ import {
 export default function BarChartComponent({ data}:any) {
   return (
     <BarChart
-      width={500}
+      width={900}
       height={300}
       data={data}
       margin={{
