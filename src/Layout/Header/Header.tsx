@@ -21,6 +21,8 @@ import ListIcon from "@mui/icons-material/List";
 import useCartStore from "@/screens/Cart/store/CartStore";
 import CartPreview from "@/screens/Cart/CartPreview";
 import useFavoriteStore from "@/screens/Favorite/store/FavoriteStore";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+   
     handleMenuClose();
   };
 
@@ -146,7 +148,7 @@ const Header = () => {
           </IconButton>
 
           <IconButton className="bg-black" onClick={handleMenuOpen}>
-            <AccountCircleOutlinedIcon />
+            <SettingsIcon />
           </IconButton>
 
           <Menu
@@ -154,8 +156,18 @@ const Header = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
           >
-            <MenuItem onClick={handleProfile}>Hồ sơ</MenuItem>
-            <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
+            <MenuItem onClick={handleProfile}>
+              <div>
+                <AccountCircleOutlinedIcon />
+                <span className="ml-1">Thông tin cá nhân</span>
+              </div>
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>
+              <div>
+                <LogoutIcon />
+                <span className="ml-1">Đăng xuất</span>
+              </div>
+            </MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>

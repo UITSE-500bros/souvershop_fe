@@ -22,9 +22,11 @@ export default function VerifyEmail() {
         localStorage.setItem("refreshToken", refreshToken);
       }
       set({ accessToken, isLogin: true });
-      toast.success("Xác thực email thành công");
+  
       setTimeout(() => {
         nav('/');
+        
+
       }, 3000);
     }
   }, [accessToken, refreshToken, set, nav]);
