@@ -1,135 +1,179 @@
-import React, { useState } from "react";
-import { Button, TextField } from "@mui/material";
-import { FaUser } from "react-icons/fa";
-import ActionButtons from "../../../admin/components/ActionButtons";
+import React, { useState, useEffect } from 'react';
+import { Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import axiosInstance from '@/services/AxiosInstance';
 
-import { employeesData } from "@/admin/screens/EmployeesList/Fakedata";
+interface Employee {
+  user_name: string | null;
+  user_email: string;
+  user_address: string | null;
+  user_phone_number: string | null;
+  salary: number;
+  create_at: string;
+}
 
-export default function EmployeesList() {
+const EmployeesList = () => {
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
-  const [isSelectingAddType, setIsSelectingAddType] = useState(false);
+  const [newEmployee, setNewEmployee] = useState<Employee>({
+    user_name: '',
+    user_email: '',
+    user_address: '',
+    user_phone_number: '',
+    salary: 0,
+    create_at: new Date().toISOString(),
+  });
+  const [errors, setErrors] = useState({
+    user_name: '',
+    user_email: '',
+    user_address: '',
+    user_phone_number: '',
+    salary: '',
+  });
 
-  const [employees, setEmployees] = useState(employeesData);
-
-  const handleAddEmployee = () => {
-    setIsSelectingAddType(true);  
+  const fetchEmployees = async () => {
+    try {
+      const res = await axiosInstance.get("admin/get_employee");
+      setEmployees(res.data);
+    } catch (error) {
+      console.error("Error fetching employee data:", error);
+    }
   };
 
-  const handleCloseModal = () => {
-    setIsAddingEmployee(false);
-    setIsSelectingAddType(false);
+  useEffect(() => {
+    fetchEmployees();
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewEmployee({ ...newEmployee, [name]: value });
+    setErrors({ ...errors, [name]: '' });
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      user_name: newEmployee.user_name ? '' : 'Tên nhân viên không được để trống',
+      user_email: newEmployee.user_email ? '' : 'Email không được để trống',
+      user_address: newEmployee.user_address ? '' : 'Địa chỉ không được để trống',
+      user_phone_number: newEmployee.user_phone_number ? '' : 'Số điện thoại không được để trống',
+      salary: newEmployee.salary > 0 ? '' : 'Lương phải lớn hơn 0',
+    };
+
+    setErrors(newErrors);
+
+    return Object.values(newErrors).every((error) => error === '');
+  };
+
+  const handleAddEmployee = () => {
+    if (validateForm()) {
+      setEmployees([...employees, newEmployee]);
+      setIsAddingEmployee(false);
+      setNewEmployee({
+        user_name: '',
+        user_email: '',
+        user_address: '',
+        user_phone_number: '',
+        salary: 0,
+        create_at: new Date().toISOString(),
+      });
+    }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5]">
-      <div className="flex h-[700px] w-[1096px] flex-col gap-8 bg-white px-[20px] py-[20px] shadow-md relative">
-        <div className="flex justify-between items-center">
-          <div className="text-[24px] font-bold text-[#333]">Danh sách nhân viên</div>
-          <ActionButtons onAddEmployee={handleAddEmployee} />
-        </div>
+    <div>
+      <Button variant="contained" onClick={() => setIsAddingEmployee(true)}>
+        Thêm nhân viên
+      </Button>
 
-        <div className="flex flex-col gap-5 overflow-auto border border-[#ddd] rounded-md">
-          <div className="flex bg-[#f5f5f5] p-[10px] font-bold text-[#333]">
-            <div className="flex-1 text-left">Tên nhân viên</div>
-            <div className="flex-1 text-left">Mã nhân viên</div>
-            <div className="flex-1 text-left">Số điện thoại liên lạc</div>
-            <div className="flex-1 text-left">E-mail</div>
-            <div className="flex-1 text-left">Loại nhân viên</div>
-            <div className="flex-1 text-left">Lương</div>
-          </div>
-          
-          {employees.map((employee, index) => (
-            <div className="flex p-[10px] border-b border-[#ddd]" key={index}>
-              <div className="flex-1 text-left">{employee.name}</div>
-              <div className="flex-1 text-left">{employee.employeeId}</div>
-              <div className="flex-1 text-left">{employee.phone}</div>
-              <div className="flex-1 text-left">{employee.email}</div>
-              <div className="flex-1 text-left">{employee.employeeType}</div>
-              <div className="flex-1 text-left">{employee.salary}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex justify-center items-center gap-[20px] p-[10px] mt-[auto]">
-          <Button variant="outlined" sx={{ textTransform: "none", marginRight: "350px" }}>Trước</Button>
-          <div>Trang 1 trong 10</div>
-          <Button variant="outlined" sx={{ textTransform: "none", marginLeft: "350px" }}>Sau</Button>
-        </div>
-
-        {isSelectingAddType && (
-          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-10">
-            <div className="bg-white w-[400px] p-[20px] rounded-md shadow-lg">
-              <h2 className="text-[24px] font-bold mb-4">Chọn kiểu thêm nhân viên</h2>
-              <div className="flex flex-col gap-4">
-                <Button
-                  variant="contained"
-                  onClick={() => { setIsAddingEmployee(true); setIsSelectingAddType(false); }}
-                  sx={{ marginBottom: "10px" }}
-                >
-                  Thêm 1 nhân viên
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={() => { setIsSelectingAddType(false); setIsAddingEmployee(true); }}
-                  sx={{ marginBottom: "10px" }}
-                >
-                  Thêm nhiều nhân viên 
-                </Button>
-                <Button variant="outlined" onClick={handleCloseModal}>Hủy bỏ</Button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {isAddingEmployee && (
-          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-10">
-            <div className="bg-white w-[400px] p-[20px] rounded-md shadow-lg">
-              <h2 className="text-[24px] font-bold mb-4">Thêm Nhân Viên</h2>
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between border-dashed border-2 p-4 mt-4">
-                  <div className="w-[100px] h-[100px] rounded-full border-2 border-dashed border-[#ddd] flex justify-center items-center">
-                    <FaUser size={60} color="#777777" />
-                  </div>
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="text-[#858D9D]">Kéo hình ảnh vào đây</div>
-                    <div className="text-[#858D9D]">Hoặc</div>
-                    <div className="text-[#448DF2]">Duyệt hình ảnh</div>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <label className="text-[14px] text-[#333] w-[150px]">Tên nhân viên:</label>
-                  <TextField fullWidth variant="outlined" size="small" />
-                </div>
-                <div className="flex justify-between items-center">
-                  <label className="text-[14px] text-[#333] w-[150px]">Mã nhân viên:</label>
-                  <TextField fullWidth variant="outlined" size="small" />
-                </div>
-                <div className="flex justify-between items-center">
-                  <label className="text-[14px] text-[#333] w-[150px]">Số điện thoại:</label>
-                  <TextField fullWidth variant="outlined" size="small"/>
-                </div>
-                <div className="flex justify-between items-center gap-10">
-                  <label className="text-[14px] text-[#333] w-[100px]">E-mail:</label>
-                  <TextField fullWidth variant="outlined" size="small"/>
-                </div>
-                <div className="flex justify-between items-center">
-                  <label className="text-[14px] text-[#333]">Loại nhân viên:</label>
-                  <TextField sx={{ width: "250px" }} variant="outlined" size="small"/>
-                </div>
-                <div className="flex justify-between items-center">
-                  <label className="text-[14px] text-[#333]">Lương:</label>
-                  <TextField sx={{ width: "250px", height: "44px" }} variant="outlined" size="small"/>
-                </div>
-                <div className="flex justify-between mt-4">
-                  <Button variant="outlined" onClick={handleCloseModal}>Hủy bỏ</Button>
-                  <Button variant="contained" color="primary" onClick={handleCloseModal}>Thêm nhân viên</Button>
-                </div>
-              </div>
+      {isAddingEmployee && (
+        <div className="absolute left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black bg-opacity-50">
+          <div className="w-[400px] rounded-md bg-white p-[20px] shadow-lg">
+            <h2 className="mb-4 text-[24px] font-bold">Thêm nhân viên</h2>
+            <div className="flex flex-col gap-4">
+              <TextField
+                label="Tên nhân viên"
+                name="user_name"
+                value={newEmployee.user_name}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.user_name}
+                helperText={errors.user_name}
+              />
+              <TextField
+                label="Email"
+                name="user_email"
+                value={newEmployee.user_email}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.user_email}
+                helperText={errors.user_email}
+              />
+              <TextField
+                label="Địa chỉ"
+                name="user_address"
+                value={newEmployee.user_address}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.user_address}
+                helperText={errors.user_address}
+              />
+              <TextField
+                label="Số điện thoại"
+                name="user_phone_number"
+                value={newEmployee.user_phone_number}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.user_phone_number}
+                helperText={errors.user_phone_number}
+              />
+              <TextField
+                label="Lương"
+                name="salary"
+                type="number"
+                value={newEmployee.salary}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.salary}
+                helperText={errors.salary}
+              />
+              <Button variant="contained" onClick={handleAddEmployee}>
+                Thêm
+              </Button>
+              <Button variant="outlined" onClick={() => setIsAddingEmployee(false)}>
+                Hủy
+              </Button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Tên nhân viên</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Địa chỉ</TableCell>
+              <TableCell>Số điện thoại</TableCell>
+              <TableCell>Lương</TableCell>
+              <TableCell>Ngày tạo</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {employees.map((employee, index) => (
+              <TableRow key={index}>
+                <TableCell>{employee.user_name}</TableCell>
+                <TableCell>{employee.user_email}</TableCell>
+                <TableCell>{employee.user_address}</TableCell>
+                <TableCell>{employee.user_phone_number}</TableCell>
+                <TableCell>{employee.salary}</TableCell>
+                <TableCell>{new Date(employee.create_at).toLocaleDateString()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
-}
+};
+
+export default EmployeesList;
