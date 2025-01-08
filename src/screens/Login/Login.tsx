@@ -48,12 +48,14 @@ function Login() {
 
     if (emailValid && passwordValid) {
       try {
-        await login(formValue.email, formValue.password);
-        toast.success("Đăng nhập thành công");
-        setTimeout(() => {
+        const role = await login(formValue.email, formValue.password);
+        console.log(role);
+        if (role === "chủ cửa hàng") {
+          navigate("/admin");
+        }
+        else{
           navigate("/");
-        }, 3000);
-       
+        }
       } catch (err) {
         console.error(err);
       }
@@ -62,7 +64,6 @@ function Login() {
 
   return (
     <div className="flex h-full w-full flex-row justify-start bg-[#F8F2E5]">
-
       <img
         src="src/assets/login.jpeg"
         alt="login"

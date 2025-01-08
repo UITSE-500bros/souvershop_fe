@@ -34,7 +34,7 @@ const SignUpTextField: React.FC<SignUpTextFieldProps> = ({
     <TextField
       type={isPassword && !showPassword ? "password" : "text"}
       value={value}
-      label={label}
+      label={value ? label : ""}
       required
       sx={{ width: 430 }}
       variant="outlined"

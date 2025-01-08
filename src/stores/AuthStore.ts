@@ -1,16 +1,17 @@
 import axiosInstance from "@/services/AxiosInstance";
 import { create } from "zustand";
 import { jwtDecode } from "jwt-decode";
-
+import { Role } from "@/models/Role";
 
 type AuthStore = {
   isLogin: boolean;
   accessToken: string;
   refreshToken: string;
-  login: (user_email: string, user_password: string) => void;
+  login: (user_email: string, user_password: string) => Promise<string | undefined>;
   logout: () => void;
   loadFromStorage: () => void;
-  role: string|null;
+  role: string | null;
+  set: (partial: Partial<AuthStore>) => void;
 };
 
 const useAuthStore = create<AuthStore>((set) => ({
@@ -25,17 +26,19 @@ const useAuthStore = create<AuthStore>((set) => ({
         user_password,
       });
       const { accessToken, refreshToken } = response.data;
-      if (accessToken) {
-        set({ accessToken, refreshToken, isLogin: true });
-        const decodedToken: { role: string } = jwtDecode(accessToken);
-        console.log(decodedToken);
+      if (accessToken && refreshToken) {
+        const decodedToken: { user_role: string } = jwtDecode(accessToken);
+        let role: Role = decodedToken.user_role as Role;
+        console.log(role);
+        
+        set({ isLogin: true, accessToken, refreshToken, role });
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        return role;
       }
     } catch (err) {
       console.error(err);
     }
-
   },
 
   logout: () => {
@@ -51,5 +54,6 @@ const useAuthStore = create<AuthStore>((set) => ({
       set({ accessToken, refreshToken });
     }
   },
+  set: (partial) => set(partial),
 }));
 export default useAuthStore;

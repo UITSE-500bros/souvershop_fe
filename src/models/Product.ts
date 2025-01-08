@@ -13,6 +13,5 @@ export interface Product {
   create_at?: string;
   update_at?: string;
   category_id?: string;
+  product_quantity: number;
 }
-
-
