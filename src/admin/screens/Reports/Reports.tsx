@@ -79,21 +79,21 @@ export default function Reports() {
         <Container title="Tổng quan">
           <div className="flex w-full flex-row justify-between gap-5">
             <div className="flex flex-col gap-2">
-              <span>{formatPrice(number)}</span>
+              <span>{formatPrice(156079000)}</span>
               <span className="font-['Inter'] text-sm font-normal leading-tight text-[#555555]">
                 Tổng lợi nhuận
               </span>
             </div>
 
             <div className="flex flex-col gap-2">
-              <span>{formatPrice(number)}</span>
+              <span>{formatPrice(230450000)}</span>
               <span className="font-['Inter'] text-sm font-normal leading-tight text-[#DBA362]">
                 Doanh thu
               </span>
             </div>
 
             <div className="flex flex-col gap-2">
-              <span>{formatPrice(number)}</span>
+              <span>{200}</span>
               <span className="font-['Inter'] text-sm font-normal leading-tight text-[#845EBC]">
                 Doanh số bán hàng
               </span>

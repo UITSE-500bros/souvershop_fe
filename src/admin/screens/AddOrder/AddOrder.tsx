@@ -1,243 +1,246 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { OrderItem } from "./model/OrderItem";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import axiosInstance from "@/services/AxiosInstance";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const OrdersList: React.FC = () => {
-  const navigate = useNavigate();
-  const [isAddingReceipt, setIsAddingReceipt] = useState(false);
+interface Product {
+  product_id: string;
+  product_name: string;
+  product_import_price: number;
+  product_quantity: number;
+}
 
-  const [orderData, setOrderData] = useState<OrderItem[]>([]);
-  const [selectedOrders, setSelectedOrders] = useState<number[]>([]);
+export default function AddOrder() {
+  const [products, setProducts] = useState<Product[]>([]); // List of products
+  const [open, setOpen] = useState(false); // Dialog visibility
+  const [selectedProductId, setSelectedProductId] = useState<string>(""); // ID of the selected product
+  const [quantity, setQuantity] = useState<number | string>(""); // Quantity for the selected product
+  const [data, setData] = useState<Product[]>([]); // Data fetched from API
+  const [totalAmount, setTotalAmount] = useState<number>(0); // Total amount of the order
 
-  const fetchOrders = async () => {
-    try {
-      const res = await axiosInstance.get("product/lookup");
-      setOrderData(res.data);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    }
-  };
-
+  const nav = useNavigate();
+  // Fetch product data from API
   useEffect(() => {
-    fetchOrders();
+    axiosInstance
+      .get("product/lookup")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
-  console.log(orderData);
-  const [orders, setOrders] = useState([
-    {
-      id: 1,
-      productName: "Mì tôm",
-      orderValue: "250,000 VNĐ",
-      quantity: "50 Gói",
-      deliveryDate: "12/1/2024",
-    },
-    {
-      id: 2,
-      productName: "Bánh Oreo",
-      orderValue: "150,000 VNĐ",
-      quantity: "30 Gói",
-      deliveryDate: "14/1/2024",
-    },
-    {
-      id: 3,
-      productName: "Coca Cola",
-      orderValue: "500,000 VNĐ",
-      quantity: "100 Lon",
-      deliveryDate: "20/1/2024",
-    },
-  ]);
 
-  const handleSelectOrder = (id: number) => {
-    setSelectedOrders((prev) =>
-      prev.includes(id)
-        ? prev.filter((orderId) => orderId !== id)
-        : [...prev, id],
-    );
+  // Handle open/close dialog
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedProductId("");
+    setQuantity("");
   };
-
-  const handleSelectAll = () => {
-    if (selectedOrders.length === orders.length) {
-      setSelectedOrders([]);
-    } else {
-      setSelectedOrders(orders.map((order) => order.id));
+  const handleAddOrder = () => {
+    if (products.length === 0) {
+      toast.error("Không có sản phẩm nào được thêm");
+      return;
     }
-  };
 
-  const handleImportOrders = () => {
-    const selectedOrderDetails = orders.filter((order) =>
-      selectedOrders.includes(order.id),
+    let totalAmount = products.reduce(
+      (total, product) =>
+        total + product.product_import_price * product.product_quantity,
+      0,
     );
-    navigate("/admin/orders", {
-      state: { importedOrders: selectedOrderDetails },
-    });
+
+    axiosInstance
+      .post("grn", {
+        grn_total: totalAmount,
+        product_list: products.map((product) => ({
+          product_id: product.product_id,
+          product_quantity: product.product_quantity,
+          product_total:
+            product.product_import_price * product.product_quantity,
+        })),
+      })
+      .then((res) => {
+        console.log(res);
+        setProducts([]);
+      })
+      .then(() => {
+        toast.success("Thêm phiếu nhập hàng thành công");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
-  const handleAddReceipt = () => {
-    setIsAddingReceipt(true);
-  };
+  // Add product to the list
+  const handleAddProduct = () => {
+    const selectedProduct = data.find(
+      (product) => product.product_id === selectedProductId,
+    );
 
-  const handleCloseForm = () => {
-    setIsAddingReceipt(false);
-  };
+    if (selectedProduct && quantity) {
+      const newProduct: Product = {
+        product_id: selectedProduct.product_id,
+        product_name: selectedProduct.product_name,
+        product_import_price: selectedProduct.product_import_price,
+        product_quantity: Number(quantity),
+      };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setOrderData({ ...orderData, [name]: value });
-  };
-
-  const handleSubmit = () => {
-    const newOrder = {
-      id: orders.length + 1,
-      productName: orderData.productName,
-      orderValue: orderData.orderValue,
-      quantity: orderData.quantity,
-      deliveryDate: orderData.deliveryDate,
-    };
-
-    setOrders([...orders, newOrder]);
-    setIsAddingReceipt(false);
+      setProducts([...products, newProduct]);
+      handleClose();
+    }
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100">
-      <div className="container mx-auto flex-grow rounded bg-white p-6 shadow-md">
-        <h2 className="mb-4 text-2xl font-bold">Danh sách đơn hàng</h2>
-        <div className="overflow-auto">
-          <table className="w-full border-collapse border border-gray-300">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="border border-gray-300 p-4 text-center text-lg">
-                  <label className="cursor-pointer">Chọn</label>
-                </th>
-                <th className="border border-gray-300 p-4 text-left text-lg">
-                  Sản phẩm
-                </th>
-                <th className="border border-gray-300 p-4 text-left text-lg">
-                  Giá Nhập
-                </th>
-                <th className="border border-gray-300 p-4 text-left text-lg">
-                  Số lượng
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order.id}>
-                  <td className="flex items-center justify-center border border-gray-300 py-6 text-lg">
-                    <input
-                      type="checkbox"
-                      checked={selectedOrders.includes(order.id)}
-                      onChange={() => handleSelectOrder(order.id)}
-                    />
-                  </td>
+    <div className="container mx-auto p-6">
+      <h1 className="mb-4 text-2xl font-bold">Quản lý phiếu nhập hàng</h1>
 
-                  <td className="border border-gray-300 p-4 text-lg">
-                    {order.productName}
-                  </td>
-                  <td className="border border-gray-300 p-4 text-lg">
-                    {order.orderValue}
-                  </td>
-                  <td className="border border-gray-300 p-4 text-lg">
-                    {order.quantity}
-                  </td>
-                </tr>
+      {/* Button to open form */}
+      <Button variant="contained" color="primary" onClick={handleOpen}>
+        Thêm sản phẩm
+      </Button>
+      {/* Button to add order */}
+      <Button
+        onClick={handleAddOrder}
+        variant="contained"
+        color="secondary"
+        sx={{ marginLeft: "10px" }}
+      >
+        Thêm phiếu nhập
+      </Button>
+
+    {/* Button to navigate back to orders list */}
+    <Button
+        variant="contained"
+        color="success"
+        onClick={() => nav("/admin/orders")}
+        sx={{ marginLeft: "10px" }}
+    >
+        Trở về danh sách đơn hàng
+    </Button>
+
+      {/* Table to display products */}
+      <div className="mt-6">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>STT</TableCell>
+              <TableCell>Tên sản phẩm</TableCell>
+              <TableCell>Giá nhập (VNĐ)</TableCell>
+              <TableCell>Số lượng</TableCell>
+              <TableCell>Thành tiền (VNĐ)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {products.map((product, index) => (
+              <TableRow key={product.product_id}>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{product.product_name}</TableCell>
+                <TableCell>
+                  {product.product_import_price.toLocaleString()}
+                </TableCell>
+                <TableCell>{product.product_quantity}</TableCell>
+                <TableCell>
+                  {(
+                    product.product_import_price * product.product_quantity
+                  ).toLocaleString()}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        {products.length === 0 && (
+          <p className="mt-4 text-center text-gray-500">
+            Chưa có sản phẩm nào được thêm.
+          </p>
+        )}
+        {/* Display total amount */}
+        <div className="mt-4 text-right">
+          <h2 className="text-xl font-bold">
+            Tổng cộng:{" "}
+            {products
+              .reduce(
+                (total, product) =>
+                  total +
+                  product.product_import_price * product.product_quantity,
+                0,
+              )
+              .toLocaleString()}{" "}
+            VNĐ
+          </h2>
+        </div>
+      </div>
+
+      {/* Dialog for adding a new product */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Thêm sản phẩm</DialogTitle>
+        <DialogContent>
+          {/* Select product */}
+          <FormControl fullWidth margin="dense">
+            <InputLabel id="product-select-label">Tên sản phẩm</InputLabel>
+            <Select
+              labelId="product-select-label"
+              value={selectedProductId}
+              onChange={(e) => setSelectedProductId(e.target.value)}
+            >
+              {data.map((product) => (
+                <MenuItem key={product.product_id} value={product.product_id}>
+                  {product.product_name}
+                </MenuItem>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </Select>
+          </FormControl>
 
-      <div className="flex items-center justify-between bg-gray-100 p-4">
-        <Button variant="contained" color="primary" onClick={handleSelectAll}>
-          Chọn tất cả
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleImportOrders}
-          disabled={selectedOrders.length === 0}
-        >
-          Nhập hàng
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleAddReceipt}>
-          Tạo phiếu nhập
-        </Button>
-      </div>
+          {/* Display selected product's import price */}
+          <TextField
+            margin="dense"
+            label="Giá nhập (VNĐ)"
+            type="text"
+            fullWidth
+            disabled
+            value={
+              data
+                .find((product) => product.product_id === selectedProductId)
+                ?.product_import_price?.toLocaleString() || ""
+            }
+          />
 
-      {isAddingReceipt && (
-        <div className="absolute left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black bg-opacity-50">
-          <div className="w-[400px] rounded-md bg-white p-[20px] shadow-lg">
-            <h2 className="mb-4 text-[24px] font-bold">Tạo phiếu nhập</h2>
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between gap-3">
-                <label className="w-[150px] text-[14px] text-[#333]">
-                  Sản phẩm:
-                </label>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  name="productName"
-                  value={orderData.productName}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <label className="w-[150px] text-[14px] text-[#333]">
-                  Giá trị đơn hàng:
-                </label>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  name="orderValue"
-                  value={orderData.orderValue}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <label className="w-[150px] text-[14px] text-[#333]">
-                  Số lượng:
-                </label>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  name="quantity"
-                  value={orderData.quantity}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  name="deliveryDate"
-                  value={orderData.deliveryDate}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mt-4 flex justify-between gap-3">
-                <Button variant="outlined" onClick={handleCloseForm}>
-                  Hủy bỏ
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
-                >
-                  Lưu phiếu nhập
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+          {/* Quantity input */}
+          <TextField
+            margin="dense"
+            label="Số lượng"
+            type="number"
+            fullWidth
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary">
+            Hủy
+          </Button>
+          <Button onClick={handleAddProduct} color="primary">
+            Thêm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
-};
-
-export default OrdersList;
+}
