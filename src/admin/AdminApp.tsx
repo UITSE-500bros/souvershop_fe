@@ -3,10 +3,11 @@ import AdminLayout from "./layouts/AdminLayout";
 import EmployeesList from "./screens/EmployeesList";
 import AdminDashboard from "./screens/DashBoard";
 import AddOrder from "./screens/AddOrder";
-import Orders from "./screens/Orders";
+
 import Inventory from "./screens/Inventory";
 import ProductInfo from "./screens/ProductInfo";
 import Reports from "./screens/Reports";
+import Orders from "./screens/Orders";
 
 export default function AdminApp() {
   return (

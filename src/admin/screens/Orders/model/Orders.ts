@@ -4,7 +4,7 @@ export interface Product {
     product_total: number;
 }
 
-export interface Order {
+export interface OrderInterface {
     grn_id: string;
     created_at: string;
     update_at: string;

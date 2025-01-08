@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import OrderButton from "@/admin/components/OrderButtons";
-import { Order } from "./Orders";
 import axiosInstance from "@/services/AxiosInstance";
 import {
   Table,
@@ -14,12 +13,13 @@ import {
   Paper,
 } from "@mui/material";
 import { formatPrice } from "@/utils/FormatPrice";
+import { OrderInterface } from "./model/Orders";
 
 const Orders: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const importedOrders = location.state?.importedOrders || [];
-  const [orders, setOrders] = React.useState<Order[]>([]);
+  const [orders, setOrders] = React.useState<OrderInterface[]>([]);
 
   const handleAddOrder = () => {
     navigate("add-order");
@@ -141,7 +141,7 @@ const Orders: React.FC = () => {
           </Table>
         </TableContainer>
 
-        {/* <div className="mt-[auto] flex items-center justify-center gap-[20px] p-[10px]">
+        <div className="mt-[auto] flex items-center justify-center gap-[20px] p-[10px]">
           <Button
             variant="outlined"
             sx={{ textTransform: "none", marginRight: "350px" }}
@@ -155,7 +155,7 @@ const Orders: React.FC = () => {
           >
             Sau
           </Button>
-        </div> */}
+        </div>
       </div>
     </div>
   );
