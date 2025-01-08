@@ -20,7 +20,10 @@ import { useParams } from "react-router-dom";
 import ButtonGroup from "../../components/ButtonGroup";
 import ImageSlider from "./ImageSlider";
 import RatingReview from "./RatingReview";
-import { getProductById, getProductReviews } from "./service/ProductDetail.service";
+import {
+  getProductById,
+  getProductReviews,
+} from "./service/ProductDetail.service";
 
 import { Loading } from "@/components/Loading";
 import { Link } from "react-router-dom";
@@ -72,14 +75,14 @@ function ProductDetail() {
       if (!productId) return;
       const res = await getProductReviews(productId);
       setReviews(res);
-    }
+    };
     fetchProduct();
     fetchReviews();
   }, [productId]);
 
-  
-
-  const [ratingvValue, setRatingValue] = React.useState<number | undefined>(product?.average_rating ?? undefined);
+  const [ratingvValue, setRatingValue] = React.useState<number | undefined>(
+    product?.average_rating ?? undefined,
+  );
 
   const [quantity, setQuantity] = React.useState<number>(1);
   const [tabIndex, setTabIndex] = useState(0);
@@ -168,7 +171,7 @@ function ProductDetail() {
               {product.is_sale && (
                 <>
                   <div className="font-['Inter'] text-[32px] font-bold text-black/30 line-through">
-                   {originPrice !== undefined ? formatPrice(originPrice) : ''}
+                    {originPrice !== undefined ? formatPrice(originPrice) : ""}
                   </div>
                   <div className="inline-flex h-[31px] items-center justify-center gap-3 rounded-[62px] bg-[#ff3333]/10 px-3.5 py-1.5">
                     <div className="font-['Inter'] text-base font-medium text-[#ff3333]">
@@ -258,12 +261,9 @@ function ProductDetail() {
           </TabPanel>
           <TabPanel value={tabIndex} index={1}>
             <div className="h-[990px] w-full">
-              <RatingReview Reviews={[{
-                content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem unde blanditiis perspiciatis sunt a harum assumenda officia officiis veritatis ea fugit, ab iusto quaerat ex ratione id nobis dolorum cupiditate?",
-                name: "Samantha D.",
-                date: "Posted on August 16, 2023",
-                rating: 4
-              }]}/>
+              <RatingReview
+                Reviews={reviews}
+              />
             </div>
           </TabPanel>
         </Box>

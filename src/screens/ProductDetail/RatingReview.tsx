@@ -1,23 +1,28 @@
+import { TopReview } from "@/models/TopReview";
 import { Button, Rating } from "@mui/material";
+import axios from "axios";
 
-export type ReviewFrameProps = {
-  content: string;
-  name: string;
-  date: string;
-  rating: number;
-};
+
 type ReviewProps = {
-  Reviews: ReviewFrameProps[];
+  Reviews: TopReview[];
 };
 
 export default function RatingReview({ Reviews }: ReviewProps) {
+  // const handleWriteReview = () => {
+  //   axios.post("review", {
+  //     product_id: Reviews[0].product_id,
+  //     review_text: "Good product",
+  //     rating: 5,
+  //   });
+  // }
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex flex-row items-center justify-between">
         <div className="font-['Inter'] text-2xl font-bold text-black">
-          All Reviews(413)
+          All Reviews({Reviews.length})
         </div>
         <Button
+        // onClick={handleWriteReview}
           variant="contained"
           color="primary"
           sx={{
@@ -34,20 +39,17 @@ export default function RatingReview({ Reviews }: ReviewProps) {
       </div>
       <div className="flex flex-wrap">
         {Reviews.map((review) => (
-          <div key={review.content} className="w-1/2 p-2">
+          <div key={review.product_id} className="w-1/2 p-2">
             <div className="flex h-[241.58px] w-[610px] flex-col items-start justify-start rounded-[20px] border border-black/10 px-8 py-7">
-              <Rating name="read-only" value={4} readOnly />
+              <Rating name="read-only" value={review.rating} readOnly />
               <div className="font-['Inter'] text-xl font-bold text-black">
-                Samantha D.
+                {review.user_name}
               </div>
               <span className="text-base font-thin leading-snug">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-                unde blanditiis perspiciatis sunt a harum assumenda officia
-                officiis veritatis ea fugit, ab iusto quaerat ex ratione id
-                nobis dolorum cupiditate?
+                {review.review_text}
               </span>
               <div className="w-[546px] font-['Inter'] text-base font-medium leading-snug text-black/60">
-                Posted on August 16, 2023
+                {review.create_date}
               </div>
             </div>
           </div>
