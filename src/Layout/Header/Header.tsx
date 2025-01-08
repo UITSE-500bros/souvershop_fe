@@ -20,6 +20,7 @@ import useAuthStore from "@/stores/AuthStore";
 import ListIcon from "@mui/icons-material/List";
 import useCartStore from "@/screens/Cart/store/CartStore";
 import CartPreview from "@/screens/Cart/CartPreview";
+import useFavoriteStore from "@/screens/Favorite/store/FavoriteStore";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ const Header = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const cartQuantity = useCartStore((state) => state.getLength());
   const logout = useAuthStore((state) => state.logout);
+  const favoriteItems = useFavoriteStore((state) => state.favoriteItems);
+  let favoriteQuantity = favoriteItems.length;
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setPopoverAnchorEl(event.currentTarget);
@@ -137,7 +140,9 @@ const Header = () => {
             className="bg-black"
             onClick={() => navigate("/favorite")}
           >
-            <FavoriteBorderOutlinedIcon />
+            <Badge badgeContent={favoriteQuantity} color="error">
+              <FavoriteBorderOutlinedIcon />
+            </Badge>
           </IconButton>
 
           <IconButton className="bg-black" onClick={handleMenuOpen}>
