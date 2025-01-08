@@ -16,6 +16,7 @@ import VerifyEmail from "@/screens/VerifyEmail";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import { UnauthorizedPage } from "@/admin/screens/Unauthorized";
+import PaymentReturn from "@/screens/PaymentReturn";
 
 export default function MainRoute() {
   return (
@@ -30,15 +31,13 @@ export default function MainRoute() {
           <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/favorite" element={<Favorite />} />
         </Route>
-
+        <Route path="/api/receipt/payment-return" element={<PaymentReturn />} />{" "}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/new-password" element={<NewPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
-
         <Route path="/admin/*" element={<AdminApp />} />
-
         <Route element={<UnauthorizedPage />} path="/Unauthorized" />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>

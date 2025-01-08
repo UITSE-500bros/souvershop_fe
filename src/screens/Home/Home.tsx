@@ -99,6 +99,7 @@ const Home = () => {
         </div>
         <Button
           variant="contained"
+          onClick={() => navigate("/category")}
           sx={{
             width: 210,
             height: 50,
