@@ -48,6 +48,11 @@ const items = [
     url: "/admin/orders",
     icon: PackagePlus,
   },
+  {
+    title: "Đơn đặt hàng",
+    url: "/admin/customer-orders",
+    icon: PackagePlus,
+  }
 ];
 
 export default function AdminSidebar() {
