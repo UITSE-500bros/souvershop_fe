@@ -31,7 +31,7 @@ export default function AddOrder() {
   const [products, setProducts] = useState<Product[]>([]); // List of products
   const [open, setOpen] = useState(false); // Dialog visibility
   const [selectedProductId, setSelectedProductId] = useState<string>(""); // ID of the selected product
-  const [quantity, setQuantity] = useState<number | string>(""); // Quantity for the selected product
+  const [quantity, setQuantity] = useState<number | string>("1"); // Quantity for the selected product
   const [data, setData] = useState<Product[]>([]); // Data fetched from API
   const [totalAmount, setTotalAmount] = useState<number>(0); // Total amount of the order
 
@@ -126,15 +126,15 @@ export default function AddOrder() {
         Thêm phiếu nhập
       </Button>
 
-    {/* Button to navigate back to orders list */}
-    <Button
+      {/* Button to navigate back to orders list */}
+      <Button
         variant="contained"
         color="success"
         onClick={() => nav("/admin/orders")}
         sx={{ marginLeft: "10px" }}
-    >
+      >
         Trở về danh sách đơn hàng
-    </Button>
+      </Button>
 
       {/* Table to display products */}
       <div className="mt-6">
@@ -229,8 +229,14 @@ export default function AddOrder() {
             type="number"
             fullWidth
             value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={(e) => {
+              const value = Number(e.target.value);
+              if (value > 0) {
+                setQuantity(value);
+              }
+            }}
           />
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary">

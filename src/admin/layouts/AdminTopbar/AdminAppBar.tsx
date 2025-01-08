@@ -3,6 +3,7 @@ import { IconButton, TextField } from "@mui/material";
 import { Search, Bell, User, MenuIcon } from "lucide-react";
 import React from "react";
 import { sIsSidebarOpen } from "../AdminSidebar/stores/AdminSidebarStores";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminAppBar() {
   const { toggleSidebar } = useSidebar();
@@ -12,6 +13,7 @@ export default function AdminAppBar() {
     console.log(sIsSidebarOpen.value);
     
   }
+  const nav = useNavigate();
   return (
     <div className="sticky top-0 z-10 flex flex-row items-center justify-between bg-white py-[20px] pr-[32px]">
       <div className="flex items-end">
@@ -35,7 +37,7 @@ export default function AdminAppBar() {
         <IconButton>
           <Bell size={24} />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => nav("/admin/profile")}>
           <User size={24} />
         </IconButton>
       </div>
