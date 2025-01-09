@@ -141,7 +141,7 @@ const Orders: React.FC = () => {
           </Table>
         </TableContainer>
 
-        <div className="mt-[auto] flex items-center justify-center gap-[20px] p-[10px]">
+        {/* <div className="mt-[auto] flex items-center justify-center gap-[20px] p-[10px]">
           <Button
             variant="outlined"
             sx={{ textTransform: "none", marginRight: "350px" }}
@@ -155,7 +155,7 @@ const Orders: React.FC = () => {
           >
             Sau
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
