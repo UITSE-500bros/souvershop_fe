@@ -1,3 +1,4 @@
+import Discount from "@/admin/screens/Discount";
 import {
   Sidebar,
   SidebarContent,
@@ -19,7 +20,10 @@ import {
   LogOut,
   PackagePlus,
   Settings,
+  SquarePercent,
+  
 } from "lucide-react";
+import { useState } from "react";
 //menu items
 const items = [
   {
@@ -52,12 +56,35 @@ const items = [
     title: "Đơn đặt hàng",
     url: "/admin/customer-orders",
     icon: PackagePlus,
+  },
+  {
+    title: "Khuyến mãi",
+    url: "/admin/discount",
+    icon: SquarePercent,
   }
+ 
 ];
 
 export default function AdminSidebar() {
   const {logout}=useAuthStore();
+  const [open, setOpen] = useState(false);
+  const openDialog = () => {
+    setOpen(true);
+  }
+  const closeDialog = () => {
+    setOpen(false);
+  }
+  const handleSaveDiscount = (data: {
+    eventName: string;
+    value: string;
+    startDate: string;
+    endDate: string;
+  }) => {
+    console.log('Discount Data:', data);
+    closeDialog();
+  };
   return (
+    <>
     <Sidebar>
       {/* Sidebar header */}
       <SidebarHeader>
@@ -103,9 +130,16 @@ export default function AdminSidebar() {
                 <span>Đăng xuất</span>
               </a>
             </SidebarMenuButton>
+            <SidebarMenuButton onClick={openDialog} asChild>
+              <a href="#">
+                <SquarePercent className="h-8 w-8" />
+                <span>Khuyến mãi</span>
+              </a>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
+    </>
   );
 }

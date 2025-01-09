@@ -10,6 +10,7 @@ import Reports from "./screens/Reports";
 import Orders from "./screens/Orders";
 import CustomerInfoPage from "@/screens/CustomerInfo";
 import Manage from "./screens/CustomerOrders/Manage";
+import Discount from "./screens/Discount";
 
 export default function AdminApp() {
   return (
@@ -25,6 +26,7 @@ export default function AdminApp() {
         <Route path="orders/:add-order" element={<AddOrder />} />
         <Route path="profile" element={<CustomerInfoPage />} />
         <Route path="customer-orders" element={<Manage />} />
+        <Route path='discount' element ={<Discount />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Route>
     </Routes>

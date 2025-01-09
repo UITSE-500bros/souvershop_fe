@@ -105,6 +105,7 @@ export default function AdminDashboard() {
   console.log(table);
 
   return (
+    <>
     <div className="grid grid-cols-[2fr_1fr] grid-rows-[1fr_1_fr_2fr_2fr] place-items-center gap-5">
       <Container title="Tổng quan doanh số">
         <IconGroup
@@ -252,5 +253,6 @@ export default function AdminDashboard() {
         ))}
       </Container>
     </div>
+    </>
   );
 }

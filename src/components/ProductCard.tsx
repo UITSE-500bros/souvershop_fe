@@ -71,7 +71,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {discountPrice.toLocaleString()} đ
           </p>
         )} */}
-        <p className="text-sm text-gray-500 line-through">
+        <p className="text-sm text-black-500 ">
           {product.product_selling_price.toLocaleString()} đ
         </p>
       </div>

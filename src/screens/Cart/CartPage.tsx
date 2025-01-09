@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OrderSummaryCard from "../../components/OrderSummaryCard";
 import ProductCardCart from "../../components/ProductCardCart";
 
@@ -11,21 +11,33 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  InputBase,
+  InputLabel,
+  MenuItem,
   Radio,
   RadioGroup,
+  Select,
   Typography,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { checkoutVNpayApi } from "./service/Cart.service";
+import LoadingDialog from "@/admin/components/LoadingDialog";
+import axiosInstance from "@/services/AxiosInstance";
 
 const CartPage: React.FC = () => {
-
   const [shippingMethod, setShippingMethod] = useState<string>("standard");
   const [paymentMethod, setPaymentMethod] = useState<string>("VNpay");
   const cartItems = useCartStore((state) => state.cartItems);
+  const [loading, setLoading] = useState(false);
+  const [discounts, setDiscounts] = useState<
+    { id: string; discount_name: string; discount_value: number }[]
+  >([]);
+  const [selectedDiscountId, setSelectedDiscountId] = useState<string>("");
+  const [discountValue, setDiscountValue] = useState<number>(0);
 
+  const [level, setLevel] = useState(0);
   const shipping = 20000;
+  const [memberDiscount, setMemberDiscount] = useState(0);
+  
 
   const calculateSubtotal = (items: typeof cartItems) =>
     items.reduce(
@@ -34,21 +46,47 @@ const CartPage: React.FC = () => {
     );
 
   const subtotal = calculateSubtotal(cartItems);
-  const total = subtotal + shipping;
+  const discountQuantity = subtotal*discountValue/100;
+  const total = subtotal + shipping - discountQuantity - memberDiscount;
+
+  const fetchDiscounts = async () => {
+    try {
+      const response = await axiosInstance.get("/customer/discounts");
+      setDiscounts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchLevel = async () => {
+    try {
+      const response = await axiosInstance.get("customer/level");
+      setLevel(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDiscountChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const selectedId = event.target.value as string;
+    setSelectedDiscountId(selectedId);
+
+    // Find the discount value associated with the selected ID
+    const selectedDiscountObj = discounts.find((d) => d.id === selectedId);
+    setDiscountValue(selectedDiscountObj ? selectedDiscountObj.discount_value : 0);
+  };
 
   const handleCheckout = () => {
     if (paymentMethod === "cod") {
-      toast.success("Đăt hàng thành công!");
+      toast.success("Đặt hàng thành công!");
     } else {
       checkoutVNpayApi({
         amount: total,
-        productList: cartItems.map((item) => {
-          return {
-            product_id: item.product_id,
-            product_total: item.total,
-            quantity: item.quantity,
-          };
-        }),
+        productList: cartItems.map((item) => ({
+          product_id: item.product_id,
+          product_total: item.total,
+          quantity: item.quantity,
+        })),
       })
         .then((res) => {
           window.location.href = res;
@@ -57,8 +95,14 @@ const CartPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    fetchDiscounts();
+    fetchLevel();
+  }, []);
+
   return (
     <div className="flex justify-evenly space-x-6 p-10">
+      <LoadingDialog open={loading} />
       <div
         className="rounded-lg bg-white p-6"
         style={{ width: "715px", height: "508px" }}
@@ -70,15 +114,17 @@ const CartPage: React.FC = () => {
         </div>
       </div>
 
-      {/* payment info mation */}
+      {/* Payment information */}
       <div className="bg-white-100 m-5 rounded-lg p-4">
         <OrderSummaryCard
           subtotal={subtotal}
           shipping={shipping}
           total={total}
+          discount={discountQuantity}
+          memberDiscount={memberDiscount}
         />
 
-        {/* shipping options */}
+        {/* Shipping options */}
         <div style={{ padding: "20px" }}>
           <Typography variant="h4" gutterBottom>
             Lựa Chọn Vận Chuyển
@@ -97,7 +143,7 @@ const CartPage: React.FC = () => {
           </FormControl>
         </div>
 
-        {/* payment details */}
+        {/* Payment details */}
         <div style={{ padding: "20px" }}>
           <Typography variant="h4" gutterBottom>
             Chi Tiết Thanh Toán
@@ -121,61 +167,35 @@ const CartPage: React.FC = () => {
           </FormControl>
         </div>
 
+        {/* Discount selection */}
         <div style={{ marginTop: "24px" }}>
           <Box display="flex" flexDirection="column" gap={3}>
-            {/* <Box display="flex" alignItems="center">
-              <Box
-                display="flex"
-                alignItems="center"
-                gap={1}
-                px={2}
-                py={1}
-                bgcolor="#efefef"
-                borderRadius="62px"
-                overflow="hidden"
-                width={326}
-                height={48}
-              >
-                <LocalOfferIcon
-                  style={{ width: 24, height: 24, color: "gray" }}
-                />
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  style={{
-                    fontFamily: "Inter-Regular",
-                  }}
-                ></Typography>
-                <InputBase
-                  placeholder="Nhập mã khuyến mãi"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    padding: "8px",
-                    borderRadius: "8px",
-                    backgroundColor: "#efefef",
-                  }}
-                />
-              </Box>
-
-              <Button
-                variant="contained"
+            <Box display="flex" alignItems="center">
+              <FormControl
                 sx={{
-                  backgroundColor: "black",
-                  color: "white",
+                  width: 326,
+                  backgroundColor: "#efefef",
                   borderRadius: "62px",
-                  padding: "10px 20px",
-                  marginLeft: "12px",
-                  width: "119px",
-                  height: "48px",
-                  "&:hover": {
-                    backgroundColor: "#333",
-                  },
+                  padding: "8px 16px",
                 }}
               >
-                Áp dụng
-              </Button>
-            </Box> */}
+                <InputLabel>Mã khuyến mãi</InputLabel>
+                <Select
+                  value={selectedDiscountId}
+                  onChange={handleDiscountChange}
+                  displayEmpty
+                >
+                  <MenuItem value="" disabled>
+                    Chọn mã khuyến mãi
+                  </MenuItem>
+                  {discounts.map((discount) => (
+                    <MenuItem key={discount.id} value={discount.id}>
+                      {discount.discount_name} - Giảm {discount.discount_value}%
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
 
             <Button
               variant="contained"

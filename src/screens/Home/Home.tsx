@@ -44,6 +44,8 @@ const Home = () => {
       console.log(error);
     }
   }
+
+  const isSale=true
   
   useEffect(() => {
     const fetchBanners = async () => {
@@ -144,6 +146,15 @@ const Home = () => {
       {/* empty space */}
       <div className="h-[100px] w-full bg-[#7b5c43]" />
       {/* new products */}
+
+      {isSale && (
+        <img
+          src='https://cdn-kvweb.kiotviet.vn/kiotviet-website/wp-content/uploads/2023/09/25085120/khuyen-mai-20-10-spa.png'
+          alt="sale"
+          className="h-[400px] w-2/3 self-center my-5"
+        />
+      )}
+
 
       <ProductSlider navigate={navigate} data={newArrivals} text="Sản phẩm mới" />
 
