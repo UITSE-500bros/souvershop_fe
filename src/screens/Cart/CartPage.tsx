@@ -47,7 +47,8 @@ const CartPage: React.FC = () => {
 
   const subtotal = calculateSubtotal(cartItems);
   const discountQuantity = subtotal*discountValue/100;
-  const total = subtotal + shipping - discountQuantity - memberDiscount;
+  const memberDiscountQuantity = subtotal*memberDiscount/100;
+  const total = subtotal + shipping - discountQuantity - memberDiscountQuantity;
 
   const fetchDiscounts = async () => {
     try {
@@ -61,7 +62,7 @@ const CartPage: React.FC = () => {
   const fetchLevel = async () => {
     try {
       const response = await axiosInstance.get("customer/level");
-      setLevel(response.data);
+      setMemberDiscount(response.data.user_level)
     } catch (error) {
       console.log(error);
     }
@@ -100,6 +101,8 @@ const CartPage: React.FC = () => {
     fetchLevel();
   }, []);
 
+  
+
   return (
     <div className="flex justify-evenly space-x-6 p-10">
       <LoadingDialog open={loading} />
@@ -121,7 +124,7 @@ const CartPage: React.FC = () => {
           shipping={shipping}
           total={total}
           discount={discountQuantity}
-          memberDiscount={memberDiscount}
+          memberDiscount={memberDiscountQuantity}
         />
 
         {/* Shipping options */}
@@ -179,7 +182,7 @@ const CartPage: React.FC = () => {
                   padding: "8px 16px",
                 }}
               >
-                <InputLabel>Mã khuyến mãi</InputLabel>
+                
                 <Select
                   value={selectedDiscountId}
                   onChange={handleDiscountChange}
