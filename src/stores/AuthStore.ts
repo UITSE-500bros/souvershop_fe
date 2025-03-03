@@ -28,7 +28,7 @@ const useAuthStore = create<AuthStore>((set) => ({
       const { accessToken, refreshToken } = response.data;
       if (accessToken && refreshToken) {
         const decodedToken: { user_role: string } = jwtDecode(accessToken);
-        let role: Role = decodedToken.user_role as Role;
+        const role: Role = decodedToken.user_role as Role;
         console.log(role);
         
         set({ isLogin: true, accessToken, refreshToken, role });

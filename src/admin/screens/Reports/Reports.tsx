@@ -45,7 +45,7 @@ const tableData = [
 ];
 
 export default function Reports() {
-  let number = 100000;
+  const number = 100000;
   const [bestSeller, setBestSeller] = React.useState<BestSeller[]>([]);
   const [bestCategory, setBestCategory] = React.useState<BestCategory[]>([]);
   const fetchBestSeller = async () => {

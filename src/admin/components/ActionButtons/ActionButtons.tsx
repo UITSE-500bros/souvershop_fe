@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import React from "react";
 
 export default function ActionButtons({ onAddEmployee }: { onAddEmployee: () => void }) {
   return (

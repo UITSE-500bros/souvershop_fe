@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import React from "react";
 type InventoryButtonProps = {
   onAddInventory: () => void;
   exportExcel: () => void;

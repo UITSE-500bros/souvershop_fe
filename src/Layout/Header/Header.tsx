@@ -34,7 +34,7 @@ const Header = () => {
   const cartQuantity = useCartStore((state) => state.getLength());
   const logout = useAuthStore((state) => state.logout);
   const favoriteItems = useFavoriteStore((state) => state.favoriteItems);
-  let favoriteQuantity = favoriteItems.length;
+  const favoriteQuantity = favoriteItems.length;
 
   const queryRef = useRef(""); // Use useRef to store the query without triggering re-renders
 

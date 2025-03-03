@@ -86,7 +86,7 @@ const EmployeesList = () => {
     if (validateForm()) {
       try {
         setIsLoading(true); // Start loading when the API call begins
-        let employee = {
+        const employee = {
           user_name: newEmployee.user_name,
           user_email: newEmployee.user_email,
           user_address: newEmployee.user_address,

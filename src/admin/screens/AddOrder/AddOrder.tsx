@@ -61,7 +61,7 @@ export default function AddOrder() {
       return;
     }
 
-    let totalAmount = products.reduce(
+    const totalAmount = products.reduce(
       (total, product) =>
         total + product.product_import_price * product.product_quantity,
       0,

@@ -1,6 +1,5 @@
-import React from "react";
 import { Button } from "@mui/material";
-import { FaEdit, FaDownload } from "react-icons/fa";
+import { FaDownload, FaEdit } from "react-icons/fa";
 
 export default function ProductInfoButton() {
   return (

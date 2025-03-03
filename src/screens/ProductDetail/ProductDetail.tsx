@@ -100,13 +100,13 @@ function ProductDetail() {
     }
   };
   const handleOnInCrease = () => {
-    let newQuantity = quantity + 1;
+    const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     onQuantityChange(newQuantity);
   };
   const handleOnDecrease = () => {
     if (quantity > 1) {
-      let newQuantity = quantity - 1;
+      const newQuantity = quantity - 1;
       setQuantity(newQuantity);
       onQuantityChange(newQuantity);
     }
@@ -115,7 +115,7 @@ function ProductDetail() {
     if (!product) return;
     addToCart(product);
   };
-  let originPrice = product?.product_selling_price;
+  const originPrice = product?.product_selling_price;
   if (product) {
     if (product.percentage_sale !== undefined) {
       product.product_selling_price =
